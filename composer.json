@@ -1,5 +1,5 @@
 {
-    "name": "spyp/Rmscms",
+    "name": "spyp/rmscms",
     "type": "library",
     "description": "Admin and content management package for laravel",
     "keywords": ["laravel","cms","laravel cms","admin system laravel"],
