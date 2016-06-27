@@ -29,7 +29,7 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "laravelbook/ardent": "3.*",
+        "laravelbook/ardent": "dev-master",
         "laravelbook/ardent": "dev-master"
     },
     "autoload": {
