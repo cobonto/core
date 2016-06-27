@@ -1,0 +1,40 @@
+{
+    "name": "spyp/Rmscms",
+    "type": "library",
+    "description": "Admin and content management package for laravel",
+    "keywords": ["laravel","cms","laravel cms","admin system laravel"],
+    "homepage": "https://github.com/spyp/Rms",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "mohammad sharif ahrari",
+            "email": "msharif.ahrari@gmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "mahdi shad",
+            "email": "ramtin2025@yahoo.com",
+            "role": "Developer"
+        },
+         {
+            "name": "Mousa najafi",
+            "email": "tito_igtyx@yahoo.com",
+            "role": "Designer"
+        },
+         {
+            "name": "Milad karami",
+            "email": "seomateriel@gmail.com",
+            "role": "Manager"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "laravelbook/ardent": "3.*",
+        "laravelbook/ardent": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "RmsCms\\": "src"
+        }
+    }
+}
