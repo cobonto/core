@@ -10,6 +10,9 @@ namespace RmsCms;
 
 use Illuminate\Support\ServiceProvider;
 use RmsCms\Classes\Assign;
+use RmsCms\Commands\ExportCommand;
+use RmsCms\Commands\ImportCommand;
+use RmsCms\Commands\ModelCommand;
 
 class CmsServiceProvider extends ServiceProvider
 {
@@ -18,6 +21,7 @@ class CmsServiceProvider extends ServiceProvider
         $this->app->singleton('assign', function ($app) {
             return new Assign($app['files']);
         });
+        $this->registerCommands();
     }
     public function boot()
     {
@@ -28,4 +32,42 @@ class CmsServiceProvider extends ServiceProvider
             __DIR__.'/copy/database'=>database_path(),
         ]);
     }
+    protected function registerCommands()
+    {
+        $commands = ['Import', 'Model', 'Export'];
+        foreach ($commands as $command)
+        {
+            $this->{'register' . $command . 'Command'}();
+        }
+
+        $this->commands(
+            'rms.import',
+            'rms.model',
+            'rms.export'
+        );
+    }
+    protected function registerImportCommand()
+    {
+        $this->app->singleton('rms.import', function ($app)
+        {
+            return new ImportCommand($app['files']);
+        });
+    }
+
+    protected function registerModelCommand()
+    {
+        $this->app->singleton('rms.model', function ($app)
+        {
+            return new ModelCommand($app['files']);
+        });
+    }
+
+    protected function registerExportCommand()
+    {
+        $this->app->singleton('rms.export', function ($app)
+        {
+            return new ExportCommand($app['files']);
+        });
+    }
+
 }

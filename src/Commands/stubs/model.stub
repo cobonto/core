@@ -1,0 +1,10 @@
+<?php
+
+namespace DummyNamespace;
+
+use LaravelArdent\Ardent\Ardent;
+
+class DummyClass extends Ardent
+{
+    //
+}

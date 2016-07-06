@@ -28,11 +28,15 @@
         }
     ],
     "require": {
-       
+      "laravelcollective/html": "5.2.*",
+      "laracasts/utilities": "~2.0",
+      "barryvdh/laravel-ide-helper":"2.2.*",
+      "yajra/laravel-datatables-oracle": "^6.15"
     },
     "autoload": {
         "psr-4": {
             "RmsCms\\": "src"
         }
-    }
+    },
+    "minimum-stability":"dev"
 }
