@@ -10,6 +10,7 @@ namespace RmsCms;
 
 use Illuminate\Support\ServiceProvider;
 use RmsCms\Classes\Assign;
+use RmsCms\Classes\Settings;
 use RmsCms\Commands\ExportCommand;
 use RmsCms\Commands\ImportCommand;
 use RmsCms\Commands\ModelCommand;
@@ -22,6 +23,7 @@ class CmsServiceProvider extends ServiceProvider
             return new Assign($app['files']);
         });
         $this->registerCommands();
+        $this->registerSettings();
     }
     public function boot()
     {
@@ -69,5 +71,10 @@ class CmsServiceProvider extends ServiceProvider
             return new ExportCommand($app['files']);
         });
     }
-
+    protected function registerSettings(){
+        $this->app->singleton('settings', function ($app)
+        {
+            return new Settings([],true);
+        });
+    }
 }
