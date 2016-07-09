@@ -12,9 +12,11 @@ namespace RmsCms\Controllers;
 use App\Http\Controllers\Controller;
 use Barryvdh\Reflection\DocBlock\Context;
 use Module\Classes\Hook;
+use RmsCms\Classes\Traits\HelperList;
 
 abstract class AdminController extends Controller
 {
+    use HelperList;
     /**
      * @string tpl view file
      */
@@ -23,10 +25,24 @@ abstract class AdminController extends Controller
      * @string title of page
      */
     protected $title;
+
+    /**
+     * @string table
+     */
+    protected $table;
+
+    /**
+     * @string model
+     */
+    protected $model;
+    /*
+     * @string className
+     */
+    protected $className;
     public function __construct()
     {
         // run some method before routing
-        $this->beforeProcess(\Route::getCurrentRoute()->getActionName());
+      //  $this->beforeProcess(\Route::getCurrentRoute()->getActionName());
     }
 
     /**
@@ -54,6 +70,16 @@ abstract class AdminController extends Controller
         ]);
         // javascript
         app('assign')->addPlugin('morris');
+        // add datable if bulder is created
+        if($this->listBuilder)
+        {
+            app('assign')->addCSS('plugins/datatables/dataTables.bootstrap.css');
+            app('assign')->addJS([
+                'plugins/datatables/jquery.dataTables.min.js',
+                'plugins/datatables/dataTables.bootstrap.min.js'
+
+            ]);
+        }
     }
 
     /**
