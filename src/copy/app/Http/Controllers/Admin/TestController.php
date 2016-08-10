@@ -2,18 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\User;
-use Illuminate\Support\Facades\Input;
 use RmsCms\Controllers\AdminController;
 
-
-class UserController extends AdminController
+class TestController extends AdminController
 {
-    protected $title = 'Users';
-    protected $table = 'users';
-    protected $route_name = 'users';
-    protected $model_name = 'User';
-
     protected function index()
     {
         $this->fields_list = [
@@ -26,13 +18,6 @@ class UserController extends AdminController
             'email' => [
                 'title' => 'Email',
             ],
-            'active' => [
-                'title' => 'Status',
-                'function' => 'displayStatus',
-            ],
-            'created_at' => [
-                'title' => 'Created at',
-            ]
         ];
         return parent::index();
     }
@@ -66,45 +51,19 @@ class UserController extends AdminController
                         //  'prefix' => '00.0',
 
                     ],
-                    [
-                        'name' => 'password',
-                        'type' => 'password',
-                        'class' => '',
-                        'col' => '3',
-                        'title' => 'Password',
-
-                    ],
-                    // date picker
-                    [
-                        'name' => 'active',
-                        'type' => 'switch',
-                        'class' => '',
-                        'col' => '6',
-                        'title' => 'Status',
-                        'default_value' => 1,
-                        'jqueryOptions' => [
-                            'onColor' => 'success',
-                            'offColor' => 'danger',
-                            'onText' => 'Yes',
-                            'offText' => 'No',
-                        ]
-                    ],
                 ],
                 'submit' => [
                     [
-                        'name' => 'save',
-                        'title' => 'Save',
-                        'type' => 'submit',
+                    'title' => 'Save',
+                    'name' => 'save',
+                    'type' => 'submit',
                     ],
                     [
-                        'name' => 'saveAndStay',
                         'title' => 'Save and stay',
+                        'name' => 'saveAndStay',
                         'type' => 'submit',
-                        'class'=>'btn-warning'
-                    ]
-
-                ],
-
+                    ],
+                ]
             ],
         ];
         return parent::edit($id);

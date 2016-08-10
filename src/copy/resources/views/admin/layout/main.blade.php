@@ -14,6 +14,7 @@
         </ol>
     </section>
     <section class="content">
+        @include('admin.layout.messages')
         @yield('content')
     </section>
 </div>
@@ -26,7 +27,7 @@
     @foreach($javascript_files as $file)
         <script type="text/javascript" src="{{ asset($file) }}"></script>
     @endforeach
-     @stack('scripts')
+    @include('admin.layout.javascript')
 @endif
 
 </html>

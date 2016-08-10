@@ -15,7 +15,7 @@
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'IndexController@index');
 // admin
 // admin login
 Route::get('admin/login', 'Admin\\AuthController@showLoginForm');
@@ -24,9 +24,12 @@ Route::get('admin/logout', 'Admin\\AuthController@logout');
 Route::group(
     [
         'namespace' => 'Admin',
-        'middleware' => ['admin','web'],
+        'middleware' => ['admin'],
         'prefix' => 'admin'],function(){
-    Route::get('dashboard', 'DashboardController@index');
-    Route::get('users', 'UserController@getIndex');
-    Route::get('users/databalse',['as'=>'datatable','uses'=>'UserController@myData']);
+    Route::resources([
+        'dashboard'=>'DashboardController',
+        'users'=>'UserController',
+        'test'=>'TestController'
+
+    ]);
 });

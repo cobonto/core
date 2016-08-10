@@ -24,10 +24,10 @@ class ExportCommand extends RMSCommand
     {
         $sp = DIRECTORY_SEPARATOR;
         // we start to copy data from system to package name of folders
-        $folders = ['app/Http/Controllers/Admin',
-                    'database/migrations',
-                    'database/seeds',
-                    'resources/views/admin'];
+        $folders = ['resources/views',
+            'app/Http/Controllers/Admin',
+            'database/migrations',
+            'database/seeds'];
         $files = [
             'config/app.php',
             'app/Http/Kernel.php',
@@ -35,16 +35,19 @@ class ExportCommand extends RMSCommand
             'app/User.php',
         ];
         // change separtor
-        foreach($folders as &$folder)
+        $index=0;
+        foreach($folders as $folder)
         {
-            $folder = str_replace('/',$sp,$folder);
+
+            $folders[$index] = trim(str_replace('/',$sp,$folder));
+            $index++;
         }
         foreach($folders as $folder)
         {
             if($this->files->copyDirectory(base_path($folder),$this->package_path.$folder))
                 $this->info($folder .' is exported');
             else
-                $this->error($folder.' is not exported, manually updated');
+                $this->info($folder.' is not exported, manually updated');
         }
          foreach($files as $file)
          {// we have to check first

@@ -28,10 +28,10 @@
         }
     ],
     "require": {
-      "laravelcollective/html": "5.2.*",
       "laracasts/utilities": "~2.0",
       "barryvdh/laravel-ide-helper":"2.2.*",
-      "yajra/laravel-datatables-oracle": "^6.15"
+      "yajra/laravel-datatables-oracle": "^6.15",
+      "spyp/laravel-module-package":"@dev"
     },
     "autoload": {
         "psr-4": {

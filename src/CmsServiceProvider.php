@@ -9,7 +9,10 @@
 namespace RmsCms;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\Engines\CompilerEngine;
+use Illuminate\View\Engines\EngineResolver;
 use RmsCms\Classes\Assign;
+use RmsCms\Classes\CmsBladeCompiler;
 use RmsCms\Classes\Settings;
 use RmsCms\Commands\ExportCommand;
 use RmsCms\Commands\ImportCommand;
@@ -24,6 +27,7 @@ class CmsServiceProvider extends ServiceProvider
         });
         $this->registerCommands();
         $this->registerSettings();
+        $this->registerCompiler();
     }
     public function boot()
     {
@@ -33,6 +37,7 @@ class CmsServiceProvider extends ServiceProvider
             __DIR__.'/copy/app'=>app_path(),
             __DIR__.'/copy/database'=>database_path(),
         ]);
+
     }
     protected function registerCommands()
     {
@@ -75,6 +80,24 @@ class CmsServiceProvider extends ServiceProvider
         $this->app->singleton('settings', function ($app)
         {
             return new Settings([],true);
+        });
+    }
+
+    /**
+     * @param  \Illuminate\View\Engines\EngineResolver  $resolver
+     */
+    protected function registerCompiler()
+    {
+        $resolver = app('view.engine.resolver');
+        $app = $this->app;
+        $app->singleton('blade.compiler', function($app)
+        {
+            $cache = $app['config']['view.compiled'];
+            return new CmsBladeCompiler($app['files'], $cache);
+        });
+
+        $resolver->register('blade', function () use ($app) {
+            return new CompilerEngine($app['blade.compiler']);
         });
     }
 }
