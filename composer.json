@@ -1,5 +1,5 @@
 {
-    "name": "RmsCms/core",
+    "name": "rmscms/core",
     "type": "library",
     "description": "Admin and content management package for laravel",
     "keywords": ["laravel","cms","laravel cms","admin system laravel"],
