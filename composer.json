@@ -31,7 +31,7 @@
       "laracasts/utilities": "~2.0",
       "barryvdh/laravel-ide-helper":"2.2.*",
       "yajra/laravel-datatables-oracle": "^6.15",
-      "RmsCms/module":"@dev"
+      "rmscms/module":"@dev"
     },
     "autoload": {
         "psr-4": {
