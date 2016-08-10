@@ -1,9 +1,9 @@
 {
-    "name": "spyp/rmscms",
+    "name": "RmsCms/core",
     "type": "library",
     "description": "Admin and content management package for laravel",
     "keywords": ["laravel","cms","laravel cms","admin system laravel"],
-    "homepage": "https://github.com/spyp/Rms",
+    "homepage": "https://github.com/RmsCms/core",
     "license": "MIT",
     "authors": [
         {
@@ -31,7 +31,7 @@
       "laracasts/utilities": "~2.0",
       "barryvdh/laravel-ide-helper":"2.2.*",
       "yajra/laravel-datatables-oracle": "^6.15",
-      "spyp/laravel-module-package":"@dev"
+      "RmsCms/module":"@dev"
     },
     "autoload": {
         "psr-4": {
