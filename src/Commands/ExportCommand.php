@@ -14,7 +14,7 @@ class ExportCommand extends RMSCommand
     /**
      * @param string $name
      */
-    protected $name = 'rms:export';
+    protected $name = 'cobonto:export';
     /**
      * @param string $description
      */

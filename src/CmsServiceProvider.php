@@ -48,14 +48,14 @@ class CmsServiceProvider extends ServiceProvider
         }
 
         $this->commands(
-            'rms.import',
-            'rms.model',
-            'rms.export'
+            'cobonto.import',
+            'cobonto.model',
+            'cobonto.export'
         );
     }
     protected function registerImportCommand()
     {
-        $this->app->singleton('rms.import', function ($app)
+        $this->app->singleton('cobonto.import', function ($app)
         {
             return new ImportCommand($app['files']);
         });
@@ -63,7 +63,7 @@ class CmsServiceProvider extends ServiceProvider
 
     protected function registerModelCommand()
     {
-        $this->app->singleton('rms.model', function ($app)
+        $this->app->singleton('cobonto.model', function ($app)
         {
             return new ModelCommand($app['files']);
         });
@@ -71,7 +71,7 @@ class CmsServiceProvider extends ServiceProvider
 
     protected function registerExportCommand()
     {
-        $this->app->singleton('rms.export', function ($app)
+        $this->app->singleton('cobonto.export', function ($app)
         {
             return new ExportCommand($app['files']);
         });

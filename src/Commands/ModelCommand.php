@@ -18,7 +18,7 @@ class ModelCommand extends ModuleCommand
     /**
      * @string name
      */
-    protected $name='rms:model';
+    protected $name='cobonto:model';
     protected function getStub()
     {
         return __DIR__.'/stubs/model.stub';
@@ -75,7 +75,7 @@ class ModelCommand extends ModuleCommand
      */
     protected function getPath($name)
     {
-        $path = base_path('vendor/spyp/rmscms/src/Classes');
+        $path = base_path('vendor/cobonto/src/Classes');
         return $path.'/'.str_replace('\\', '/', $name).'.php';
     }
 

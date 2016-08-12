@@ -16,7 +16,7 @@ class ImportCommand extends RMSCommand
     /**
      * @param string $name
      */
-    protected $name = 'rms:import';
+    protected $name = 'cobonto:import';
     /**
      * @param string $description
      */
