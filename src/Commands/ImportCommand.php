@@ -27,7 +27,7 @@ class ImportCommand extends RMSCommand
         $sp = DIRECTORY_SEPARATOR;
         // we start to copy data from system to package name of folders
         $folders = [
-            'resources/views/admin',
+            'resources/views',
             'app/Http/Controllers/Admin',
             'database/migrations',
             'database/seeds',

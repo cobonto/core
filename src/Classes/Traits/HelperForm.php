@@ -9,6 +9,8 @@
 namespace RmsCms\Classes\Traits;
 
 
+use Illuminate\Support\Facades\Input;
+
 trait HelperForm
 {
     /** @var  array $fields form */
@@ -17,13 +19,15 @@ trait HelperForm
     protected $fields_values = [];
     /** @var array $tpl_form */
     private $tpl_form = 'admin.helpers.form.main';
+    /** @var array available plugin for form */
     private $available_plugins = [
         'selecttwo',
         'colorpicker',
         'datepicker',
         'ckeditor',
     ];
-
+    /** @var array list of switchers */
+    protected $switchers = ['active'];
     /**
      * create form with helper form
      */
@@ -119,5 +123,20 @@ trait HelperForm
             $field['javascript'] .= $options;
         }
         $field['javascript'] .= '});';
+    }
+    // do something before update or add
+    protected function calcPost()
+    {
+        // switchers
+        if(is_array($this->switchers) && count($this->switchers))
+        {
+            foreach($this->switchers as $switch)
+            {
+                if(!$this->request->has($switch))
+                    $this->request->merge([$switch=>0]);
+                else
+                    $this->request->merge([$switch=>1]);
+            }
+        }
     }
 }

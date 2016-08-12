@@ -37,9 +37,8 @@ class UserController extends AdminController
         return parent::index();
     }
 
-    protected function edit($id)
+    protected function fieldForm()
     {
-
         $this->fields_form = [
             [
                 'title' => 'Edit user',
@@ -74,6 +73,14 @@ class UserController extends AdminController
                         'title' => 'Password',
 
                     ],
+                    [
+                        'name' => 'password_confirmation',
+                        'type' => 'password',
+                        'class' => '',
+                        'col' => '3',
+                        'title' => 'Password confirm',
+
+                    ],
                     // date picker
                     [
                         'name' => 'active',
@@ -100,13 +107,35 @@ class UserController extends AdminController
                         'name' => 'saveAndStay',
                         'title' => 'Save and stay',
                         'type' => 'submit',
-                        'class'=>'btn-warning'
+                        'class' => 'btn-warning'
                     ]
 
                 ],
 
             ],
         ];
-        return parent::edit($id);
+    }
+
+    protected function beforeAdd()
+    {
+        $email = $this->request->input('email');
+        if($email)
+            if(User::getByEmail($email))
+                $this->errors[] = 'This email is already is exists';
+    }
+
+    protected function beforeUpdate($id)
+    {
+        $email = $this->request->input('email');
+        if($email)
+        {
+            $new_id = User::getByEmail($email,true);
+            {
+                if($new_id !=$id)
+                    $this->errors[] = 'This email is already used';
+            }
+        }
+
+
     }
 }

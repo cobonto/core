@@ -22,7 +22,7 @@ class TestController extends AdminController
         return parent::index();
     }
 
-    protected function edit($id)
+    protected function fieldForm()
     {
 
         $this->fields_form = [
@@ -51,6 +51,21 @@ class TestController extends AdminController
                         //  'prefix' => '00.0',
 
                     ],
+                    // date picker
+                    [
+                        'name' => 'active',
+                        'type' => 'switch',
+                        'class' => '',
+                        'col' => '6',
+                        'title' => 'Status',
+                        'default_value' => 1,
+                        'jqueryOptions' => [
+                            'onColor' => 'success',
+                            'offColor' => 'danger',
+                            'onText' => 'Yes',
+                            'offText' => 'No',
+                        ]
+                    ],
                 ],
                 'submit' => [
                     [
@@ -66,6 +81,5 @@ class TestController extends AdminController
                 ]
             ],
         ];
-        return parent::edit($id);
     }
 }

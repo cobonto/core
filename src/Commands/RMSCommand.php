@@ -27,7 +27,7 @@ class RMSCommand extends BaseCommand
     {
         $sp = DIRECTORY_SEPARATOR;
         $this->files = $file;
-        $this->package_path = base_path('vendor'.$sp.'spyp'.$sp.'rmscms'.$sp.'src'.$sp.'copy'.$sp);
+        $this->package_path = base_path('vendor'.$sp.'rmscms'.$sp.'core'.$sp.'src'.$sp.'copy'.$sp);
         parent::__construct();
     }
 

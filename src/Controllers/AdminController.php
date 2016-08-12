@@ -246,10 +246,30 @@ abstract class AdminController extends Controller
         }
         return $this->view();
     }
+    protected function create()
+    {
+        $this->fieldForm();
+        $this->loadObject();
+        // add some variable for view
+        if ($this->tpl == false)
+            $this->tpl = $this->tpl_form;
+        $this->generateForm();
+        app('assign')->view([
+            'id' => 0,
+            'form_url' => route($this->route_name . 'store'),
+            'object' => $this->model ?: null,
+            'route_list' => route($this->route_name . 'index'),
+        ]);
+        return $this->view();
+    }
+    protected function fieldForm()
+    {
 
+    }
     // edit method
     protected function edit($id)
     {
+        $this->fieldForm();
         $this->loadObject($id, true);
         // add some variable for view
         if ($this->tpl == false)
@@ -277,55 +297,53 @@ abstract class AdminController extends Controller
     // create
     protected function add()
     {
-        $this->copyFromPost();
-        if (!$this->model->validate()) {
-            $this->errors = $this->model->errors()->all();
-            return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
-        } else {
-            $this->beforeCreate();
-            if (count($this->errors))
-                return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
-            // else save
-            else {
-                if ($this->save())
-                    return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->with('msg', 'successfully created');
-                else
-                    $this->errors = $this->model->errors();
-                return $this->edit($this->model->id);
+        $this->calcPost();
+        $this->loadObject();
+        if (is_object($this->model)) {
+            $this->beforeAdd();
+            if (!count($this->errors)) {
+                if (!$this->model->save()) {
+                    $this->errors = $this->model->errors()->all();
+                    return redirect(route($this->route_name . 'create'))->withErrors($this->errors);
+                } else {
+                    // call beforeCrate()
+                    $this->afterAdd($this->model->id);
+                    if (count($this->errors))
+                        return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
+                    else
+                        return $this->redirect('Successfully Added');
+                }
             }
         }
+        else
+            $this->errors[] = 'Problem in load object';
+        return redirect(route($this->route_name . 'create'))->withErrors($this->errors);
     }
 
     //update
     protected function update($id)
     {
+        $this->calcPost();
         $this->loadObject($id, true);
         if (is_object($this->model)) {
+            $this->beforeUpdate($id);
             if (!count($this->errors)) {
                 if (!$this->model->save()) {
                     $this->errors = $this->model->errors()->all();
                     return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
                 } else {
                     // call beforeCrate()
-                    $this->beforeUpdate();
+                    $this->afterUpdate($id);
                     if (count($this->errors))
                         return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
-                    // else save
-                    else {
-                        if ($this->model->save()) {
-                            return $this->redirect('Successfully updated');
-                        } else {
-                            $this->errors = $this->model->errors();
-                        }
-
-
+                   else
+                       return $this->redirect('Successfully updated');
                     }
                 }
             }
-
-        } else
+        else
             $this->errors[] = 'Problem in load object';
-        return $this->edit($id);
+        return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
     }
     /**
      * destroy object
@@ -368,16 +386,22 @@ abstract class AdminController extends Controller
 
     }
 
-    protected function beforeCreate()
+    protected function beforeAdd()
     {
 
     }
-
-    protected function beforeUpdate()
+    protected function afterAdd($id)
     {
 
     }
+    protected function beforeUpdate($id)
+    {
 
+    }
+    protected function afterUpdate($id)
+    {
+
+    }
     protected function redirect($msg)
     {
         if (isset($_POST['saveAndStay']))
