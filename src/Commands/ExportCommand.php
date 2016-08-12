@@ -6,7 +6,7 @@
  * Time: 2:29 AM
  */
 
-namespace RmsCms\Commands;
+namespace Cobonto\Commands;
 
 
 class ExportCommand extends RMSCommand

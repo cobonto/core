@@ -1,6 +1,6 @@
 <?php
 
-namespace RmsCms\Classes;
+namespace Cobonto\Classes;
 
 use Illuminate\Support\Facades\DB;
 use LaravelArdent\Ardent\Ardent;

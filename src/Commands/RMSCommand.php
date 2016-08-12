@@ -6,7 +6,7 @@
  * Time: 2:26 AM
  */
 
-namespace RmsCms\Commands;
+namespace Cobonto\Commands;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Database\Console\Migrations\BaseCommand;
 

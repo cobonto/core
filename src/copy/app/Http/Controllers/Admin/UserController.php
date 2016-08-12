@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\User;
 use Illuminate\Support\Facades\Input;
-use RmsCms\Controllers\AdminController;
+use Cobonto\Controllers\AdminController;
 
 
 class UserController extends AdminController

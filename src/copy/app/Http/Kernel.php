@@ -35,7 +35,7 @@ class Kernel extends HttpKernel
             'throttle:60,1',
         ],
         'admin'=>[
-            \RmsCms\Middleware\AdminAuthenticate::class
+            \Cobonto\Middleware\AdminAuthenticate::class
         ]
     ];
 
@@ -51,7 +51,7 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'guest.admin' =>  \RmsCms\Middleware\RedirectIfAuthenticatedAdmin::class,
+        'guest.admin' =>  \Cobonto\Middleware\RedirectIfAuthenticatedAdmin::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];
 }

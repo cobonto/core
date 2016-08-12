@@ -6,7 +6,7 @@
  * Time: 7:40 PM
  */
 
-namespace RmsCms\Controllers;
+namespace Cobonto\Controllers;
 
 
 use App\Http\Controllers\Controller;
@@ -16,8 +16,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use LaravelArdent\Ardent\Ardent;
 use Module\Classes\Hook;
-use RmsCms\Classes\Traits\HelperForm;
-use RmsCms\Classes\Traits\HelperList;
+use Cobonto\Classes\Traits\HelperForm;
+use Cobonto\Classes\Traits\HelperList;
 
 abstract class AdminController extends Controller
 {

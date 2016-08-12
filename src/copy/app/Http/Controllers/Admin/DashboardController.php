@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Module\Classes\Hook;
-use RmsCms\Controllers\AdminController;
+use Cobonto\Controllers\AdminController;
 
 class DashboardController extends AdminController
 {

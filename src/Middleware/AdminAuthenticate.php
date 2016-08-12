@@ -6,7 +6,7 @@
  * Time: 3:13 AM
  */
 
-namespace RmsCms\Middleware;
+namespace Cobonto\Middleware;
 
 use Closure;
 class AdminAuthenticate

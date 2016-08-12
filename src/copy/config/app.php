@@ -160,7 +160,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Module\ModuleServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        \RmsCms\CmsServiceProvider::class,
+        \Cobonto\CmsServiceProvider::class,
         \Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         \Yajra\Datatables\DatatablesServiceProvider::class,
 

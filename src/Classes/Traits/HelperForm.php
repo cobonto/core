@@ -6,7 +6,7 @@
  * Time: 7:32 PM
  */
 
-namespace RmsCms\Classes\Traits;
+namespace Cobonto\Classes\Traits;
 
 
 use Illuminate\Support\Facades\Input;

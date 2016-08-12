@@ -1,6 +1,6 @@
 <?php
 
-namespace RmsCms\Classes\Traits;
+namespace Cobonto\Classes\Traits;
 
 use Yajra\Datatables\Html\Builder;
 use Yajra\Datatables\Datatables;

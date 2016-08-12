@@ -6,7 +6,7 @@
  * Time: 3:06 AM
  */
 
-namespace RmsCms\Commands;
+namespace Cobonto\Commands;
 
 
 use Illuminate\Support\Str;
@@ -25,7 +25,7 @@ class ModelCommand extends ModuleCommand
     }
     protected function getDefaultNamespace($Class)
     {
-        return 'RmsCms\\Classes';
+        return 'Cobonto\\Classes';
     }
     /**
      * The type of class being generated.

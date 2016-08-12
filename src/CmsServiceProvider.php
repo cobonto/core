@@ -6,17 +6,17 @@
  * Time: 1:58 AM
  */
 
-namespace RmsCms;
+namespace Cobonto;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Engines\CompilerEngine;
 use Illuminate\View\Engines\EngineResolver;
-use RmsCms\Classes\Assign;
-use RmsCms\Classes\CmsBladeCompiler;
-use RmsCms\Classes\Settings;
-use RmsCms\Commands\ExportCommand;
-use RmsCms\Commands\ImportCommand;
-use RmsCms\Commands\ModelCommand;
+use Cobonto\Classes\Assign;
+use Cobonto\Classes\CmsBladeCompiler;
+use Cobonto\Classes\Settings;
+use Cobonto\Commands\ExportCommand;
+use Cobonto\Commands\ImportCommand;
+use Cobonto\Commands\ModelCommand;
 
 class CmsServiceProvider extends ServiceProvider
 {

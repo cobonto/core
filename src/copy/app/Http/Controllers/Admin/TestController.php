@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use RmsCms\Controllers\AdminController;
+use Cobonto\Controllers\AdminController;
 
 class TestController extends AdminController
 {

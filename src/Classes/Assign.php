@@ -6,13 +6,13 @@
  * Time: 9:39 PM
  */
 
-namespace RmsCms\Classes;
+namespace Cobonto\Classes;
 
 use Illuminate\Filesystem\Filesystem;
 
 /**
  * Class Assign responsible for store and pass data to view files
- * @package RmsCms\Classes
+ * @package Cobonto\Classes
  */
 class Assign
 {

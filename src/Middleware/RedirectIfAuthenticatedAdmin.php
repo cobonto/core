@@ -1,6 +1,6 @@
 <?php
 
-namespace RmsCms\Middleware;
+namespace Cobonto\Middleware;
 
 use Closure;
 
