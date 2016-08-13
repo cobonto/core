@@ -33,8 +33,8 @@
     <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
 
-        {!! Form::open(array('url' => url('admin/login'))) !!}
-            {!! Form::token() !!}
+        <form class="form-horizontal" method="POST" action="{{ url('admin/login') }}">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
                 <input type="email" class="form-control" placeholder="Email" name="email">
                 @if ($errors->has('email'))
@@ -65,7 +65,7 @@
                 </div>
                 <!-- /.col -->
             </div>
-        {!! Form::close() !!}
+       </form>
         <!-- /.social-auth-links -->
 
         <a href="{{ url('admin/password/reset') }}">I forgot my password</a><br>

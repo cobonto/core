@@ -27,7 +27,7 @@ class CmsServiceProvider extends ServiceProvider
         });
         $this->registerCommands();
         $this->registerSettings();
-        $this->registerCompiler();
+     //   $this->registerCompiler();
     }
     public function boot()
     {
