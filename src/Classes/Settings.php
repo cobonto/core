@@ -8,14 +8,13 @@ use LaravelArdent\Ardent\Ardent;
 class Settings extends Ardent
 {
     protected  $data=[];
-    protected $table = 'configs';
+    protected $table = 'settings';
     //protected $fillable = ['group_id', 'name', 'value'];
     public static $rules = array(
-        'id'                    => 'numeric',
-        'name'                  => 'required|string|unique:configs,name',
+        'name'                  => 'required|string|unique:settings,name',
         'value'                 => 'required',
     );
-
+    protected $fillable = ['name','value'];
     /**
      * Settings constructor.
      * @param array $attributes
@@ -60,6 +59,10 @@ class Settings extends Ardent
             return true;
         }
         return false;
+    }
+    public function deleteByName($name)
+    {
+        return \DB::table($this->table)->where('name',$name)->delete();
     }
 
 }

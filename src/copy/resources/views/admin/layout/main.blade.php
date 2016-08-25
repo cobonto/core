@@ -4,15 +4,19 @@
 @include('admin.layout.header')
         <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            {{ $title }}
-        </h1>
-        <ol class="breadcrumb">
-            @include('admin.layout.breadcrumb')
-        </ol>
-    </section>
+    <!-- Content Header maybe yeild  -->
+    @hasSection ('header')
+        @yield('header')
+    @else
+        <section class="content-header">
+            <h1>
+                {{ $title }}
+            </h1>
+            <ol class="breadcrumb">
+                @include('admin.layout.breadcrumb')
+            </ol>
+        </section>
+    @endif
     <section class="content">
         @include('admin.layout.messages')
         @yield('content')

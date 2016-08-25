@@ -60,9 +60,15 @@ class User extends Ardent implements
     public static function getByEmail($email,$returId=false)
     {
        $result = \DB::table('users')->where('email',$email)->first();
-        if($returId)
-            return (int)$result->id;
+        if($result)
+        {
+            if($returId)
+                return (int)$result->id;
+            else
+                return true;
+        }
         else
-            return (bool)$result->id;
+        return false;
+
     }
 }

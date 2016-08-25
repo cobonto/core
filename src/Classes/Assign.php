@@ -101,7 +101,7 @@ class Assign
      * @param $key
      * @param null|string $value
      */
-    public function view($key, $value = null)
+    public function params($key, $value = null)
     {
         if ($value == null)
         {

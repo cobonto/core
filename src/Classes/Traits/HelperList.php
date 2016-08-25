@@ -11,6 +11,8 @@ trait HelperList
     protected $fields_list = [];
     /** @var bool $autoIncrement check if list has autoincrement */
     protected $autoIncrement = true;
+    /** @var $create */
+    protected $create = true;
     /** @var array $actions */
     protected $actions = [
         'edit' => ['name' => 'Edit'],
@@ -52,13 +54,14 @@ trait HelperList
                 $options['data'] = $options['name'] = $field;
                 $this->listBuilder->addColumn($options);
             }
-            app('assign')->addCSS('plugins/datatables/dataTables.bootstrap.css');
-            app('assign')->addJS([
+            $this->assign->addCSS(['plugins/datatables/dataTables.bootstrap.css',
+                                 'css/list.css']);
+            $this->assign->addJS([
                 'plugins/datatables/jquery.dataTables.min.js',
                 'plugins/datatables/dataTables.bootstrap.min.js',
                 'js/list.js',
             ]);
-            app('assign')->addPlugin('confirm');
+            $this->assign->addPlugin('confirm');
         }
         if (count($this->actions)) {
             // set session and retrieve later
@@ -73,7 +76,11 @@ trait HelperList
         // add extra methods to listHtmlBuilder
         $this->setParametersDataTable();
         // add assign
-        app('assign')->view('HtmlList', $this->listBuilder);
+        $this->assign->params([
+            'HtmlList'=> $this->listBuilder,
+            'create'=>$this->create,
+            'route_name' => $this->route_name,
+        ]);
     }
 
     protected function listQuery()

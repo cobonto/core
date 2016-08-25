@@ -31,6 +31,9 @@ class CmsServiceProvider extends ServiceProvider
     }
     public function boot()
     {
+        if (! $this->app->routesAreCached()) {
+            require __DIR__.'/../routes.php';
+        }
         $this->publishes([
             __DIR__.'/copy/config'=>base_path('config'),
             __DIR__.'/copy/resources/views'=>resource_path('views'),

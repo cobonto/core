@@ -7,13 +7,10 @@
  */
 
 namespace Cobonto\Controllers;
-
-
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Request;
 use App\User;
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\MessageBag;
 use LaravelArdent\Ardent\Ardent;
 use Module\Classes\Hook;
 use Cobonto\Classes\Traits\HelperForm;
@@ -82,10 +79,16 @@ abstract class AdminController extends Controller
      */
     protected $info = [];
 
-    public function __construct(Request $request)
+    /**
+     * @param \Cobonto\Classes\Assign $assign
+     */
+    protected $assign;
+
+    public function __construct(\Illuminate\Http\Request $request)
     {
         $this->request = $request;
         $this->app = \App::getInstance();
+        $this->assign = app('assign');
         $this->setProperties();
         $this->route_name = 'admin.' . $this->route_name . '.';
         //run some method before routing
@@ -117,14 +120,14 @@ abstract class AdminController extends Controller
     protected function setMedia()
     {
         // css
-        app('assign')->addCSS([
+        $this->assign->addCSS([
             'css/bootstrap.min.css',
             'css/font-awesome/css/font-awesome.min.css',
             'css/ionicons/css/ionicons.min.css',
             'css/skins/_all-skins.min.css',
         ]);
         // js
-        app('assign')->addJS([
+        $this->assign->addJS([
             'plugins/jQuery/jQuery-2.2.0.min.js',
             'plugins/jQueryUI/jquery-ui.min.js',
             'js/bootstrap.min.js',
@@ -132,7 +135,7 @@ abstract class AdminController extends Controller
 
         ]);
         // javascript
-        app('assign')->addPlugin('morris');
+        $this->assign->addPlugin('morris');
     }
 
     /**
@@ -163,26 +166,26 @@ abstract class AdminController extends Controller
     {
         // after process
         $this->afterProcess(\Route::getCurrentRoute()->getActionName());
-        app('assign')->view([
+        $this->assign->params([
             'HOOK_HEADER' => Hook::execute('displayAdminHeader'),
             'HOOK_FOOTER' => Hook::execute('displayAdminFooter'),
             'HOOK_NAV' => Hook::execute('displayAdminNav')
         ]);
         // assign general hooks
         // to override all plugins and buttons
-        app('assign')->addCSS(
+        $this->assign->addCSS(
             [
                 'css/AdminLTE.css',
             ]);
-        app('assign')->view([
-            'css' => app('assign')->getCSS(),
-            'javascript_files' => app('assign')->getJS(),
-            'javascript_vars' => app('assign')->getJSVars(),
+        $this->assign->params([
+            'css' => $this->assign->getCSS(),
+            'javascript_files' => $this->assign->getJS(),
+            'javascript_vars' => $this->assign->getJSVars(),
             'title' => $this->title,
         ]);
         $this->loadMsgs();
         // analyze tpl name and render view
-        return view($this->renderTplName(), app('assign')->getViewData());
+        return view($this->renderTplName(), $this->assign->getViewData());
     }
 
     /**
@@ -212,17 +215,21 @@ abstract class AdminController extends Controller
             return true;
         if (!$this->model_name)
             return false;
-        else {
+        else
+        {
             $model = $this->prefix_model . $this->model_name;
-            if (class_exists($model)) {
+            if (class_exists($model))
+            {
                 if (!$id && $force)
                     return false;
-                elseif ($id) {
+                elseif ($id)
+                {
                     if ($force)
                         $this->model = $model::findOrFail($id);
                     else
                         $this->model = $model::find($id);
-                } elseif (!$id && !$force)
+                }
+                elseif (!$id && !$force)
                     $this->model = new $model;
 
             }
@@ -234,7 +241,8 @@ abstract class AdminController extends Controller
     // index method
     protected function index()
     {
-        if (count($this->fields_list)) {
+        if (count($this->fields_list))
+        {
             // render view file
             if ($this->tpl == false)
                 $this->tpl = $this->tpl_list;
@@ -246,6 +254,7 @@ abstract class AdminController extends Controller
         }
         return $this->view();
     }
+
     protected function create()
     {
         $this->fieldForm();
@@ -254,7 +263,7 @@ abstract class AdminController extends Controller
         if ($this->tpl == false)
             $this->tpl = $this->tpl_form;
         $this->generateForm();
-        app('assign')->view([
+        $this->assign->params([
             'id' => 0,
             'form_url' => route($this->route_name . 'store'),
             'object' => $this->model ?: null,
@@ -262,10 +271,12 @@ abstract class AdminController extends Controller
         ]);
         return $this->view();
     }
+
     protected function fieldForm()
     {
 
     }
+
     // edit method
     protected function edit($id)
     {
@@ -275,7 +286,7 @@ abstract class AdminController extends Controller
         if ($this->tpl == false)
             $this->tpl = $this->tpl_form;
         $this->generateForm();
-        app('assign')->view([
+        $this->assign->params([
             'id' => $id,
             'form_url' => route($this->route_name . 'store', ['id' => $id]),
             'object' => $this->model ?: null,
@@ -299,13 +310,18 @@ abstract class AdminController extends Controller
     {
         $this->calcPost();
         $this->loadObject();
-        if (is_object($this->model)) {
+        if (is_object($this->model))
+        {
             $this->beforeAdd();
-            if (!count($this->errors)) {
-                if (!$this->model->save()) {
+            if (!count($this->errors))
+            {
+                if (!$this->model->save())
+                {
                     $this->errors = $this->model->errors()->all();
                     return redirect(route($this->route_name . 'create'))->withErrors($this->errors);
-                } else {
+                }
+                else
+                {
                     // call beforeCrate()
                     $this->afterAdd($this->model->id);
                     if (count($this->errors))
@@ -325,42 +341,48 @@ abstract class AdminController extends Controller
     {
         $this->calcPost();
         $this->loadObject($id, true);
-        if (is_object($this->model)) {
+        if (is_object($this->model))
+        {
             $this->beforeUpdate($id);
-            if (!count($this->errors)) {
-                if (!$this->model->save()) {
+            if (!count($this->errors))
+            {
+                if (!$this->model->save())
+                {
                     $this->errors = $this->model->errors()->all();
                     return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
-                } else {
+                }
+                else
+                {
                     // call beforeCrate()
                     $this->afterUpdate($id);
                     if (count($this->errors))
                         return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
-                   else
-                       return $this->redirect('Successfully updated');
-                    }
+                    else
+                        return $this->redirect('Successfully updated');
                 }
             }
+        }
         else
             $this->errors[] = 'Problem in load object';
         return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
     }
+
     /**
      * destroy object
      * @param int $id
      */
     protected function destroy($id)
     {
-        if(!$this->loadObject($id,true))
+        if (!$this->loadObject($id, true))
             $this->errors[] = 'Problem in load object';
         else
         {
-            $this->beforeDelete($this->model,$id);
-            if(!count($this->errors))
+            $this->beforeDelete($this->model, $id);
+            if (!count($this->errors))
             {
-                if($this->model->delete())
+                if ($this->model->delete())
                 {
-                    $this->afterDelete($this->model,$id);
+                    $this->afterDelete($this->model, $id);
 
                 }
                 else
@@ -370,13 +392,13 @@ abstract class AdminController extends Controller
             }
 
         }
-        if(count($this->errors))
+        if (count($this->errors))
             return redirect(route($this->route_name . 'index'))->withErrors($this->errors);
         else
             return $this->redirect('SuccessFully Deleted');
     }
 
-    protected function beforeDelete($object,$id)
+    protected function beforeDelete($object, $id)
     {
 
     }
@@ -390,18 +412,22 @@ abstract class AdminController extends Controller
     {
 
     }
+
     protected function afterAdd($id)
     {
 
     }
+
     protected function beforeUpdate($id)
     {
 
     }
+
     protected function afterUpdate($id)
     {
 
     }
+
     protected function redirect($msg)
     {
         if (isset($_POST['saveAndStay']))
@@ -416,7 +442,7 @@ abstract class AdminController extends Controller
     protected function loadMsgs()
     {
         if (count($this->errors))
-            \Session::flash('errors', $this->errors);
+            \Session::flash('errors',new MessageBag($this->errors));
         if (count($this->warning))
             \Session::flash('warning', $this->warning);
         if (count($this->warning))

@@ -24,10 +24,11 @@ class AdminAuthenticate
         {
             if(!\Auth::user()->is_admin)
             {
+
                 if ($request->ajax() || $request->wantsJson()) {
                     return response('Unauthorized.', 401);
                 } else {
-                    return redirect()->guest('login');
+                    return redirect()->guest('admin/login');
                 }
             }
         }

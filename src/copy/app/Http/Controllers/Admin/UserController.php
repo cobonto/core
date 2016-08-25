@@ -121,7 +121,7 @@ class UserController extends AdminController
         $email = $this->request->input('email');
         if($email)
             if(User::getByEmail($email))
-                $this->errors[] = 'This email is already is exists';
+                $this->errors[] = 'This email is already used';
     }
 
     protected function beforeUpdate($id)
@@ -130,12 +130,17 @@ class UserController extends AdminController
         if($email)
         {
             $new_id = User::getByEmail($email,true);
+            if($new_id)
             {
                 if($new_id !=$id)
                     $this->errors[] = 'This email is already used';
             }
         }
 
-
+    }
+    protected function listQuery()
+    {
+        parent::listQuery();
+      return  $this->sql->where('is_admin',0);
     }
 }

@@ -9,8 +9,6 @@
 namespace Cobonto\Classes\Traits;
 
 
-use Illuminate\Support\Facades\Input;
-
 trait HelperForm
 {
     /** @var  array $fields form */
@@ -33,6 +31,10 @@ trait HelperForm
      */
     protected function generateForm()
     {
+        // check fields_value for edit it
+        $dataFormDb = true;
+        if(count($this->fields_values))
+            $dataFormDb = false;
         if (count($this->fields_form))
         {
             // add plugins
@@ -41,16 +43,20 @@ trait HelperForm
                 foreach ($form['input'] as &$field)
                 {
                     // add field values
-                    if(is_object($this->model) && $this->model->id)
+                    if($dataFormDb)
                     {
-                        $this->fields_values[$field['name']]=$this->model->{$field['name']};
+                        if(is_object($this->model) && $this->model->id)
+                        {
+                            $this->fields_values[$field['name']]=$this->model->{$field['name']};
+                        }
+                        else
+                        {
+                            $this->fields_values[$field['name']] = (isset($field['default_value'])?:null);
+                        }
                     }
-                    else
-                    {
-                        $this->fields_values[$field['name']] = (isset($field['default_value'])?:null);
-                    }
+
                     if (in_array($field['type'], $this->available_plugins))
-                        app('assign')->addPlugin($field['type']);
+                        $this->assign->addPlugin($field['type']);
                     if ($field['type'] == 'selecttwo')
                     {
                         $id = (isset($field['id']) ? $field['id'] : $field['name']);
@@ -59,11 +65,11 @@ trait HelperForm
                     }
                     elseif ($field['type'] == 'inputmask')
                     {
-                        app('assign')->addJS('plugins/inputmask/jquery.inputmask.js');
+                        $this->assign->addJS('plugins/inputmask/jquery.inputmask.js');
                         // check has extenstions
                         if (isset($field['extensions']))
                         {
-                            app('assign')->addJS([
+                            $this->assign->addJS([
                                 'plugins/inputmask/jquery.inputmask.' . $field['extensions'] . '.extensions.js',
                                 'plugins/inputmask/jquery.inputmask.extensions.js',
                             ]);
@@ -89,12 +95,12 @@ trait HelperForm
                     }
                     elseif ($field['type'] == 'textarea' && isset($field['class']) && $field['class'] == 'ckeditor')
                     {
-                        app('assign')->addJS('plugins/ckeditor/ckeditor.js');
+                        $this->assign->addJS('plugins/ckeditor/ckeditor.js');
 
                     }
                     elseif ($field['type'] == 'switch')
                     {
-                        app('assign')->addPlugin('bootstrap-switch');
+                        $this->assign->addPlugin('bootstrap-switch');
                         $id = (isset($field['id']) ? $field['id'] : $field['name']);
                         $field['javascript'] = '$("#' . $id . '").bootstrapSwitch({';
                         $this->addJqueryOptions($field);
@@ -102,7 +108,7 @@ trait HelperForm
                 }
                 // add id to field_value
             }
-            app('assign')->view([
+            $this->assign->params([
                 'forms'=>$this->fields_form,
                 'values'=>$this->fields_values,
             ]);
@@ -125,18 +131,25 @@ trait HelperForm
         $field['javascript'] .= '});';
     }
     // do something before update or add
-    protected function calcPost()
+    protected function calcPost($request=false)
     {
+        if(property_exists($this,'request'))
+            $request = $this->request;
         // switchers
         if(is_array($this->switchers) && count($this->switchers))
         {
             foreach($this->switchers as $switch)
             {
-                if(!$this->request->has($switch))
-                    $this->request->merge([$switch=>0]);
+                if(!$request->has($switch))
+                    $request->merge([$switch=>0]);
                 else
-                    $this->request->merge([$switch=>1]);
+                    $request->merge([$switch=>1]);
             }
         }
+        // check for return request or add to property
+        if(property_exists($this,'request'))
+            $this->request = $request;
+        else
+            return $request;
     }
 }

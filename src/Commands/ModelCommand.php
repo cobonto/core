@@ -75,7 +75,7 @@ class ModelCommand extends ModuleCommand
      */
     protected function getPath($name)
     {
-        $path = base_path('vendor/cobonto/src/Classes');
+        $path = base_path('vendor/cobonto/core/src/Classes');
         return $path.'/'.str_replace('\\', '/', $name).'.php';
     }
 
