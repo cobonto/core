@@ -42,7 +42,7 @@ abstract class AdminController extends Controller
      */
     protected $request;
     /**
-     * @var \App $request
+     * @var \App::getInstance()
      */
     protected $app;
     /**
@@ -84,6 +84,10 @@ abstract class AdminController extends Controller
      */
     protected $assign;
 
+    /**
+     * @var string $translationPrefixFile
+     */
+    protected $translationPrefixFile ='admin';
     public function __construct(\Illuminate\Http\Request $request)
     {
         $this->request = $request;
@@ -169,7 +173,9 @@ abstract class AdminController extends Controller
         $this->assign->params([
             'HOOK_HEADER' => Hook::execute('displayAdminHeader'),
             'HOOK_FOOTER' => Hook::execute('displayAdminFooter'),
-            'HOOK_NAV' => Hook::execute('displayAdminNav')
+            'HOOK_NAV' => Hook::execute('displayAdminNav'),
+            'HOOK_SIDEBAR_TOP'=>Hook::execute('displayAdminSideBarTop'),
+            'HOOK_SIDEBAR'=>Hook::execute('displayAdminSideBar'),
         ]);
         // assign general hooks
         // to override all plugins and buttons
@@ -180,12 +186,17 @@ abstract class AdminController extends Controller
         $this->assign->params([
             'css' => $this->assign->getCSS(),
             'javascript_files' => $this->assign->getJS(),
-            'javascript_vars' => $this->assign->getJSVars(),
             'title' => $this->title,
         ]);
+        $tpl = $this->renderTplName();
         $this->loadMsgs();
+        // add javascript vars to front
+        $this->assign->addJSVars([
+            '_token'=>csrf_token(),
+        ]);
+        \JavaScript::put($this->assign->getJSVars());
         // analyze tpl name and render view
-        return view($this->renderTplName(), $this->assign->getViewData());
+        return view($tpl,$this->assign->getViewData());
     }
 
     /**
@@ -327,12 +338,12 @@ abstract class AdminController extends Controller
                     if (count($this->errors))
                         return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
                     else
-                        return $this->redirect('Successfully Added');
+                        return $this->redirect($this->lang('add_success'));
                 }
             }
         }
         else
-            $this->errors[] = 'Problem in load object';
+            $this->errors[] = $this->lang('object_not_loaded') ;
         return redirect(route($this->route_name . 'create'))->withErrors($this->errors);
     }
 
@@ -358,12 +369,12 @@ abstract class AdminController extends Controller
                     if (count($this->errors))
                         return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
                     else
-                        return $this->redirect('Successfully updated');
+                        return $this->redirect($this->lang('add_success'));
                 }
             }
         }
         else
-            $this->errors[] = 'Problem in load object';
+            $this->errors[] = $this->lang('object_not_loaded');
         return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
     }
 
@@ -374,7 +385,7 @@ abstract class AdminController extends Controller
     protected function destroy($id)
     {
         if (!$this->loadObject($id, true))
-            $this->errors[] = 'Problem in load object';
+            $this->errors[] = $this->lang('object_not_loaded');
         else
         {
             $this->beforeDelete($this->model, $id);
@@ -387,7 +398,7 @@ abstract class AdminController extends Controller
                 }
                 else
                 {
-                    $this->errors[] = 'Problem in delete object';
+                    $this->errors[] = $this->lang('object_not_deleted');
                 }
             }
 
@@ -395,7 +406,7 @@ abstract class AdminController extends Controller
         if (count($this->errors))
             return redirect(route($this->route_name . 'index'))->withErrors($this->errors);
         else
-            return $this->redirect('SuccessFully Deleted');
+            return $this->redirect($this->lang('delete_success'));
     }
 
     protected function beforeDelete($object, $id)
@@ -445,8 +456,27 @@ abstract class AdminController extends Controller
             \Session::flash('errors',new MessageBag($this->errors));
         if (count($this->warning))
             \Session::flash('warning', $this->warning);
-        if (count($this->warning))
+        if (count($this->info))
             \Session::flash('info', $this->info);
+    }
+
+    /**
+     * get translated file
+     * @param $string
+     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     */
+    public function lang($string)
+    {
+        return trans($this->translationPrefixFile.'.'.$string);
+    }
+    /**
+     * get translated file
+     * @param $string
+     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     */
+    public function l($string)
+    {
+        return $this->lang($string);
     }
 
 }

@@ -27,6 +27,7 @@ class CmsServiceProvider extends ServiceProvider
         });
         $this->registerCommands();
         $this->registerSettings();
+        $this->registerHelpers();
      //   $this->registerCompiler();
     }
     public function boot()
@@ -37,6 +38,7 @@ class CmsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/copy/config'=>base_path('config'),
             __DIR__.'/copy/resources/views'=>resource_path('views'),
+            __DIR__.'/copy/resources/lang'=>resource_path('lang'),
             __DIR__.'/copy/app'=>app_path(),
             __DIR__.'/copy/database'=>database_path(),
         ]);
@@ -102,5 +104,13 @@ class CmsServiceProvider extends ServiceProvider
         $resolver->register('blade', function () use ($app) {
             return new CompilerEngine($app['blade.compiler']);
         });
+    }
+    /** register helpers functions */
+    protected function registerHelpers()
+    {
+        // require all helpers files in Helper folder
+        foreach (glob(dirname(__FILE__).'/Helpers/*.php') as $filename){
+            require_once($filename);
+        }
     }
 }

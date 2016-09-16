@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-
-use App\Http\Requests\ZipUploadRequest;
+namespace Cobonto\Controllers\Admin;
 use Cobonto\Controllers\AdminController;
 
+use Cobonto\Requests\ZipUploadRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Module\Classes\Module;
@@ -252,6 +251,7 @@ class ModulesController extends AdminController
     public function reBuildList()
     {
         $this->clearCache();
+
         return $this->redirect($this->lang('refresh_successfully'));
     }
 
@@ -279,6 +279,9 @@ class ModulesController extends AdminController
     protected function clearCache()
     {
         \Cache::forget('modules');
+        \Cache::forget('moduleAdminRoutes');
+        \Cache::forget('moduleFrontRoutes');
+        app('cache')->flush();
     }
 
     protected function fillData($post = false)

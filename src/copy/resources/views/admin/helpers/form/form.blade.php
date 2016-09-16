@@ -6,7 +6,7 @@
             @foreach($forms as $form)
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">@if(isset($form['title'])) {{ $form['title'] }}@else Form @endif</h3>
+                        <h3 class="box-title">@if(isset($form['title'])) {{ $form['title'] }}@else {{ transTpl('form','helpers')}} @endif</h3>
                     </div>
                     <!-- /.box-header -->
                     <!-- form start -->
@@ -18,7 +18,7 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <a class="btn btn-default" href="{{ $route_list }}"><i class="fa fa-remove"></i> Cancel</a>
+                        <a class="btn btn-default" href="{{ $route_list }}"><i class="fa fa-remove"></i>{{ transTpl('cancel','helpers') }}</a>
                         @if(isset($form['buttons']))
                             @foreach($form['buttons'] as $button)
                                 <button type="{{$button['type']}}"

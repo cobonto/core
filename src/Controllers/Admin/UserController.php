@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace Cobonto\Controllers\Admin;
 
 use App\User;
 use Illuminate\Support\Facades\Input;

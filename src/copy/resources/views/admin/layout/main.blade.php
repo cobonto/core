@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{env('locale')}}">
 <!--header-->
 @include('admin.layout.header')
         <!-- Content Wrapper. Contains page content -->

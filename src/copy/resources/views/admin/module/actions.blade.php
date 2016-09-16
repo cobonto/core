@@ -42,5 +42,15 @@
                 </li>
             @endif
         @endif
+        <!-- remove module -->
+                <li>
+                    <a class="delete" href="">Delete</a>
+                    <form style="display:none" id="delete_{{ $module['author'] }}_{{ $module['name']}}" action="{{ route('admin.modules.destroy',['id'=>'null']) }}" method="POST">
+                        <input type="hidden" name="author" value="{{ strtolower(camel_case($module['author'])) }}" />
+                        <input type="hidden" name="name" value="{{ strtolower(camel_case($module['name'])) }}" />
+                        <input type="hidden" name="_method" value="DELETE">
+                        {!! csrf_field() !!}
+                    </form>
+                </li>
     </ul>
 </div>

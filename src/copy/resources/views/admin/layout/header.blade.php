@@ -17,20 +17,27 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 </head>
-<body class="hold-transition skin-green sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
     <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="{{ url('admin/dashboard') }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>A</b>LT</span>
+            <span class="logo-mini">{{ transTpl('admin_title_mini') }}</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Admin</b>LTE</span>
+            <span class="logo-lg">{{ transTpl('admin_title') }}</span>
         </a>
-        <!-- Header Navbar: style can be found in header.less -->
-        Ramtin, [20.07.16 20:38]
-        <div class="navbar-custom-menu">
-            {!! $HOOK_NAV !!}
-        </div>
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">{{ transTpl('toggle_nav','tpl') }}</span>
+            </a>
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    {!! $HOOK_NAV !!}
+                </ul>
+            </div>
+        </nav>
     </header>
 @include('admin.layout.sidebar')

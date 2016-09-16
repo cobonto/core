@@ -24,15 +24,17 @@ class ExportCommand extends RMSCommand
     {
         $sp = DIRECTORY_SEPARATOR;
         // we start to copy data from system to package name of folders
-        $folders = ['resources/views',
-            'app/Http/Controllers/Admin',
+        $folders = [
+            'resources/views',
+            'resources/lang',
             'database/migrations',
-            'database/seeds'];
+            'database/seeds'
+        ];
         $files = [
             'config/app.php',
             'app/Http/Kernel.php',
-            'app/Http/routes.php',
-            'app/User.php',
+            #'app/Http/routes.php',
+           # 'app/User.php',
         ];
         // change separtor
         $index=0;

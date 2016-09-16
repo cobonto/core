@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace Cobonto\Controllers\Admin;
 use App\Http\Requests;
 use Module\Classes\Hook;
 use Cobonto\Controllers\AdminController;

@@ -27,16 +27,16 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="../../index2.html">Welcome to <b>RMS</b></a>
+        <a href="">{{ transTpl('welcome_title','auth') }}</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg">{{ transTpl('sign_in_title','auth') }}</p>
 
         <form class="form-horizontal" method="POST" action="{{ url('admin/login') }}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
-                <input type="email" class="form-control" placeholder="Email" name="email">
+                <input type="email" class="form-control" placeholder="{{ transTpl('email','auth')}}" name="email">
                 @if ($errors->has('email'))
                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -44,7 +44,7 @@
                 @endif
             </div>
             <div class="form-group has-feedback {{ $errors->has('password') ? ' has-error' : '' }}">
-                <input type="password" class="form-control" placeholder="Password" name="password">
+                <input type="password" class="form-control" placeholder="{{ transTpl('password','auth')}}" name="password">
                 @if ($errors->has('password'))
                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -55,24 +55,25 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input name="remember" type="checkbox"> Remember Me
+                            <input name="remember" type="checkbox"> {{ transTpl('remember','auth') }}
                         </label>
                     </div>
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">{{ transTpl('sign_in_btn','auth') }}</button>
                 </div>
                 <!-- /.col -->
             </div>
        </form>
         <!-- /.social-auth-links -->
 
-        <a href="{{ url('admin/password/reset') }}">I forgot my password</a><br>
+        <a href="{{ url('admin/password/reset') }}">{{ transTpl('forget_passwd','auth') }}</a><br>
         <!--<a href="register.html" class="text-center">Register a new membership</a>-->
+        <!--<p class="login-box-msg">{{ transTpl('copy_right','auth') }}</p>-->
 
-    </div>
     <!-- /.login-box-body -->
+    <div class
 </div>
 <!-- /.login-box -->
 

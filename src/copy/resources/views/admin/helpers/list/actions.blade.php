@@ -1,5 +1,5 @@
 <div class="btn-group">
-    <button class="btn btn-info" type="button">Actions</button>
+    <button class="btn btn-info" type="button">{{ transTpl('actions','helpers') }}</button>
     <button data-toggle="dropdown" class="btn btn-info dropdown-toggle" type="button" aria-expanded="false">
         <span class="caret"></span>
     </button>

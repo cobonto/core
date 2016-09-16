@@ -1,6 +1,6 @@
 @if($errors->has() or session('success') or session('warning') or session('info'))
     <div class="callout callout-@if($errors->has())danger @elseif(session('success'))success @elseif(session('warning'))warning @elseif(session('info'))info @endif">
-        <h4>@if($errors->has())You have Error(s): @elseif(session('success'))Success! @elseif(session('warning'))Note!@elseif(session('info'))Information!@endif</h4>
+        <h4>@if($errors->has()){{ transTpl('have_errors','helpers') }} @elseif(session('success'))Success! @elseif(session('warning')){{transTpl('note','helpers')}}}@elseif(session('info')){{ transTpl('info','helpers') }}}@endif</h4>
         @if($errors->has())
             @foreach($errors->all() as $error)
                 <p>{!!  $error !!}</p>

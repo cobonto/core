@@ -33,6 +33,8 @@ Route::group(
     Route::get('modules/disable/{author}/{name}', 'ModulesController@disable')->name('admin.modules.disable');;
     Route::get('modules/configure/{author}/{name}', 'ModulesController@configuration')->name('admin.modules.configure');;
     Route::post('modules/save/{author}/{name}', 'ModulesController@save')->name('admin.modules.save');;
+    Route::post('modules/uploadModule', 'ModulesController@uploadModule')->name('admin.modules.uploadModule');;
+    Route::get('modules/rebuild', 'ModulesController@rebuildList')->name('admin.modules.rebuildList');;
     Route::resources([
         'dashboard'=>'DashboardController',
         'users'=>'UserController',

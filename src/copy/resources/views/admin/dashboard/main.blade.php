@@ -2,7 +2,6 @@
 @section('content')
         <!-- display hook top of dashboard -->
     <div class="row">
-
         {!! $HOOK_DASHBOARD_TOP !!}
     </div>
     <!--hook right and left -->

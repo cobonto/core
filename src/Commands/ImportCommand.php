@@ -28,15 +28,16 @@ class ImportCommand extends RMSCommand
         // we start to copy data from system to package name of folders
         $folders = [
             'resources/views',
-            'app/Http/Controllers/Admin',
+            'resources/lang',
+           # 'app/Http/Controllers/Admin',
             'database/migrations',
             'database/seeds',
         ];
         $files = [
             'config/app.php',
             'app/Http/Kernel.php',
-            'app/Http/routes.php',
-            'app/User.php',
+            #'app/Http/routes.php',
+            #'app/User.php',
         ];
         $file_changes = [];
         foreach ($folders as $folder)
