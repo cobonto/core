@@ -23,9 +23,12 @@ class ModuleAdminController extends AdminController
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        $this->loadModule();
     }
-
+    protected function setProperties()
+    {
+        parent::setProperties();
+        $this->prefix_model = $this->app->getNamespace().'Modules\\'.$this->module->author.'\\'.$this->module->name.'\\Models\\';
+    }
     protected function loadModule()
     {
         //
@@ -71,6 +74,6 @@ class ModuleAdminController extends AdminController
 
     public function lang($string)
     {
-        $this->module->lang($string);
+       return $this->module->lang($string);
     }
 }
