@@ -96,10 +96,10 @@ abstract class AdminController extends Controller
         // load module
         if($this instanceof ModuleAdminController)
            $this->loadModule();
-        $this->route_name = 'admin.' . $this->route_name . '.';
         //run some method before routing
         //$this->beforeProcess(\Route::getCurrentRoute()->getActionName());
         $this->setProperties();
+        $this->route_name = 'admin.' . $this->route_name . '.';
         $this->setMedia();
     }
 
