@@ -31,7 +31,6 @@
       "laracasts/utilities": "~2.0",
       "barryvdh/laravel-ide-helper":"2.2.*",
       "yajra/laravel-datatables-oracle": "^6.15",
-      "cobonto/module":"0.4.1",
       "intervention/image": "^2.3"
     },
     "autoload": {
