@@ -141,8 +141,12 @@ abstract class AdminController extends Controller
             'js/app.js',
 
         ]);
+      #  $this->assign->addUI('ui.core');
+      #  $this->assign->addUI('ui.widget');
+       # $this->assign->addUI('ui.button');
         // javascript
         $this->assign->addPlugin('morris');
+        $this->assign->addPlugin('pace');
     }
 
     /**

@@ -108,6 +108,8 @@ trait HelperForm
                 }
                 // add id to field_value
             }
+            // add more values to array before pass to view
+            $this->addMoreValues();
             $this->assign->params([
                 'forms'=>$this->fields_form,
                 'values'=>$this->fields_values,
@@ -151,5 +153,13 @@ trait HelperForm
             $this->request = $request;
         else
             return $request;
+    }
+
+    /**
+     * add more values before render views
+     */
+    protected function addMoreValues()
+    {
+
     }
 }

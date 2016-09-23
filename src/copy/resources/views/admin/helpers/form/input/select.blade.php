@@ -4,7 +4,7 @@
 
     <div class="col-lg-{{isset($input['col'])? $input['col'] : 6 }}">
         <select class="form-control {{isset($input['class'])? $input['class']:''}}"
-                id="{{ isset($input['id'])?$input['id']:$input['name'] }}"
+                name="{{ $input['name'] }}"  id="{{ isset($input['id'])?$input['id']:$input['name'] }}"
         @if(isset($input['attributes']) && count($input['attributes']))
             @foreach($input['attributes'] as $key=>$value)
                 {{ $key }}="{{ $value }}"
@@ -12,7 +12,7 @@
         @endif
         >
         @foreach($input['options']['query'] as $option)
-            <option value="{{ $option[$input['options']['key']] }}" @if($option['value']==$values[$input['name']]) selected="selected" @endif>{{ $option[$input['options']['name']] }}</option>
+            <option value="{{ $option[$input['options']['key']] }}" @if($option[$input['options']['key']]==$values[$input['name']]) selected="selected" @endif>{{ $option[$input['options']['name']] }}</option>
             @endforeach
             </select>
             @if(isset($input['desc']))<span class="help-block">{{ $input['desc'] }}</span>@endif

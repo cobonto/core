@@ -95,6 +95,19 @@ class Assign
             $this->addCSS('plugins/' . $name . '/' . $name . '.css');
         }
     }
+    /**
+     * add jquery ui to system
+     * @param array|string file name $files
+     * @return void
+     */
+    public function addUI($name)
+    {
+        $jsPath = 'plugins/jQueryUI/ui/';
+        $cssPath = 'plugins/jQueryUI/ui/themes/base/';
+        $file ='jquery.'.$name.'.min.';
+            $this->addJS($jsPath.$file.'js');
+            $this->addCSS($cssPath.$file.'css');
+    }
 
     /**
      * assign variable to view

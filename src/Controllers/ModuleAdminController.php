@@ -71,9 +71,8 @@ class ModuleAdminController extends AdminController
         }
 
     }
-
-    public function lang($string)
+    public function l($string)
     {
-       return $this->module->lang($string);
+        return $this->module->lang($string);
     }
 }
