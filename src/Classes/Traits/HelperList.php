@@ -90,8 +90,8 @@ trait HelperList
             // select
             $select[] = isset($options['real_field']) ? $options['real_field'] . ' as ' . $field : $field;
         }
-        if (!in_array('id', $select) && $this->autoIncrement)
-            $select[] = 'id';
+      #  if (!in_array('id', $select) && $this->autoIncrement)
+      #      $select[] = 'id';
         $this->sql = \DB::table($this->table . ' AS a')->select($select);
 
         return $this->sql;
@@ -112,7 +112,7 @@ trait HelperList
 
             $this->displayRowActions($dataTables);
         }
-        return $dataTables->make(true);
+        return $dataTables->orderColumn()->make(true);
     }
 
     /**

@@ -35,6 +35,7 @@ class CmsServiceProvider extends ServiceProvider
         if (! $this->app->routesAreCached()) {
             require __DIR__.'/../routes.php';
         }
+        $this->bootValidators();
         $this->publishes([
             __DIR__.'/copy/config'=>base_path('config'),
             __DIR__.'/copy/resources/views'=>resource_path('views'),
@@ -112,5 +113,12 @@ class CmsServiceProvider extends ServiceProvider
         foreach (glob(dirname(__FILE__).'/Helpers/*.php') as $filename){
             require_once($filename);
         }
+    }
+    protected function bootValidators()
+    {
+        \Validator::extend('alpha_spaces', function($attribute, $value)
+        {
+            return preg_match('/^[\pL\s]+$/u', $value);
+        });
     }
 }
