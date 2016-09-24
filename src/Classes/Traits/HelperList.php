@@ -112,7 +112,7 @@ trait HelperList
 
             $this->displayRowActions($dataTables);
         }
-        return $dataTables->orderColumn()->make(true);
+        return $dataTables->make(true);
     }
 
     /**
