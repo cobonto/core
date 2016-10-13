@@ -27,11 +27,12 @@
 @include('admin.layout.footer')
 </div>
 <!-- srcript -->
+@include('admin.layout.javascript')
 @if(count($javascript_files))
     @foreach($javascript_files as $file)
         <script type="text/javascript" src="{{ asset($file) }}"></script>
     @endforeach
-    @include('admin.layout.javascript')
+
 @endif
 
 </html>
