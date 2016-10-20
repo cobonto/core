@@ -1,9 +1,7 @@
 <?php
 
 namespace Cobonto\Controllers\Admin;
-
 use App\User;
-use Illuminate\Support\Facades\Input;
 use Cobonto\Controllers\AdminController;
 
 
@@ -13,7 +11,7 @@ class UserController extends AdminController
     protected $table = 'users';
     protected $route_name = 'users';
     protected $model_name = 'User';
-    protected function index()
+    protected function fieldList()
     {
         $this->fields_list = [
             'id' => [
@@ -33,7 +31,6 @@ class UserController extends AdminController
                 'title' => 'Created at',
             ]
         ];
-        return parent::index();
     }
 
     protected function fieldForm()

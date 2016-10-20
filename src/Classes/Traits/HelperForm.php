@@ -156,10 +156,29 @@ trait HelperForm
     }
 
     /**
-     * add more values before render views
+     * add more values before render views and calculate data
      */
     protected function addMoreValues()
     {
 
+    }
+    /**
+     * add data values from session before generateForm
+     */
+    protected function fillValues()
+    {
+        // check save or save and stay checked or not
+        if($this->request->old('saveAndStay') || $this->request->old('save'))
+            if(count($this->fields_form))
+            {
+                // add plugins
+                foreach ($this->fields_form as &$form)
+                {
+                    foreach ($form['input'] as &$field)
+                    {
+                        $this->fields_values[$field['name']] = $this->request->old($field['name']);
+                    }
+                }
+            }
     }
 }

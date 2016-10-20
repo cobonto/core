@@ -7,19 +7,25 @@
  */
 
 namespace Cobonto\Controllers;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
 use App\User;
+use Cobonto\Classes\Traits\HelperList;
+use Cobonto\Classes\Traits\SimpleHelperList;
 use Illuminate\Support\MessageBag;
 use LaravelArdent\Ardent\Ardent;
 use Module\Classes\Hook;
 use Cobonto\Classes\Traits\HelperForm;
-use Cobonto\Classes\Traits\HelperList;
+use Cobonto\Classes\Traits\DataTableHelperList;
 
 abstract class AdminController extends Controller
 {
     use HelperList;
+    use DataTableHelperList;
     use HelperForm;
+    use SimpleHelperList;
+
     /**
      * @string tpl view file
      */
@@ -28,7 +34,6 @@ abstract class AdminController extends Controller
      * @string title of page
      */
     protected $title;
-
     /**
      * @string table
      */
@@ -87,15 +92,24 @@ abstract class AdminController extends Controller
     /**
      * @var string $translationPrefixFile
      */
-    protected $translationPrefixFile ='admin';
+    protected $translationPrefixFile = 'admin';
+    /**
+     * @var bool datatable list
+     */
+    protected $dataTableList = true;
+
+    /**
+     * AdminController constructor.
+     * @param \Illuminate\Http\Request $request
+     */
     public function __construct(\Illuminate\Http\Request $request)
     {
         $this->request = $request;
         $this->app = \App::getInstance();
         $this->assign = app('assign');
         // load module
-        if($this instanceof ModuleAdminController)
-           $this->loadModule();
+        if ($this instanceof ModuleAdminController)
+            $this->loadModule();
         //run some method before routing
         //$this->beforeProcess(\Route::getCurrentRoute()->getActionName());
         $this->setProperties();
@@ -108,16 +122,19 @@ abstract class AdminController extends Controller
     {
         $this->prefix_model = $this->app->getNamespace();
         $controller_name = substr(class_basename($this), 0, -10);
-        if (!$this->table)
-            $this->table = snake_case($controller_name);
         if (!$this->route_name)
             $this->route_name = strtolower($controller_name);
         if (!$this->title)
             $this->title = $controller_name;
         if (!$this->model_name)
             $this->model_name = $controller_name;
-
-
+        if (!$this->table)
+        {
+            if ($this->model_name)
+                $this->table = strtolower(snake_case($this->model_name)) . 's';
+            else
+                $this->table = snake_case($controller_name);
+        }
     }
 
     /**
@@ -141,9 +158,9 @@ abstract class AdminController extends Controller
             'js/app.js',
 
         ]);
-      #  $this->assign->addUI('ui.core');
-      #  $this->assign->addUI('ui.widget');
-       # $this->assign->addUI('ui.button');
+        #  $this->assign->addUI('ui.core');
+        #  $this->assign->addUI('ui.widget');
+        # $this->assign->addUI('ui.button');
         // javascript
         $this->assign->addPlugin('morris');
         $this->assign->addPlugin('pace');
@@ -181,8 +198,8 @@ abstract class AdminController extends Controller
             'HOOK_HEADER' => Hook::execute('displayAdminHeader'),
             'HOOK_FOOTER' => Hook::execute('displayAdminFooter'),
             'HOOK_NAV' => Hook::execute('displayAdminNav'),
-            'HOOK_SIDEBAR_TOP'=>Hook::execute('displayAdminSideBarTop'),
-            'HOOK_SIDEBAR'=>Hook::execute('displayAdminSideBar'),
+            'HOOK_SIDEBAR_TOP' => Hook::execute('displayAdminSideBarTop'),
+            'HOOK_SIDEBAR' => Hook::execute('displayAdminSideBar'),
         ]);
         // assign general hooks
         // to override all plugins and buttons
@@ -199,11 +216,11 @@ abstract class AdminController extends Controller
         $this->loadMsgs();
         // add javascript vars to front
         $this->assign->addJSVars([
-            '_token'=>csrf_token(),
+            '_token' => csrf_token(),
         ]);
         \JavaScript::put($this->assign->getJSVars());
         // analyze tpl name and render view
-        return view($tpl,$this->assign->getViewData());
+        return view($tpl, $this->assign->getViewData());
     }
 
     /**
@@ -259,14 +276,18 @@ abstract class AdminController extends Controller
     // index method
     protected function index()
     {
+        // fill fields list
+        $this->fieldList();
         if (count($this->fields_list))
         {
-            // render view file
-            if ($this->tpl == false)
-                $this->tpl = $this->tpl_list;
-            // after set fields_list
-            if ($this->request->ajax())
-                return $this->loadData();
+            // determine datatable or list table loaded
+            if ($this->dataTableList)
+            {
+                if ($this->request->ajax())
+                    return $this->dataTableGenerateList();
+                else
+                    $this->dataTableGenerateList();
+            }
             else
                 $this->generateList();
         }
@@ -280,6 +301,8 @@ abstract class AdminController extends Controller
         // add some variable for view
         if ($this->tpl == false)
             $this->tpl = $this->tpl_form;
+        // fill value if exists in session
+        $this->fillValues();
         $this->generateForm();
         $this->assign->params([
             'id' => 0,
@@ -294,7 +317,6 @@ abstract class AdminController extends Controller
     {
 
     }
-
     // edit method
     protected function edit($id)
     {
@@ -303,6 +325,8 @@ abstract class AdminController extends Controller
         // add some variable for view
         if ($this->tpl == false)
             $this->tpl = $this->tpl_form;
+        // fill value if exists in session
+        $this->fillValues();
         $this->generateForm();
         $this->assign->params([
             'id' => $id,
@@ -336,6 +360,7 @@ abstract class AdminController extends Controller
                 if (!$this->model->save())
                 {
                     $this->errors = $this->model->errors()->all();
+                    $this->request->flash();
                     return redirect(route($this->route_name . 'create'))->withErrors($this->errors);
                 }
                 else
@@ -343,14 +368,18 @@ abstract class AdminController extends Controller
                     // call beforeCrate()
                     $this->afterAdd($this->model->id);
                     if (count($this->errors))
+                    {
+                        $this->request->flash();
                         return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
+                    }
+
                     else
                         return $this->redirect($this->lang('add_success'));
                 }
             }
         }
         else
-            $this->errors[] = $this->lang('object_not_loaded') ;
+            $this->errors[] = $this->lang('object_not_loaded');
         return redirect(route($this->route_name . 'create'))->withErrors($this->errors);
     }
 
@@ -367,6 +396,7 @@ abstract class AdminController extends Controller
                 if (!$this->model->save())
                 {
                     $this->errors = $this->model->errors()->all();
+                    $this->request->flash();
                     return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
                 }
                 else
@@ -374,7 +404,10 @@ abstract class AdminController extends Controller
                     // call beforeCrate()
                     $this->afterUpdate($id);
                     if (count($this->errors))
+                    {
+                        $this->request->flash();
                         return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
+                    }
                     else
                         return $this->redirect($this->lang('add_success'));
                 }
@@ -448,7 +481,7 @@ abstract class AdminController extends Controller
 
     protected function redirect($msg)
     {
-        if (isset($_POST['saveAndStay']))
+        if ($this->request->input('saveAndStay'))
             return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->with('success', $msg);
         else
             return redirect(route($this->route_name . 'index'))->with('success', $msg);
@@ -460,7 +493,7 @@ abstract class AdminController extends Controller
     protected function loadMsgs()
     {
         if (count($this->errors))
-            \Session::flash('errors',new MessageBag($this->errors));
+            \Session::flash('errors', new MessageBag($this->errors));
         if (count($this->warning))
             \Session::flash('warning', $this->warning);
         if (count($this->info))
@@ -474,8 +507,9 @@ abstract class AdminController extends Controller
      */
     public function lang($string)
     {
-        return trans($this->translationPrefixFile.'.'.$string);
+        return trans($this->translationPrefixFile . '.' . $string);
     }
+
     /**
      * get translated file
      * @param $string
@@ -486,4 +520,22 @@ abstract class AdminController extends Controller
         return $this->lang($string);
     }
 
+    protected function listQuery()
+    {
+       if($this->sql==false)
+       {
+           $select = [];
+           foreach ($this->fields_list as $field => $options)
+           {
+               // select
+               $select[] = isset($options['real_field']) ? $options['real_field'] . ' as ' . $field : $field;
+           }
+           $this->sql = \DB::table($this->table . ' AS a')->select($select);
+       }
+        return $this->sql;
+    }
+    public function getRoute()
+    {
+        return $this->route_name;
+    }
 }

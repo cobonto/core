@@ -30,7 +30,7 @@
                         @endif
                         @if(isset($form['submit']))
                             @foreach($form['submit'] as $button)
-                                <button type="submit" name="{{ $button['name'] }}"
+                                <button value="1" type="submit" name="{{ $button['name'] }}"
                                         class="btn {{  isset($button['class'])?$button['class']:'btn-primary'}} pull-right">{{ $button['title'] }}</button>
                             @endforeach
                         @endif

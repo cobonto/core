@@ -11,7 +11,7 @@ namespace Cobonto\Commands;
 
 use Symfony\Component\Console\Input\InputOption;
 
-class ImportCommand extends RMSCommand
+class ImportCommand extends CobontoCommand
 {
     /**
      * @param string $name
@@ -28,7 +28,7 @@ class ImportCommand extends RMSCommand
         // we start to copy data from system to package name of folders
         $folders = [
             'resources/views',
-            'resources/lang',
+           # 'resources/lang',
            # 'app/Http/Controllers/Admin',
             'database/migrations',
             'database/seeds',
@@ -121,6 +121,7 @@ class ImportCommand extends RMSCommand
     {
         return [
             ['force', null, InputOption::VALUE_NONE, 'force copy'],
+            ['lang', null, InputOption::VALUE_NONE, 'lang  copy'],
         ];
     }
 }

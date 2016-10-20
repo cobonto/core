@@ -37,6 +37,12 @@ return [
     'no_modules_in_this_position'=>'No modules in this position',
     'unregister'=>'Un register',
     'no_data_for_update'=>'No data for update',
-    'invalid_data'=>'Invalid data'
-
+    'invalid_data'=>'Invalid data',
+    'new'=>'New',
+    'no_data'=>'No data',
+    'actions'=>'Actions',
+    'yes'=>'Yes',
+    'no'=>'No',
+    'filter'=>'Filter',
+    'reset'=>'Reset'
 ];

@@ -11,7 +11,7 @@
                 @if($create)
                     <a class="create btn btn-default btn-circle btn-info" href="{!! route($route_name.'create') !!}">
                         <i class="fa fa-plus"></i>
-                        New
+                        {{ transTpl('new') }}
                     </a>
                 @endif
             </div>

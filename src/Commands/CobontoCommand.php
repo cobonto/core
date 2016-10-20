@@ -10,7 +10,7 @@ namespace Cobonto\Commands;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Database\Console\Migrations\BaseCommand;
 
-class RMSCommand extends BaseCommand
+class CobontoCommand extends BaseCommand
 {
     /**
      * @var Filesystem

@@ -9,7 +9,7 @@
 namespace Cobonto\Commands;
 
 
-class ExportCommand extends RMSCommand
+class ExportCommand extends CobontoCommand
 {
     /**
      * @param string $name
@@ -27,8 +27,7 @@ class ExportCommand extends RMSCommand
         $folders = [
             'resources/views',
             'resources/lang',
-            'database/migrations',
-            'database/seeds'
+            'database/migrations'
         ];
         $files = [
             'config/app.php',
