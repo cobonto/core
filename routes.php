@@ -123,7 +123,7 @@ Route::group(
         {
              \Cache::put($controller->getRoute().'perPage',$perPage,1440);
         }
-        elseif($request->input('cancelFilter'))
+        elseif($request->input('resetFilter'))
         {
             \Cache::forget($controller->getRoute().'filter');
         }
