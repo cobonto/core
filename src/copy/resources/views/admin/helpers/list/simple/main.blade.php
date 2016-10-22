@@ -48,7 +48,7 @@
                                 <th style="width:{{ isset($options['width'])?$options['width']:'auto' }}">{{ $options['title'] }}</th>
                             @endforeach
                             @if(count($actions))
-                                <th style="width:auto">{{ transTpl('actions') }}</th>
+                                <th style="width:auto;text-align: center">{{ transTpl('actions') }}</th>
                             @endif
                         </tr>
                         @if($filters)
@@ -64,7 +64,7 @@
                                     @foreach($fields as $name=>$options)
                                         <td id="{{ isset($options['id'])?$options['id']:$name}}"
                                             class="{{ isset($options['class'])?$options['class']:''}}"
-                                            style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: center">{!! isset($options['function'])?$controller->{$options['function']}($row):$row->{$name} !!}
+                                            style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">{!! isset($options['function'])?$controller->{$options['function']}($row):$row->{$name} !!}
                                         </td>
                                     @endforeach
                                     @if(count($actions))
@@ -81,26 +81,28 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="row box-footer clearfix">
-                    <div class="col-lg-3 ">
-                        <div class="pagination pull-left">
-                            <form id="per_page_form" method="post" action="{{ route('admin.list.filters') }}">
-                                {{ csrf_field() }}
-                                <input type="hidden" name="class_name" value="{{ get_class($controller) }}"/>
-                                <select name="perPage" onchange="$('#per_page_form').submit()" class="select2">
-                                    @if($rows->total()>10)
-                                        <option value="10" @if($per_page==10)selected="selected" @endif>10</option>@endif
-                                    @if($rows->total()>20)
-                                        <option value="20" @if($per_page==20)selected="selected" @endif>20</option>@endif
-                                    @if($rows->total()>50)
-                                        <option value="50" @if($per_page==50)selected="selected" @endif>50</option>@endif
-                                    @if($rows->total()>100)
-                                        <option value="100" @if($per_page==100)selected="selected" @endif>100</option>@endif
-                                    @if($rows->total()>300)
-                                        <option value="300" @if($per_page==300)selected="selected" @endif>300</option>@endif
-                                </select>
-                            </form>
+                    @if($rows->total()>10)
+                        <div class="col-lg-3 ">
+                            <div class="pagination pull-left">
+                                <form id="per_page_form" method="post" action="{{ route('admin.list.filters') }}">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="class_name" value="{{ get_class($controller) }}"/>
+                                    <select name="perPage" onchange="$('#per_page_form').submit()" class="select2">
+                                        @if($rows->total()>10)
+                                            <option value="10" @if($per_page==10)selected="selected" @endif>10</option>@endif
+                                        @if($rows->total()>20)
+                                            <option value="20" @if($per_page==20)selected="selected" @endif>20</option>@endif
+                                        @if($rows->total()>50)
+                                            <option value="50" @if($per_page==50)selected="selected" @endif>50</option>@endif
+                                        @if($rows->total()>100)
+                                            <option value="100" @if($per_page==100)selected="selected" @endif>100</option>@endif
+                                        @if($rows->total()>300)
+                                            <option value="300" @if($per_page==300)selected="selected" @endif>300</option>@endif
+                                    </select>
+                                </form>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                     <div class="col-lg-9 ">
                         <div class="no-margin pull-right">
                             {{ $rows->render() }}

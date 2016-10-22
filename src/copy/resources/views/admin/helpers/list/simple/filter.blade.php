@@ -2,7 +2,7 @@
     <form method="post" action="{{ route('admin.list.filters') }}">
         {{ csrf_field() }}
         <input type="hidden" name="class_name" value="{{ get_class($controller) }}"/>
-        <th>
+        <th style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">
             @if(isset($options['filter']) && $options['filter']==false)
                 --
                 @else
