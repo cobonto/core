@@ -96,7 +96,7 @@ abstract class AdminController extends Controller
     /**
      * @var bool datatable list
      */
-    protected $dataTableList = true;
+    protected $dataTableList = false;
 
     /**
      * AdminController constructor.

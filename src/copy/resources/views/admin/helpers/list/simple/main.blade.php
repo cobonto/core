@@ -1,4 +1,27 @@
 @extends('admin.layout.main')
+@section('header')
+    <section class="content-header">
+        <div class="row">
+            <div class="col-lg-6">
+                <h5>
+                    {{ $title }}
+                </h5>
+            </div>
+            <div class="col-lg-6">
+                @if($create)
+                    <a class="create btn btn-default btn-circle btn-info" href="{!! route($route_name.'create') !!}">
+                        <i class="fa fa-plus"></i>
+                        {{ transTpl('new') }}
+                    </a>
+                @endif
+            </div>
+        </div>
+        <ol class="breadcrumb">
+            @include('admin.layout.breadcrumb')
+        </ol>
+
+    </section>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-xs-12">
@@ -41,7 +64,7 @@
                                     @foreach($fields as $name=>$options)
                                         <td id="{{ isset($options['id'])?$options['id']:$name}}"
                                             class="{{ isset($options['class'])?$options['class']:''}}"
-                                            width="width:{{ isset($options['width'])?$options['width']:'auto' }}">{{ isset($options['function'])?$controller->{$options['function']}($row):$row->{$name} }}
+                                            style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: center">{!! isset($options['function'])?$controller->{$options['function']}($row):$row->{$name} !!}
                                         </td>
                                     @endforeach
                                     @if(count($actions))

@@ -48,8 +48,8 @@ trait SimpleHelperList
 
     protected function listAssets()
     {
-        $this->assign->addCSS(['css/simple.list.css']);
-        $this->assign->addCSS(['css/simple.list.css']);
+        $this->assign->addCSS(['css/list.css']);
+        $this->assign->addJS(['js/list.js']);
         $this->assign->addJS(['js/simple.list.js']);
         $this->assign->addPlugin('confirm');
         $this->assign->addPlugin('selecttwo');
