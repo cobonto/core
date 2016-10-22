@@ -85,4 +85,8 @@ trait SimpleHelperList
         $this->assign->params(['per_page'=>$perPage]);
        return  $this->sql->paginate($perPage);
     }
+    public function displayStatus($row)
+    {
+        return '<i class="fa '.($row->active?'fa-check btn btn-success':'fa-remove btn btn-danger').'"></i>';
+    }
 }
