@@ -26,8 +26,8 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectPath  = 'admin/dashboard';
-    protected $redirectAfterLogout  = 'admin/login';
+    protected $redirectPath  = false;
+    protected $redirectAfterLogout  = false;
     protected $guard = null;
     /**
      * Create a new authentication controller instance.
@@ -36,6 +36,9 @@ class AuthController extends Controller
      */
     public function __construct()
     {
+        $admin_url = config('app.admin_url');
+        $this->redirectPath = $admin_url.'/dashboard';
+        $this->redirectAfterLogout = $admin_url.'/login';
         $this->middleware('guest.admin', ['except' => ['logout']]);
     }
     public function getCredentials($request)

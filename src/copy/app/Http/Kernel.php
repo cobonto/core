@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use Cobonto\Middleware\AdminAuthenticate;
+use Cobonto\Middleware\AdminPermission;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -15,6 +17,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        \Clockwork\Support\Laravel\ClockworkMiddleware::class,
     ];
 
     /**
@@ -35,7 +38,8 @@ class Kernel extends HttpKernel
             'throttle:60,1',
         ],
         'admin'=>[
-            \Cobonto\Middleware\AdminAuthenticate::class
+            AdminAuthenticate::class,
+            AdminPermission::class
         ]
     ];
 

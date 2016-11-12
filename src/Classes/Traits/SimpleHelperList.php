@@ -41,7 +41,7 @@ trait SimpleHelperList
             'actions' => $this->actions,
             'skip_actions' => $this->skip_actions,
             'controller' => $this,
-            'filters' => true,
+            'filters' => $this->filter,
             'sqlRows'=>$this->sql
         ]);
     }

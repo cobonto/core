@@ -11,6 +11,8 @@ trait HelperList
     protected $autoIncrement = true;
     /** @var $create */
     protected $create = true;
+    /** @var bool filter is active or not */
+    protected $filter = true;
     /** @var array $actions */
     protected $actions = [
         'edit' => ['name' => 'Edit'],

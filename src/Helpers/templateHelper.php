@@ -2,7 +2,7 @@
 if (!function_exists('transTpl'))
 {
     /**
-     * trnslate for tpl
+     * translate for tpl
      * @param $string
      * @param string $file
      * @return string|\Symfony\Component\Translation\TranslatorInterface

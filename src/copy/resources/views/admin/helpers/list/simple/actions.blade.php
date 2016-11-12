@@ -1,4 +1,4 @@
-<td>
+<td style="text-align: {{ isset($options['align'])?$options['align']:'center' }}">
     @if(count($actions)>count($skip_actions))
         <div class="btn-group">
             <button class="btn btn-info" type="button">{{ transTpl('actions','helpers') }}</button>
@@ -7,7 +7,7 @@
             </button>
             <ul role="menu" class="dropdown-menu">
                 @foreach($actions as $action=>$params)
-                    @if(!in_array($action,$skip_actions) || (isset($skip_actions[$action]) && !in_array($row->id,$skip_actions_list[$action])))
+                    @if(!in_array($action,array_keys($skip_actions)) || (isset($skip_actions[$action]) && !in_array($row->id,$skip_actions[$action])))
                         <li>
                             @if(isset($params['route_name']))
                                 <a href="{!! route($params['route_name'],['id'=>$row->id]) !!}">{{$params['name']}}</a>

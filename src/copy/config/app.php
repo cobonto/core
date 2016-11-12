@@ -1,7 +1,15 @@
 <?php
 
 return [
-
+    /*
+       |--------------------------------------------------------------------------
+       | Application Admin url
+       |--------------------------------------------------------------------------
+       |
+       | This value for prefix all admin urls
+       |
+       */
+    'admin_url'=>env('ADMIN_URL','admin'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -27,6 +35,7 @@ return [
     */
 
     'debug' => env('APP_DEBUG', false),
+    'install' => env('APP_INSTALL', 0),
 
     /*
     |--------------------------------------------------------------------------
@@ -111,7 +120,19 @@ return [
     'log' => env('APP_LOG', 'single'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
-
+    /*
+    |--------------------------------------------------------------------------
+    | Version
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure the log settings for your application. Out of
+    | the box, Laravel uses the Monolog PHP logging library. This gives
+    | you a variety of powerful log handlers / formatters to utilize.
+    |
+    | Available Settings: "single", "daily", "syslog", "errorlog"
+    |
+    */
+    'version'=>'1.1',
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -163,7 +184,8 @@ return [
         \Cobonto\CmsServiceProvider::class,
         \Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         \Yajra\Datatables\DatatablesServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class
+        Intervention\Image\ImageServiceProvider::class,
+        \Clockwork\Support\Laravel\ClockworkServiceProvider::class,
     ],
 
     /*

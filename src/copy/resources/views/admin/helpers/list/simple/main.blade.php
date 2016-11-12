@@ -45,7 +45,7 @@
                         <thead>
                         <tr>
                             @foreach($fields as $name=>$options)
-                                <th style="width:{{ isset($options['width'])?$options['width']:'auto' }}">{{ $options['title'] }}</th>
+                                <th style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: center">{{ $options['title'] }}</th>
                             @endforeach
                             @if(count($actions))
                                 <th style="width:auto;text-align: center">{{ transTpl('actions') }}</th>

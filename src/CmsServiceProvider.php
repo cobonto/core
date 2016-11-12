@@ -33,7 +33,7 @@ class CmsServiceProvider extends ServiceProvider
     public function boot()
     {
         if (! $this->app->routesAreCached()) {
-            require __DIR__.'/../routes.php';
+            require __DIR__.'/routes/routes.php';
         }
         $this->bootValidators();
         $this->publishes([

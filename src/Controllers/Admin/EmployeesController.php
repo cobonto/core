@@ -1,34 +1,49 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Sharif
+ * Date: 11/5/2016
+ * Time: 6:58 PM
+ */
 
 namespace Cobonto\Controllers\Admin;
+
+
 use App\User;
+use Cobonto\Classes\Roles\Role;
 use Cobonto\Controllers\AdminController;
 
-
-class UserController extends AdminController
+class EmployeesController extends AdminController
 {
-    protected $title = 'Users';
-    protected $table = 'users';
-    protected $route_name = 'users';
-    protected $model_name = 'User';
+
+    protected function setProperties()
+    {
+         parent::setProperties();
+         $this->title = $this->lang('employees');
+         $this->table = 'users';
+         $this->route_name = 'employees';
+         $this->model_name = 'User';
+    }
+
     protected function fieldList()
     {
+        $this->skip_actions['destroy']=[1];
         $this->fields_list = [
             'id' => [
-                'title' => 'ID',
+                'title' => $this->lang('id'),
             ],
             'name' => [
-                'title' => 'Name',
+                'title' => $this->lang('name'),
             ],
             'email' => [
-                'title' => 'Email',
+                'title' => $this->lang('email'),
             ],
             'active' => [
-                'title' => 'Status',
+                'title' => $this->lang('status'),
                 'function' => 'displayStatus',
             ],
             'created_at' => [
-                'title' => 'Created at',
+                'title' => $this->lang('created_at'),
             ]
         ];
     }
@@ -37,7 +52,7 @@ class UserController extends AdminController
     {
         $this->fields_form = [
             [
-                'title' => 'Edit user',
+                'title' => $this->lang('edit_employee'),
                 'input' => [
                     // text
                     [
@@ -45,7 +60,7 @@ class UserController extends AdminController
                         'type' => 'text',
                         'class' => '',
                         'col' => '6',
-                        'title' => 'Name',
+                        'title' => $this->lang('name'),
                         //  'suffix' => '$',
                         //  'prefix' => '00.0',
 
@@ -56,7 +71,7 @@ class UserController extends AdminController
                         'type' => 'text',
                         'class' => '',
                         'col' => '6',
-                        'title' => 'Email',
+                        'title' => $this->lang('email'),
                         //  'suffix' => '$',
                         //  'prefix' => '00.0',
 
@@ -66,7 +81,7 @@ class UserController extends AdminController
                         'type' => 'password',
                         'class' => '',
                         'col' => '3',
-                        'title' => 'Password',
+                        'title' => $this->lang('password'),
 
                     ],
                     [
@@ -74,7 +89,7 @@ class UserController extends AdminController
                         'type' => 'password',
                         'class' => '',
                         'col' => '3',
-                        'title' => 'Password confirm',
+                        'title' => $this->lang('passwd_confirm'),
 
                     ],
                     // date picker
@@ -83,27 +98,39 @@ class UserController extends AdminController
                         'type' => 'switch',
                         'class' => '',
                         'col' => '6',
-                        'title' => 'Status',
+                        'title' => $this->lang('status'),
                         'default_value' => 1,
                         'jqueryOptions' => [
                             'onColor' => 'success',
                             'offColor' => 'danger',
-                            'onText' => 'Yes',
-                            'offText' => 'No',
+                            'onText' => $this->lang('yes'),
+                            'offText' => $this->lang('no'),
                         ]
                     ],
+                      [
+                              'type' => 'select',
+                              'title' => $this->l('role'),
+                              'name' => 'role_id',
+                              'options' =>
+                               [
+                                'query' => Role::where(['admin'=>1])->get()->toArray(),
+                                'key' => 'id',
+                                'name' => 'name',
+                              ],
+                              'required' => false,
+                            ],
                 ],
                 'submit' => [
                     [
                         'name' => 'save',
-                        'title' => 'Save',
+                        'title' => $this->lang('save'),
                         'type' => 'submit',
                     ],
                     [
                         'name' => 'saveAndStay',
-                        'title' => 'Save and stay',
+                        'title' => $this->lang('save_stay'),
                         'type' => 'submit',
-                        'class' => 'btn-warning'
+                        'class' => 'btn-info'
                     ]
 
                 ],
@@ -114,14 +141,16 @@ class UserController extends AdminController
 
     protected function beforeAdd()
     {
+        $this->request->merge(['is_admin'=>1]);
         $email = $this->request->input('email');
         if($email)
             if(User::getByEmail($email))
-                $this->errors[] = 'This email is already used';
+                $this->errors[] = $this->lang('email_used');
     }
 
     protected function beforeUpdate($id)
     {
+        $this->request->merge(['is_admin'=>1]);
         $email = $this->request->input('email');
         if($email)
         {
@@ -129,7 +158,7 @@ class UserController extends AdminController
             if($new_id)
             {
                 if($new_id !=$id)
-                    $this->errors[] = 'This email is already used';
+                    $this->errors[] = $this->lang('email_used');
             }
         }
 
@@ -137,6 +166,6 @@ class UserController extends AdminController
     protected function listQuery()
     {
         parent::listQuery();
-        return  $this->sql->where('is_admin',0);
+        return  $this->sql->where('is_admin',1);
     }
 }

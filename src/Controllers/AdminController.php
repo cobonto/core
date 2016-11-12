@@ -1,16 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sharif ahrari
- * Date: 7/2/2016
- * Time: 7:40 PM
- */
 
 namespace Cobonto\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
 use App\User;
+use Cobonto\Classes\Assign;
+use Cobonto\Classes\Roles\Role;
 use Cobonto\Classes\Traits\HelperList;
 use Cobonto\Classes\Traits\SimpleHelperList;
 use Illuminate\Support\MessageBag;
@@ -51,7 +47,11 @@ abstract class AdminController extends Controller
      */
     protected $app;
     /**
-     * @param string $route_name
+     * @param string $route name of route
+     */
+    protected $route;
+    /**
+     * @param string $route_name full route name include prefix route
      */
     protected $route_name;
 
@@ -85,7 +85,7 @@ abstract class AdminController extends Controller
     protected $info = [];
 
     /**
-     * @param \Cobonto\Classes\Assign $assign
+     * @param Cobonto\Classes\Assign
      */
     protected $assign;
 
@@ -97,7 +97,10 @@ abstract class AdminController extends Controller
      * @var bool datatable list
      */
     protected $dataTableList = false;
-
+    /**
+     * @var array $permissions
+     */
+    protected $permissions;
     /**
      * AdminController constructor.
      * @param \Illuminate\Http\Request $request
@@ -106,6 +109,7 @@ abstract class AdminController extends Controller
     {
         $this->request = $request;
         $this->app = \App::getInstance();
+        /** @var Assign assign */
         $this->assign = app('assign');
         // load module
         if ($this instanceof ModuleAdminController)
@@ -113,6 +117,7 @@ abstract class AdminController extends Controller
         //run some method before routing
         //$this->beforeProcess(\Route::getCurrentRoute()->getActionName());
         $this->setProperties();
+        $this->permissions = Role::getRolePermissions(\Auth::user()->role_id);
         $this->route_name = 'admin.' . $this->route_name . '.';
         $this->setMedia();
     }
@@ -122,8 +127,14 @@ abstract class AdminController extends Controller
     {
         $this->prefix_model = $this->app->getNamespace();
         $controller_name = substr(class_basename($this), 0, -10);
+        /**
+         * @deprecated and remove next version
+         */
         if (!$this->route_name)
+        {
             $this->route_name = strtolower($controller_name);
+        }
+        $this->route = $this->route_name;
         if (!$this->title)
             $this->title = $controller_name;
         if (!$this->model_name)
@@ -278,6 +289,8 @@ abstract class AdminController extends Controller
     {
         // fill fields list
         $this->fieldList();
+        // check permission for actions
+        $this->checkPermissions();
         if (count($this->fields_list))
         {
             // determine datatable or list table loaded
@@ -342,9 +355,20 @@ abstract class AdminController extends Controller
     {
         $id = $this->request->input('id');
         if ($id && $this->loadObject($id, true))
+        {
+            // check permissions
+            if(!$this->hasPermission('edit'))
+                return redirect(route(config('api.admin_url').'.403'));
             return $this->update($id);
+        }
         else
+        {
+            // check permissions
+            if(!$this->hasPermission('create'))
+                return redirect(route(config('api.admin_url').'.403'));
             return $this->add();
+        }
+
     }
 
     // create
@@ -520,6 +544,10 @@ abstract class AdminController extends Controller
         return $this->lang($string);
     }
 
+    /**
+     * create sql instance
+     * @return \DB
+     */
     protected function listQuery()
     {
        if($this->sql==false)
@@ -537,5 +565,27 @@ abstract class AdminController extends Controller
     public function getRoute()
     {
         return $this->route_name;
+    }
+    protected function checkPermissions()
+    {
+        if(\Auth::user()->role_id==1)
+            return true;
+        foreach($this->actions as $action=>$params)
+        {
+            if(!isset($this->permissions[$this->route.'.'.$action]))
+                $this->removeAction($action);
+        }
+
+        if(!isset($this->permissions[$this->route.'.create']))
+        {
+
+            $this->create = false;
+        }
+    }
+    protected function hasPermission($permission)
+    {
+        if(\Auth::user()->role_id==1)
+            return true;
+        return isset($this->permissions[$this->route.'.'.$permission]);
     }
 }

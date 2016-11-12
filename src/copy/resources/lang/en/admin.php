@@ -44,5 +44,25 @@ return [
     'yes'=>'Yes',
     'no'=>'No',
     'filter'=>'Filter',
-    'reset'=>'Reset'
-];
+    'reset'=>'Reset',
+    /** rolesController */
+    'save_stay'=>'Save and stay',
+    'save'=>'Save',
+    'id'=>'ID',
+    'name'=>'Name',
+    'email'=>'Email',
+    'status'=>'Status',
+    'created_at'=>'Created at',
+    'edit_roles'=>'Add\Edit roles',
+    'roles'=>'Roles',
+    // employeesController
+    'email_used'=>'This email is already used',
+    'edit_employee'=>'Edit employee',
+    'employees'=>'Employees',
+    'role'=>'Role',
+    // groupscontroller
+    'groups'=>'Groups',
+    //permissionsController
+    'permissions'=>'Permissions',
+    'something_wrong'=>'Something is wrong'
+    ];

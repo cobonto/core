@@ -24,10 +24,11 @@ class AdminAuthenticate
         {
             if(!\Auth::user()->is_admin)
             {
+
                 if ($request->ajax() || $request->wantsJson()) {
                     return response('Unauthorized.', 401);
                 } else {
-                    return redirect()->guest('admin/login');
+                    return redirect()->guest(config('app.admin_url').'/login');
                 }
             }
         }
@@ -36,7 +37,7 @@ class AdminAuthenticate
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('admin/login');
+                return redirect()->guest(config('app.admin_url').'/login');
             }
         }
         return $next($request);

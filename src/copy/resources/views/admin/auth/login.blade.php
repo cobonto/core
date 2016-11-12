@@ -33,7 +33,7 @@
     <div class="login-box-body">
         <p class="login-box-msg">{{ transTpl('sign_in_title','auth') }}</p>
 
-        <form class="form-horizontal" method="POST" action="{{ url('admin/login') }}">
+        <form class="form-horizontal" method="POST" action="{{ route('admin.login') }}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
                 <input type="email" class="form-control" placeholder="{{ transTpl('email','auth')}}" name="email">
