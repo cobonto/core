@@ -5,7 +5,6 @@ use Cobonto\Controllers\AdminController;
 
 use Cobonto\Requests\ZipUploadRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
 use Module\Classes\Module;
 
 class ModulesController extends AdminController
@@ -241,7 +240,14 @@ class ModulesController extends AdminController
         $this->fillData(true);
         if ($this->inDisk)
         {
-            $this->app->files->deleteDirectory(app_path('Modules/' . $this->author . '/' . $this->name));
+            // check for core module or not
+            $module = Module::getInstance($this->author, $this->name);
+            if($module->core)
+            {
+                $this->errors[] = $this->lang('can_not_delete_core_module');
+            }
+            else
+            $this->app->files->deleteDirectory($this->modulePath);
         }
         else
             $this->errors[] = $this->lang('module_not_exists');
@@ -257,9 +263,11 @@ class ModulesController extends AdminController
 
     protected function setMedia()
     {
+        $this->assign->addJSVars(['alert_msg'=>$this->lang('sure_to_delete')]);
         parent::setMedia();
         $this->assign->addCSS('css/module.css');
         $this->assign->addJS('js/module.js');
+        $this->assign->addPlugin('confirm');
     }
 
     protected function redirect($msg)
@@ -304,7 +312,7 @@ class ModulesController extends AdminController
         $this->inDisk = 0;
         if ($this->name && $this->author)
         {
-            if (\Module\Classes\Module::checkOnDisk($this->author, $this->name))
+            if (Module::checkOnDisk($this->author, $this->name))
                 $this->inDisk = 1;
         }
         $this->modulePath = app_path('/Modules/' . $this->author . '/' . $this->name);
@@ -318,7 +326,6 @@ class ModulesController extends AdminController
             {
                 if ($data = Module::isInstalled($author, $subModule['name']))
                 {
-                    $data = \DB::table('modules')->where('name', $subModule['name'])->where('author', $author)->first();
                     $subModule['installed'] = 1;
                     $subModule['active'] = $data->active;
                     $moduleClass = Module::getInstance($author, $subModule['name']);
@@ -326,8 +333,9 @@ class ModulesController extends AdminController
                     {
                         if (method_exists($moduleClass, 'configuration'))
                             $subModule['configurable'] = 1;
-                    }
 
+                            $subModule['core']=$moduleClass->core;
+                    }
                 }
             }
         }

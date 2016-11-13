@@ -34,7 +34,7 @@ class AdminPermission
                     if ($request->ajax() || $request->wantsJson()) {
                         return response('forbidden', 403);
                     } else {
-                        return redirect(route('admin.403'));
+                        return redirect(route(config('api.admin_url').'.403'));
                     }
                 }
             }

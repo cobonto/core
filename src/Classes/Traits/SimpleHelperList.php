@@ -27,6 +27,8 @@ trait SimpleHelperList
             // add pagination
            $rows = $this->pagination();
         }
+        //add javascript vars
+        $this->assign->addJSVars(['alert_msg'=>$this->lang('sure_to_delete')]);
         // add css and img files
         $this->listAssets();
         // call helper method before render view
