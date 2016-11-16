@@ -38,11 +38,9 @@ trait SimpleHelperList
             'search' => false,
             'create' => $this->create,
             'fields' => $this->fields_list,
-            'route_name' => $this->route_name,
             'rows' => $rows,
             'actions' => $this->actions,
             'skip_actions' => $this->skip_actions,
-            'controller' => $this,
             'filters' => $this->filter,
             'sqlRows'=>$this->sql
         ]);
@@ -81,7 +79,7 @@ trait SimpleHelperList
     }
     protected function pagination()
     {
-        $perPage = \Cache::get($this->getRoute().'perPage',$this->per_page);
+        $perPage = \Cache::get($this->getRoute('perPage',false),$this->per_page);
         if(!$perPage)
             $perPage=10;
         $this->assign->params(['per_page'=>$perPage]);

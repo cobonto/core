@@ -85,7 +85,7 @@ abstract class AdminController extends Controller
     protected $info = [];
 
     /**
-     * @param Cobonto\Classes\Assign
+     * @var Assign
      */
     protected $assign;
 
@@ -101,6 +101,7 @@ abstract class AdminController extends Controller
      * @var array $permissions
      */
     protected $permissions;
+
     /**
      * AdminController constructor.
      * @param \Illuminate\Http\Request $request
@@ -109,8 +110,12 @@ abstract class AdminController extends Controller
     {
         $this->request = $request;
         $this->app = \App::getInstance();
-        /** @var Assign assign */
+        /**
+         * @var Assign
+         */
         $this->assign = app('assign');
+        // set login enviroment
+        $this->assign->setEnvironment('admin');
         // load module
         if ($this instanceof ModuleAdminController)
             $this->loadModule();
@@ -118,7 +123,7 @@ abstract class AdminController extends Controller
         //$this->beforeProcess(\Route::getCurrentRoute()->getActionName());
         $this->setProperties();
         $this->permissions = Role::getRolePermissions(\Auth::user()->role_id);
-        $this->route_name = 'admin.' . $this->route_name . '.';
+        $this->route_name = config('app.admin_url') . '.' . $this->route_name . '.';
         $this->setMedia();
     }
 
@@ -161,18 +166,16 @@ abstract class AdminController extends Controller
             'css/ionicons/css/ionicons.min.css',
             'css/skins/_all-skins.min.css',
         ]);
-        // js
+        //jquery
+        $this->assign->addPlugin('jquery');
+        $this->assign->addPlugin('jquery-ui');
+        //js
         $this->assign->addJS([
-            'plugins/jQuery/jQuery-2.2.0.min.js',
-            'plugins/jQueryUI/jquery-ui.min.js',
             'js/bootstrap.min.js',
             'js/app.js',
 
         ]);
-        #  $this->assign->addUI('ui.core');
-        #  $this->assign->addUI('ui.widget');
-        # $this->assign->addUI('ui.button');
-        // javascript
+        // plugins
         $this->assign->addPlugin('morris');
         $this->assign->addPlugin('pace');
     }
@@ -211,13 +214,18 @@ abstract class AdminController extends Controller
             'HOOK_NAV' => Hook::execute('displayAdminNav'),
             'HOOK_SIDEBAR_TOP' => Hook::execute('displayAdminSideBarTop'),
             'HOOK_SIDEBAR' => Hook::execute('displayAdminSideBar'),
+            'route_name' => $this->route_name,
+            'controller' => $this,
         ]);
         // assign general hooks
         // to override all plugins and buttons
-        $this->assign->addCSS(
-            [
-                'css/AdminLTE.css',
-            ]);
+        $this->assign->addCSS('css/AdminLTE.css');
+        // add rtl file if app is rtl
+        if (config('app.rtl'))
+        {
+            $this->assign->addCSS('css/rtl.css');
+        }
+
         $this->assign->params([
             'css' => $this->assign->getCSS(),
             'javascript_files' => $this->assign->getJS(),
@@ -319,9 +327,9 @@ abstract class AdminController extends Controller
         $this->generateForm();
         $this->assign->params([
             'id' => 0,
-            'form_url' => route($this->route_name . 'store'),
+            'form_url' => $this->getRoute('store'),
             'object' => $this->model ?: null,
-            'route_list' => route($this->route_name . 'index'),
+            'route_list' => $this->getRoute('index'),
         ]);
         return $this->view();
     }
@@ -330,6 +338,7 @@ abstract class AdminController extends Controller
     {
 
     }
+
     // edit method
     protected function edit($id)
     {
@@ -345,7 +354,7 @@ abstract class AdminController extends Controller
             'id' => $id,
             'form_url' => route($this->route_name . 'store', ['id' => $id]),
             'object' => $this->model ?: null,
-            'route_list' => route($this->route_name . 'index'),
+            'route_list' => $this->getRoute('index'),
         ]);
         return $this->view();
     }
@@ -357,15 +366,15 @@ abstract class AdminController extends Controller
         if ($id && $this->loadObject($id, true))
         {
             // check permissions
-            if(!$this->hasPermission('edit'))
-                return redirect(route(config('api.admin_url').'.403'));
+            if (!$this->hasPermission('edit'))
+                return redirect(route(config('api.admin_url') . '.403'));
             return $this->update($id);
         }
         else
         {
             // check permissions
-            if(!$this->hasPermission('create'))
-                return redirect(route(config('api.admin_url').'.403'));
+            if (!$this->hasPermission('create'))
+                return redirect(route(config('api.admin_url') . '.403'));
             return $this->add();
         }
 
@@ -385,7 +394,7 @@ abstract class AdminController extends Controller
                 {
                     $this->errors = $this->model->errors()->all();
                     $this->request->flash();
-                    return redirect(route($this->route_name . 'create'))->withErrors($this->errors);
+                    return redirect($this->getRoute('create'))->withErrors($this->errors);
                 }
                 else
                 {
@@ -404,7 +413,7 @@ abstract class AdminController extends Controller
         }
         else
             $this->errors[] = $this->lang('object_not_loaded');
-        return redirect(route($this->route_name . 'create'))->withErrors($this->errors);
+        return redirect($this->getRoute('create'))->withErrors($this->errors);
     }
 
     //update
@@ -468,7 +477,7 @@ abstract class AdminController extends Controller
 
         }
         if (count($this->errors))
-            return redirect(route($this->route_name . 'index'))->withErrors($this->errors);
+            return redirect($this->getRoute('index'))->withErrors($this->errors);
         else
             return $this->redirect($this->lang('delete_success'));
     }
@@ -508,7 +517,7 @@ abstract class AdminController extends Controller
         if ($this->request->input('saveAndStay'))
             return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->with('success', $msg);
         else
-            return redirect(route($this->route_name . 'index'))->with('success', $msg);
+            return redirect($this->getRoute('index'))->with('success', $msg);
     }
 
     /**
@@ -550,42 +559,55 @@ abstract class AdminController extends Controller
      */
     protected function listQuery()
     {
-       if($this->sql==false)
-       {
-           $select = [];
-           foreach ($this->fields_list as $field => $options)
-           {
-               // select
-               $select[] = isset($options['real_field']) ? $options['real_field'] . ' as ' . $field : $field;
-           }
-           $this->sql = \DB::table($this->table . ' AS a')->select($select);
-       }
+        if ($this->sql == false)
+        {
+            $select = [];
+            foreach ($this->fields_list as $field => $options)
+            {
+                // select
+                $select[] = isset($options['real_field']) ? $options['real_field'] . ' as ' . $field : $field;
+            }
+            $this->sql = \DB::table($this->table . ' AS a')->select($select);
+        }
         return $this->sql;
     }
-    public function getRoute()
+
+    /**
+     * get route from controller
+     * @param string $route_name
+     * @param bool $route
+     * @param array $params
+     * @return string
+     */
+    public function getRoute($route_name,$route=true)
     {
-        return $this->route_name;
+        if ($route)
+            return route($this->route_name . $route_name);
+        else
+            return $this->route_name.$route_name;
     }
+
     protected function checkPermissions()
     {
-        if(\Auth::user()->role_id==1)
+        if (\Auth::user()->role_id == 1)
             return true;
-        foreach($this->actions as $action=>$params)
+        foreach ($this->actions as $action => $params)
         {
-            if(!isset($this->permissions[$this->route.'.'.$action]))
+            if (!isset($this->permissions[$this->route . '.' . $action]))
                 $this->removeAction($action);
         }
 
-        if(!isset($this->permissions[$this->route.'.create']))
+        if (!isset($this->permissions[$this->route . '.create']))
         {
 
             $this->create = false;
         }
     }
+
     protected function hasPermission($permission)
     {
-        if(\Auth::user()->role_id==1)
+        if (\Auth::user()->role_id == 1)
             return true;
-        return isset($this->permissions[$this->route.'.'.$permission]);
+        return isset($this->permissions[$this->route . '.' . $permission]);
     }
 }

@@ -27,24 +27,28 @@ Route::group(
         'prefix' => config('app.admin_url')], function ()
 {
     // module routes
-
-    Route::get('modules/install/{author}/{name}', 'ModulesController@install')->name('admin.modules.install');
-    Route::get('modules/uninstall/{author}/{name}', 'ModulesController@uninstall')->name('admin.modules.uninstall');;
-    Route::get('modules/enable/{author}/{name}', 'ModulesController@enable')->name('admin.modules.enable');;
-    Route::get('modules/disable/{author}/{name}', 'ModulesController@disable')->name('admin.modules.disable');;
-    Route::get('modules/configure/{author}/{name}', 'ModulesController@configuration')->name('admin.modules.configure');;
-    Route::post('modules/save/{author}/{name}', 'ModulesController@save')->name('admin.modules.save');;
-    Route::post('modules/uploadModule', 'ModulesController@uploadModule')->name('admin.modules.uploadModule');;
-    Route::get('modules/rebuild', 'ModulesController@rebuildList')->name('admin.modules.rebuildList');
+    $admin_url = config('app.admin_url');
+    Route::get('modules/install/{author}/{name}', 'ModulesController@install')->name($admin_url.'.modules.install');
+    Route::get('modules/uninstall/{author}/{name}', 'ModulesController@uninstall')->name($admin_url.'.modules.uninstall');;
+    Route::get('modules/enable/{author}/{name}', 'ModulesController@enable')->name($admin_url.'.modules.enable');;
+    Route::get('modules/disable/{author}/{name}', 'ModulesController@disable')->name($admin_url.'.modules.disable');;
+    Route::get('modules/configure/{author}/{name}', 'ModulesController@configuration')->name($admin_url.'.modules.configure');;
+    Route::post('modules/save/{author}/{name}', 'ModulesController@save')->name($admin_url.'.modules.save');;
+    Route::post('modules/uploadModule', 'ModulesController@uploadModule')->name($admin_url.'.modules.uploadModule');;
+    Route::get('modules/rebuild', 'ModulesController@rebuildList')->name($admin_url.'.modules.rebuildList');
 
     // module positions routes
-    Route::get('modules/positions', 'ModulePositionsController@index')->name('admin.positions.index');
-    Route::post('modules/positions/update', 'ModulePositionsController@updatePositions')->name('admin.positions.update');
+    Route::get('modules/positions', 'ModulePositionsController@index')->name($admin_url.'.positions.index');
+    Route::post('modules/positions/update', 'ModulePositionsController@updatePositions')->name($admin_url.'.positions.update');
     // permissions route
-    Route::get('permissions', 'PermissionsController@index')->name('admin.permissions.index');
-    Route::post('permissions/update', 'PermissionsController@updatePermissions')->name('admin.permissions.update');
-    Route::post('permissions/role', 'PermissionsController@Role')->name('admin.permissions.role');
-
+    Route::get('permissions', 'PermissionsController@index')->name($admin_url.'.permissions.index');
+    Route::post('permissions/update', 'PermissionsController@updatePermissions')->name($admin_url.'.permissions.update');
+    Route::post('permissions/role', 'PermissionsController@Role')->name($admin_url.'.permissions.role');
+    // translate controller
+    Route::get('translates','TranslatesController@index')->name($admin_url.'.translates.index');
+    Route::post('translates/load','TranslatesController@loadFile')->name($admin_url.'.translates.load');
+    Route::post('translates/save','TranslatesController@saveFile')->name($admin_url.'.translates.save');
+    Route::post('translates/environment','TranslatesController@loadEnvironment')->name($admin_url.'.translates.environment');
     Route::resources([
         'dashboard' => 'DashboardController',
         'users' => 'UserController',

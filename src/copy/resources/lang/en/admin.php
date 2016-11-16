@@ -29,6 +29,7 @@ return [
     'update_success'=>'Successfully updated',
     'refresh_successfully'=>'Refreshed successfully',
     'saveconfigure_not_exists'=>'saveConfigure method is not exists in module',
+    'can_not_delete_core_module'=>'Can not delete module core',
     // moduleAdminController
     'module_name_invalid'=>'Module name is invalid',
     'module_not_loaded'=>'Module object can not be loaded',
@@ -64,5 +65,15 @@ return [
     'groups'=>'Groups',
     //permissionsController
     'permissions'=>'Permissions',
-    'something_wrong'=>'Something is wrong'
+    'something_wrong'=>'Something is wrong',
+    'sure_to_delete'=>'Are you sure to delete?',
+    // translate controller
+    'translate'=>'Translate',
+    'core_translate'=>'Translate core',
+    'module_translate'=>'Translate module',
+    'front_translate'=>'Translate front',
+    'language'=>'Language',
+    'unknown_envrionment'=>'Unknown environment',
+    'this_file_not_found'=>'This file is not found',
+    'problem_in_save_file'=>'Problem in save file',
     ];

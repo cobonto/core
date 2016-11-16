@@ -10,4 +10,6 @@ return [
     'employees'=>'Employees',
     'roles'=>'Roles',
     'permissions'=>'Permissions',
+    'settings'=>'Settings',
+    'translates'=>'Translates',
 ];

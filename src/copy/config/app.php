@@ -9,7 +9,7 @@ return [
        | This value for prefix all admin urls
        |
        */
-    'admin_url'=>env('ADMIN_URL','admin'),
+    'admin_url'=>env('APP_ADMIN_URL','admin'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -74,8 +74,8 @@ return [
     |
     */
 
-    'locale' => 'en',
-
+    'locale' => env('APP_LOCALE','en'),
+     'rtl'=>env('APP_RTL','0'),
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale

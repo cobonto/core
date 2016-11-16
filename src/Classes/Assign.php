@@ -36,12 +36,15 @@ class Assign
      * @var Filesystem $files
      */
     protected $files=[];
-
+    /**
+     * @var string $enviroment
+     */
+    protected $environment='';
     /**
      * __construct
      * @var Filesystem $file
      */
-    public function __construct($files)
+    public function __construct(Filesystem $files)
     {
         $this->files = $files;
     }
@@ -51,12 +54,14 @@ class Assign
      * @param array|string file name $files
      * @return void
      */
-    public function addJS($files)
+    public function addJS($files,$module=false)
     {
         if (!is_array($files))
             $files = array($files);
         foreach ($files as $file)
         {
+            if(!$module)
+                $file = $this->environment.$file;
             if ($this->files->exists(public_path($file)))
             {
                 $this->JSFiles[] = $file;
@@ -67,14 +72,29 @@ class Assign
     /**
      * add css file to system
      * @param array|string file name $files
+     * @param bool $module assign for modules
      * @return void
      */
-    public function addCSS($files)
+    public function addCSS($files,$module=false)
     {
         if (!is_array($files))
             $files = array($files);
         foreach ($files as $file)
         {
+            if(!$module)
+            {
+                $file = $this->environment.$file;
+            }
+
+            // check for load css rtl
+            if(config('app.rtl') && $module)
+            {
+                // we change .css filename to _rtl.css and check is exists or not
+                $rtl_file = str_replace('.css','_rtl.css',$file);
+                if($this->files->exists(public_path($rtl_file)))
+                    $file = $rtl_file;
+            }
+
             if ($this->files->exists(public_path($file)))
             {
                 $this->CSSFiles[] = $file;
@@ -89,11 +109,10 @@ class Assign
      */
     public function addPlugin($name)
     {
-        if ($this->files->exists(public_path('plugins/' . $name)))
-        {
-            $this->addJS('plugins/' . $name . '/' . $name . '.min.js');
-            $this->addCSS('plugins/' . $name . '/' . $name . '.css');
-        }
+           if($this->files->exists('plugins/' . $name . '/' . $name . '.min.js'))
+                $this->JSFiles[]='plugins/' . $name . '/' . $name . '.min.js';
+            if($this->files->exists('plugins/' . $name . '/' . $name . '.css'))
+                $this->CSSFiles[]='plugins/' . $name . '/' . $name . '.css';
     }
     /**
      * add jquery ui to system
@@ -102,11 +121,7 @@ class Assign
      */
     public function addUI($name)
     {
-        $jsPath = 'plugins/jQueryUI/ui/';
-        $cssPath = 'plugins/jQueryUI/ui/themes/base/';
-        $file ='jquery.'.$name.'.min.';
-            $this->addJS($jsPath.$file.'js');
-            $this->addCSS($cssPath.$file.'css');
+
     }
 
     /**
@@ -177,5 +192,19 @@ class Assign
     public function getJSVars()
     {
         return $this->JSVars;
+    }
+
+    /**
+     * set environment to load files
+     * @param $environment
+     */
+    public function setEnvironment($environment)
+    {
+        if($environment !='')
+            $this->environment = $environment.'/';
+    }
+    public function getEnvironment()
+    {
+        return $this->environment;
     }
 }
