@@ -3,9 +3,11 @@
 namespace Cobonto\Controllers\Admin;
 
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Cobonto\Controllers\AdminController;
 use Module\Classes\Hook;
+use Module\Classes\Module;
 
 
 class ModulePositionsController extends AdminController
@@ -35,7 +37,8 @@ class ModulePositionsController extends AdminController
         ]);
         // add some javascript vars
         $this->assign->addJSVars([
-            'ajax_position_url' => route($this->route_name . 'update'),
+            'ajax_position_url' => $this->getRoute('update'),
+            'ajax_position_unregister'=>$this->getRoute('unregister'),
         ]);
         return parent::index();
     }
@@ -93,5 +96,37 @@ class ModulePositionsController extends AdminController
             ];
         }
         return response()->json($data);
+    }
+    protected function unRegister(Request $request)
+    {
+        $data = $request->input('data');
+        $hookModule = explode('-',$data)[1];
+        $module_id = explode('*',$hookModule)[0];
+        $hook_id = explode('*',$hookModule)[1];
+        // check for hook
+        $Hook =Hook::find($hook_id);
+        if(is_object($Hook))
+        {
+            // check for module
+            $Module = Module::find($module_id);
+            if(is_object($Module))
+            {
+                \DB::table('hooks_modules')->
+                where('id_hook', '=', $hook_id)->
+                where('id_module', '=', $module_id)->delete();
+                // clear cache
+                app('cache')->flush();
+                return response()->json(['status'=>'success','msg'=>$this->lang('delete_success')]);
+
+            }
+            else
+            {
+                return response()->json(['status'=>'error','msg'=>$this->lang('invalid_data')]);
+            }
+        }
+        else
+        {
+            return response()->json(['status'=>'error','msg'=>$this->lang('invalid_data')]);
+        }
     }
 }

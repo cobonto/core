@@ -40,6 +40,7 @@ Route::group(
     // module positions routes
     Route::get('modules/positions', 'ModulePositionsController@index')->name($admin_url.'.positions.index');
     Route::post('modules/positions/update', 'ModulePositionsController@updatePositions')->name($admin_url.'.positions.update');
+    Route::post('modules/positions/unregister', 'ModulePositionsController@unRegister')->name($admin_url.'.positions.unregister');
     // permissions route
     Route::get('permissions', 'PermissionsController@index')->name($admin_url.'.permissions.index');
     Route::post('permissions/update', 'PermissionsController@updatePermissions')->name($admin_url.'.permissions.update');
