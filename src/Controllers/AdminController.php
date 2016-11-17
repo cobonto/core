@@ -233,6 +233,7 @@ abstract class AdminController extends Controller
         ]);
         $tpl = $this->renderTplName();
         $this->loadMsgs();
+        ;
         // add javascript vars to front
         $this->assign->addJSVars([
             '_token' => csrf_token(),

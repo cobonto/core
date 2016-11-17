@@ -65,14 +65,14 @@ trait HelperForm
                     }
                     elseif ($field['type'] == 'inputmask')
                     {
-                        $this->assign->addJS('plugins/inputmask/jquery.inputmask.js');
+                        $this->assign->addJS('plugins/inputmask/jquery.inputmask.js',true);
                         // check has extenstions
                         if (isset($field['extensions']))
                         {
                             $this->assign->addJS([
                                 'plugins/inputmask/jquery.inputmask.' . $field['extensions'] . '.extensions.js',
                                 'plugins/inputmask/jquery.inputmask.extensions.js',
-                            ]);
+                            ],true);
                         }
 
                         $id = (isset($field['id']) ? $field['id'] : $field['name']);
@@ -95,7 +95,8 @@ trait HelperForm
                     }
                     elseif ($field['type'] == 'textarea' && isset($field['class']) && $field['class'] == 'ckeditor')
                     {
-                        $this->assign->addJS('plugins/ckeditor/ckeditor.js');
+                        $this->assign->addJS('plugins/ckeditor/ckeditor.js',true);
+                        $this->assign->addJSVars(['eldifnder_url'=>route('elfinder.ckeditor')]);
 
                     }
                     elseif ($field['type'] == 'switch')
