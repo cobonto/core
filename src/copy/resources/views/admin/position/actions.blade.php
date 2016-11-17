@@ -8,7 +8,7 @@
     <ul role="menu" class="dropdown-menu">
         <!-- install or unistall link -->
         <li>
-            <a>{{ transTpl('unregister') }}</a>
+            <a class="unregister" href="#">{{ transTpl('unregister') }}</a>
         </li>
 
     </ul>

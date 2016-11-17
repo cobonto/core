@@ -40,7 +40,7 @@
                         </div>
                     @endif
                 </div>
-                <div class="box-body table-responsive no-padding">
+                <div class="box-body no-padding">
                     <table class="table table-hover">
                         <thead>
                         <tr>
