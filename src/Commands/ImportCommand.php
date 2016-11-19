@@ -28,7 +28,7 @@ class ImportCommand extends CobontoCommand
         // we start to copy data from system to package name of folders
         $folders = [
             'resources/views',
-           # 'resources/lang',
+            'resources/lang',
            # 'app/Http/Controllers/Admin',
             'database/migrations',
             'database/seeds',
@@ -37,7 +37,7 @@ class ImportCommand extends CobontoCommand
             'config/app.php',
             'app/Http/Kernel.php',
             #'app/Http/routes.php',
-            #'app/User.php',
+            'app/User.php',
         ];
         $file_changes = [];
         foreach ($folders as $folder)
