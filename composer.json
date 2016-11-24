@@ -29,11 +29,14 @@
     ],
     "require": {
       "laracasts/utilities": "~2.0",
-      "barryvdh/laravel-ide-helper":"2.2.*",
       "yajra/laravel-datatables-oracle": "^6.15",
       "intervention/image": "^2.3",
       "barryvdh/laravel-elfinder": "^0.3.8",
-      "itsgoingd/clockwork": "^1.12"
+      "mews/purifier": "^2.0"
+    },
+    "require-dev":{
+      "itsgoingd/clockwork": "^1.12",
+      "barryvdh/laravel-ide-helper":"2.2.*"
     },
     "autoload": {
         "psr-4": {
