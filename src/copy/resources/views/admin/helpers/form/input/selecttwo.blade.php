@@ -4,6 +4,7 @@
 
     <div class="col-lg-{{isset($input['col'])? $input['col'] : 6 }}">
         <select class="form-control {{isset($input['class'])? $input['class']:''}}"
+                name="{{ $input['name'] }}"
                 id="{{ isset($input['id'])?$input['id']:$input['name'] }}"
         @if(isset($input['attributes']) && count($input['attributes']))
             @foreach($input['attributes'] as $key=>$value)

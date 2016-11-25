@@ -19,6 +19,15 @@
                     <!-- /.box-body -->
                     <div class="box-footer">
                         <a class="btn btn-default" href="{{ $route_list }}"><i class="fa fa-remove"></i>{{ transTpl('cancel','helpers') }}</a>
+                        @if(isset($form['links']))
+                            @foreach($form['links'] as $link)
+                                <a href="{{ $link['link'] }}"
+                                        class="btn btn-default{{ isset($link['class'])?$link['class']:'' }}">
+                                    @if(isset($link['icon']))<i class="fa fa-{{ $link['icon'] }}"></i>@endif
+                                    {{ $link['name'] }}
+                                </a>
+                            @endforeach
+                        @endif
                         @if(isset($form['buttons']))
                             @foreach($form['buttons'] as $button)
                                 <button type="{{$button['type']}}"

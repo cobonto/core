@@ -128,7 +128,7 @@ trait HelperForm
             {
                 $options .= $key . ':"' . $value . '",';
             }
-            trim($options, ',');
+           $options = trim($options, ',');
             $field['javascript'] .= $options;
         }
         $field['javascript'] .= '});';
