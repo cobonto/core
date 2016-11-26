@@ -22,7 +22,7 @@
                         @if(isset($form['links']))
                             @foreach($form['links'] as $link)
                                 <a href="{{ $link['link'] }}"
-                                        class="btn btn-default{{ isset($link['class'])?$link['class']:'' }}">
+                                        class="btn btn-default {{ isset($link['class'])?$link['class']:'' }}">
                                     @if(isset($link['icon']))<i class="fa fa-{{ $link['icon'] }}"></i>@endif
                                     {{ $link['name'] }}
                                 </a>

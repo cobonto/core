@@ -20,11 +20,10 @@ class ModulesController extends AdminController
     // modules module path
     protected $modulePath;
 
-    public function __construct(Request $request)
+    public function setProperties()
     {
         $this->title = $this->lang('modules');
-        parent::__construct($request);
-
+        parent::setProperties();
         $this->fillData();
     }
 

@@ -2,7 +2,7 @@
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-        {!! $HOOK_SIDEBAR_TOP !!}
+        {!! hook('displayAdminSideBarTop') !!}
                 <!-- search form -->
         {{--<form action="#" method="get" class="sidebar-form">
             <div class="input-group">
@@ -64,7 +64,7 @@
                         </ul>
                     </li>
                 @endif
-            {!! $HOOK_SIDEBAR !!}
+            {!! hook('displayAdminSideBar') !!}
         </ul>
     </section>
     <!-- /.sidebar -->

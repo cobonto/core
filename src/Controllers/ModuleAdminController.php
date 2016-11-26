@@ -19,11 +19,11 @@ class ModuleAdminController extends AdminController
     protected $module;
     /** @var bool ovveride_view_files */
     protected $ovverrideViewFile = false;
-
-    public function __construct(Request $request)
+    public function __construct(\Illuminate\Http\Request $request)
     {
         parent::__construct($request);
     }
+
     protected function setProperties()
     {
         parent::setProperties();

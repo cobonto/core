@@ -31,3 +31,16 @@ if (!function_exists('hasAccess'))
         return $result;
     }
 }
+if (!function_exists('hook'))
+{
+    /**
+     * execute hook helper function
+     * @param string $hook
+     * @param array $params
+     * @return html
+     */
+    function hook($hook, $params=[])
+    {
+        return \Module\Classes\Hook::execute($hook,$params);
+    }
+}

@@ -2,7 +2,6 @@
 
 namespace Cobonto\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
 use App\User;
 use Cobonto\Classes\Assign;
@@ -47,15 +46,6 @@ abstract class AdminController extends Controller
      */
     protected $app;
     /**
-     * @param string $route name of route
-     */
-    protected $route;
-    /**
-     * @param string $route_name full route name include prefix route
-     */
-    protected $route_name;
-
-    /**
      * @param  string $prefix_model preifx_namespace of model
      */
     protected $prefix_model;
@@ -70,11 +60,6 @@ abstract class AdminController extends Controller
      */
     protected $model;
     /**
-     * @param array $errors ;
-     */
-    protected $errors = [];
-
-    /**
      * @param array $warning
      */
     protected $warning = [];
@@ -83,12 +68,6 @@ abstract class AdminController extends Controller
      * @param array $warning
      */
     protected $info = [];
-
-    /**
-     * @var Assign
-     */
-    protected $assign;
-
     /**
      * @var string $translationPrefixFile
      */
@@ -106,9 +85,10 @@ abstract class AdminController extends Controller
      * AdminController constructor.
      * @param \Illuminate\Http\Request $request
      */
-    public function __construct(\Illuminate\Http\Request $request)
+    public function __construct()
     {
-        $this->request = $request;
+        $this->request = app('request');
+        $this->theme = 'admin';
         $this->app = \App::getInstance();
         /**
          * @var Assign
@@ -122,7 +102,9 @@ abstract class AdminController extends Controller
         //run some method before routing
         //$this->beforeProcess(\Route::getCurrentRoute()->getActionName());
         $this->setProperties();
-        $this->permissions = Role::getRolePermissions(\Auth::user()->role_id);
+        // for debug and artisan
+        if(\Auth::check())
+             $this->permissions = Role::getRolePermissions(\Auth::user()->role_id);
         $this->route_name = config('app.admin_url') . '.' . $this->route_name . '.';
         $this->setMedia();
     }
@@ -181,39 +163,13 @@ abstract class AdminController extends Controller
     }
 
     /**
-     * before routing is executed this method will be running
-     * @param string $routeName
-     * @return void
-     */
-    public function beforeProcess($routeName)
-    {
-
-    }
-
-    /**
-     * after routing is run this method is executed
-     * @param string $routeName
-     * @return void
-     */
-    public function afterProcess($routeName)
-    {
-
-    }
-
-    /**
      * do something and prepare to render view
      * @return \View html
      */
     protected function view()
     {
-        // after process
-        $this->afterProcess(\Route::getCurrentRoute()->getActionName());
         $this->assign->params([
             'HOOK_HEADER' => Hook::execute('displayAdminHeader'),
-            'HOOK_FOOTER' => Hook::execute('displayAdminFooter'),
-            'HOOK_NAV' => Hook::execute('displayAdminNav'),
-            'HOOK_SIDEBAR_TOP' => Hook::execute('displayAdminSideBarTop'),
-            'HOOK_SIDEBAR' => Hook::execute('displayAdminSideBar'),
             'route_name' => $this->route_name,
             'controller' => $this,
         ]);
@@ -251,9 +207,9 @@ abstract class AdminController extends Controller
     {
         $data = explode('.', $this->tpl);
         if (count($data) == 1)
-            return 'admin.' . $this->tpl . '.main';
+            return $this->theme.'.' . $this->tpl . '.main';
         elseif (count($data) == 2)
-            return 'admin.' . $this->tpl;
+            return $this->theme.'.' . $this->tpl;
         else
             return $this->tpl;
     }

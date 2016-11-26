@@ -2,7 +2,7 @@
     <button class="btn {{isset($module['installed'])?'btn-success':'btn-info'}}"
             type="button">{{isset($module['installed'])?'Installed':'Uninstalled'}}</button>
     @if(isset($module['core']) && $module['core'])
-        @if(isset($module['configurable']))
+        @if(isset($module['configurable']) && $module['configurable'])
             <button data-toggle="dropdown"
                     class="btn {{isset($module['installed'])?'btn-success':'btn-info'}} dropdown-toggle"
                     type="button" aria-expanded="false">
@@ -18,7 +18,7 @@
     @endif
     <ul role="menu" class="dropdown-menu">
         <!-- install or unistall link -->
-        @if(!isset($module['core']) || $module['core'])
+        @if(!isset($module['core']) || $module['core']==false)
             <li>
                 <a href="{{isset($module['installed'])?route('admin.modules.uninstall',[
                     'author'=>strtolower(camel_case($module['author'])),
@@ -32,7 +32,7 @@
         @endif
                     <!-- disable and enable -->
          @if(isset($module['installed']))
-                @if(!isset($module['core']) || $module['core'])
+                @if(!isset($module['core']) || $module['core']==false)
                     <li>
                         <a href="{{$module['active'] ?route('admin.modules.disable',[
                     'author'=>strtolower(camel_case($module['author'])),
@@ -45,7 +45,7 @@
                     </li>
                 @endif
                             <!-- configuration module -->
-                @if(isset($module['configurable']))
+                @if(isset($module['configurable']) && $module['configurable'])
                         <li>
                             <a href="{{route('admin.modules.configure',['author'=>strtolower(camel_case($module['author'])),
                     'name'=>strtolower(camel_case($module['name'])),
@@ -54,7 +54,7 @@
                 @endif
          @endif
                                 <!-- remove module -->
-         @if(!isset($module['core']) || $module['core'])
+         @if(!isset($module['core']) || $module['core']==false)
                             <li>
                                 <a class="delete" href="">Delete</a>
                                 <form style="display:none"

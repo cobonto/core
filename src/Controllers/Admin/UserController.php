@@ -7,28 +7,36 @@ use Cobonto\Controllers\AdminController;
 
 class UserController extends AdminController
 {
-    protected $title = 'Users';
+
     protected $table = 'users';
     protected $route_name = 'users';
     protected $model_name = 'User';
+    protected function setProperties()
+    {
+        $this->title = $this->lang('users');
+        parent::setProperties();
+    }
+
     protected function fieldList()
     {
         $this->fields_list = [
             'id' => [
-                'title' => 'ID',
+                'title' => $this->lang('id'),
             ],
             'name' => [
-                'title' => 'Name',
+                'title' => $this->lang('name'),
             ],
             'email' => [
-                'title' => 'Email',
+                'title' => $this->lang('email'),
             ],
             'active' => [
-                'title' => 'Status',
+                'filter_type'=>'bool',
+                'title' => $this->lang('status'),
                 'function' => 'displayStatus',
             ],
             'created_at' => [
-                'title' => 'Created at',
+                'filter_type'=>'date',
+                'title' => $this->lang('created_at'),
             ]
         ];
     }
@@ -45,7 +53,7 @@ class UserController extends AdminController
                         'type' => 'text',
                         'class' => '',
                         'col' => '6',
-                        'title' => 'Name',
+                        'title' => $this->lang('name'),
                         //  'suffix' => '$',
                         //  'prefix' => '00.0',
 
@@ -56,7 +64,7 @@ class UserController extends AdminController
                         'type' => 'text',
                         'class' => '',
                         'col' => '6',
-                        'title' => 'Email',
+                        'title' => $this->lang('email'),
                         //  'suffix' => '$',
                         //  'prefix' => '00.0',
 
@@ -66,7 +74,7 @@ class UserController extends AdminController
                         'type' => 'password',
                         'class' => '',
                         'col' => '3',
-                        'title' => 'Password',
+                        'title' => $this->lang('password'),
 
                     ],
                     [
@@ -74,7 +82,7 @@ class UserController extends AdminController
                         'type' => 'password',
                         'class' => '',
                         'col' => '3',
-                        'title' => 'Password confirm',
+                        'title' => $this->lang('password_confirmed'),
 
                     ],
                     // date picker
@@ -83,25 +91,25 @@ class UserController extends AdminController
                         'type' => 'switch',
                         'class' => '',
                         'col' => '6',
-                        'title' => 'Status',
+                        'title' => $this->lang('status'),
                         'default_value' => 1,
                         'jqueryOptions' => [
                             'onColor' => 'success',
                             'offColor' => 'danger',
-                            'onText' => 'Yes',
-                            'offText' => 'No',
+                            'onText' => $this->lang('yes'),
+                            'offText' => $this->lang('no'),
                         ]
                     ],
                 ],
                 'submit' => [
                     [
                         'name' => 'save',
-                        'title' => 'Save',
+                        'title' => $this->lang('save'),
                         'type' => 'submit',
                     ],
                     [
                         'name' => 'saveAndStay',
-                        'title' => 'Save and stay',
+                        'title' => $this->lang('save_and_stay'),
                         'type' => 'submit',
                         'class' => 'btn-warning'
                     ]
@@ -117,7 +125,7 @@ class UserController extends AdminController
         $email = $this->request->input('email');
         if($email)
             if(User::getByEmail($email))
-                $this->errors[] = 'This email is already used';
+                $this->errors[] = $this->lang('email_used');
     }
 
     protected function beforeUpdate($id)
@@ -129,7 +137,7 @@ class UserController extends AdminController
             if($new_id)
             {
                 if($new_id !=$id)
-                    $this->errors[] = 'This email is already used';
+                    $this->errors[] = $this->lang('email_used');
             }
         }
 

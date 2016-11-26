@@ -1,3 +1,3 @@
 <footer class="main-footer">
-    {!! $HOOK_FOOTER !!}
+    {!! hook('displayAdminFooter') !!}
 </footer>

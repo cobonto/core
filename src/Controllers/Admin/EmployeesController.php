@@ -39,12 +39,10 @@ class EmployeesController extends AdminController
                 'title' => $this->lang('email'),
             ],
             'active' => [
+                'type'=>'bool',
                 'title' => $this->lang('status'),
                 'function' => 'displayStatus',
             ],
-            'created_at' => [
-                'title' => $this->lang('created_at'),
-            ]
         ];
     }
 

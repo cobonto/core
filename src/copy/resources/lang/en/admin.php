@@ -76,4 +76,7 @@ return [
     'unknown_envrionment'=>'Unknown environment',
     'this_file_not_found'=>'This file is not found',
     'problem_in_save_file'=>'Problem in save file',
+    'users'=>'Users',
+    'password'=>'Password',
+    'password_confirmed'=>'Password confirmed',
     ];
