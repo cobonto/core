@@ -141,22 +141,14 @@ abstract class AdminController extends Controller
      */
     protected function setMedia()
     {
+        parent::setMedia();
         // css
         $this->assign->addCSS([
-            'css/bootstrap.min.css',
-            'css/font-awesome/css/font-awesome.min.css',
             'css/ionicons/css/ionicons.min.css',
             'css/skins/_all-skins.min.css',
         ]);
-        //jquery
-        $this->assign->addPlugin('jquery');
-        $this->assign->addPlugin('jquery-ui');
         //js
-        $this->assign->addJS([
-            'js/bootstrap.min.js',
-            'js/app.js',
-
-        ]);
+        $this->assign->addJS('js/app.js');
         // plugins
         $this->assign->addPlugin('morris');
         $this->assign->addPlugin('pace');

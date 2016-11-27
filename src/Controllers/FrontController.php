@@ -8,6 +8,8 @@
 
 namespace Cobonto\Controllers;
 
+use Module\Classes\Hook;
+
 class FrontController extends Controller
 {
     public function __construct()
@@ -27,16 +29,16 @@ class FrontController extends Controller
     {
 
     }
-    /**
-     * add media specific for controller
-     * @return void
-     */
-    protected function setMedia()
-    {
-
-    }
     protected function view()
     {
-
+        $this->setMedia();
+        $this->assign->params([
+            'HOOK_HEADER' => Hook::execute('displayHeader'),
+        ]);
+        // add rtl file if app is rtl
+        if (config('app.rtl'))
+        {
+            $this->assign->addCSS('rtl.css');
+        }
     }
 }

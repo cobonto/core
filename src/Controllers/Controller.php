@@ -46,10 +46,14 @@ abstract class Controller extends BaseController
     /** render view */
     abstract protected function view();
     /**  setMedia files  */
-    abstract protected function setMedia();
-
-    public function __construct()
+    protected function setMedia()
     {
-
+        $this->assign->addCSS(
+            ['admin/css/bootstrap.min.css',
+                'admin/css/font-awesome/css/font-awesome.min.css']
+            ,true);
+        $this->assign->addPlugin('jquery');
+        $this->assign->addPlugin('jquery-ui');
+        $this->assign->addJS('admin/js/bootstrap.min.js',true);
     }
 }
