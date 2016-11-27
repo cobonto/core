@@ -41,6 +41,10 @@ abstract class Controller extends BaseController
      * @var string theme directory
      */
     protected $theme;
+    /**
+     * @var string theme uri
+     */
+    protected  $theme_uri;
     /** set additaional properties to controller */
     abstract protected function setProperties();
     /** render view */

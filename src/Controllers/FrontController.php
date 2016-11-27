@@ -16,7 +16,9 @@ class FrontController extends Controller
     {
         $this->assign = app('assign');
         $this->theme = config('app.theme');
-        $this->assign->setEnvironment($this->theme);
+        $this->theme_uri = str_replace('.','/',$this->theme);
+
+        $this->assign->setEnvironment($this->theme_uri);
         // load module
         if ($this instanceof ModuleFrontController)
             $this->loadModule();
@@ -35,6 +37,7 @@ class FrontController extends Controller
         $this->setMedia();
         $this->assign->params([
             'HOOK_HEADER' => Hook::execute('displayHeader'),
+            'theme_uri'=>$this->theme_uri
         ]);
         // add rtl file if app is rtl
         if (config('app.rtl'))
