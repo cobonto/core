@@ -31,6 +31,7 @@ class FrontController extends Controller
     }
     protected function view()
     {
+
         $this->setMedia();
         $this->assign->params([
             'HOOK_HEADER' => Hook::execute('displayHeader'),
@@ -40,5 +41,14 @@ class FrontController extends Controller
         {
             $this->assign->addCSS('rtl.css');
         }
+        $this->assign->params([
+            'css' => $this->assign->getCSS(),
+            'javascript_files' => $this->assign->getJS(),
+        ]);
+        // add javascript vars to front
+        $this->assign->addJSVars([
+            '_token' => csrf_token(),
+        ]);
+        \JavaScript::put($this->assign->getJSVars());
     }
 }
