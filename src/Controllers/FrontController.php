@@ -37,34 +37,6 @@ class FrontController extends Controller
     }
     protected function view()
     {
-        $this->assign->params([
-            'HOOK_HEADER' => Hook::execute('displayHeader'),
-            'route_name' => $this->route_name,
-            'controller' => $this,
-        ]);
-        // assign general hooks
-        // to override all plugins and buttons
-        $this->assign->addCSS('css/AdminLTE.css');
-        // add rtl file if app is rtl
-        if (config('app.rtl'))
-        {
-            $this->assign->addCSS('css/rtl.css');
-        }
 
-        $this->assign->params([
-            'css' => $this->assign->getCSS(),
-            'javascript_files' => $this->assign->getJS(),
-            'title' => $this->title,
-        ]);
-        $tpl = $this->renderTplName();
-        $this->loadMsgs();
-        ;
-        // add javascript vars to front
-        $this->assign->addJSVars([
-            '_token' => csrf_token(),
-        ]);
-        \JavaScript::put($this->assign->getJSVars());
-        // analyze tpl name and render view
-        return view($tpl, $this->assign->getViewData());
     }
 }
