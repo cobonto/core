@@ -195,7 +195,6 @@ return [
         \Yajra\Datatables\DatatablesServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\Elfinder\ElfinderServiceProvider::class,
-        \Clockwork\Support\Laravel\ClockworkServiceProvider::class,
         \Mews\Purifier\PurifierServiceProvider::class,
     ],
 

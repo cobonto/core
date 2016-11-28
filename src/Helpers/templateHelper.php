@@ -46,10 +46,19 @@ if (!function_exists('activeLink'))
      */
     function activeMenu($string,$class_name='active')
     {
+        $string = config('app.admin_url').'/'.$string;
         if(\Request::is($string) || \Request::is($string.'/*'))
             return $class_name;
         else
             return '';
 
+    }
+}
+if (!function_exists('adminRoute'))
+{
+    function adminRoute($name, $parameters = [], $absolute = true)
+    {
+        $name = config('app.admin_url').'.'.$name;
+        return app('url')->route($name, $parameters, $absolute);
     }
 }
