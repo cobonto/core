@@ -23,6 +23,7 @@ trait HelperForm
         'colorpicker',
         'datepicker',
         'ckeditor',
+        'tree',
     ];
     /** @var array list of switchers */
     protected $switchers = ['active'];
@@ -51,7 +52,7 @@ trait HelperForm
                         }
                         else
                         {
-                            $this->fields_values[$field['name']] = (isset($field['default_value'])?:null);
+                            $this->fields_values[$field['name']] = (isset($field['default_value'])?$field['default_value']:null);
                         }
                     }
 
@@ -93,6 +94,19 @@ trait HelperForm
                         $this->addJqueryOptions($field);
 
                     }
+                    elseif($field['type']=='tree')
+                    {
+                        $id = (isset($field['id']) ? $field['id'] : $field['name']);
+                        $field['javascript'] = '$("#' . $id . '").treeview({
+                        data:'.$field['data'].',';
+                        // add options
+                        $this->assign->addJSVars([
+                            'tree_id'=>$id,
+                            'multiSelect'=>$field['multiSelect'],
+                            'tree_name'=>$field['name'],
+                        ]);
+                        $this->addJqueryOptions($field);
+                    }
                     elseif ($field['type'] == 'textarea' && isset($field['class']) && $field['class'] == 'ckeditor')
                     {
                         $this->assign->addJS('plugins/ckeditor/ckeditor.js',true);
@@ -128,7 +142,7 @@ trait HelperForm
             {
                 $options .= $key . ':"' . $value . '",';
             }
-           $options = trim($options, ',');
+            $options = trim($options, ',');
             $field['javascript'] .= $options;
         }
         $field['javascript'] .= '});';
