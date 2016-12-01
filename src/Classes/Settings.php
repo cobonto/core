@@ -38,11 +38,12 @@ class Settings extends Ardent
     /**
      * get by key
      * @param $key
+     * @param string|bool $default_value
      * @return bool|mixed
      */
-    public function get($key)
+    public function get($key,$default_value=false)
     {
-        return isset($this->data[$key]) ? $this->data[$key] : false;
+        return isset($this->data[$key]) ? $this->data[$key] : $default_value;
     }
 
     public function set($key,$value)

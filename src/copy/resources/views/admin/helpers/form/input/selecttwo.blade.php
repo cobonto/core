@@ -13,7 +13,7 @@
         @endif
         >
         @foreach($input['options']['query'] as $option)
-            <option value="{{ $option[$input['options']['key']] }}">{{ $option[$input['options']['name']] }}</option>
+            <option value="{{ $option[$input['options']['key']] }}" @if($option[$input['options']['key']]== $values[$input["name"]])selected="selected"@endif>{{ $option[$input['options']['name']] }}</option>
             @endforeach
             </select>
             @if(isset($input['desc']))<span class="help-block">{{ $input['desc'] }}</span>@endif
