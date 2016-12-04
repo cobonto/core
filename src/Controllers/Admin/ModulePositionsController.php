@@ -279,7 +279,7 @@ class ModulePositionsController extends AdminController
                     // register module
                     if(Hook::find($id_hook)->registerModule($Module->id))
                     {
-                        \Cache::forget('hooks');
+                        \Cache::flush();
                         return $this->redirect($this->lang('hook_registered_successfully'));
                     }
                     else
