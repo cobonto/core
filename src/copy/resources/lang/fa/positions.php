@@ -7,5 +7,4 @@ return [
     'view'=>'View',
     'destroy'=>'Destroy',
     'all'=>'All',
-    'set_hook'=>'Set Hook'
 ];

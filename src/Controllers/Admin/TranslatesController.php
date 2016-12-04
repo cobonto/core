@@ -8,10 +8,10 @@
 
 namespace Cobonto\Controllers\Admin;
 
-
 use Cobonto\Classes\Translate;
 use Cobonto\Controllers\AdminController;
 use Illuminate\Http\Request;
+use Module\Classes\Module;
 
 class TranslatesController extends AdminController
 {
@@ -71,7 +71,12 @@ class TranslatesController extends AdminController
             if($environment=='core')
                 $files = Translate::getCoreFiles($language);
             elseif($environment=='module')
-                $files = Translate::getModuleFiles($language);
+            {
+                $modules  =  Module::getModulesByFile('translate'.DIRECTORY_SEPARATOR.$language.'.php');
+                foreach($modules as $module)
+                    $files[] = $module['name'];
+            }
+
             elseif($environment=='front')
             {
                 return response()->json(['status'=>'error','msg'=>'Under develop']);

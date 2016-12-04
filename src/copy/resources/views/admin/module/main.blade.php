@@ -79,13 +79,13 @@
                         <tbody>
                         @if(count($modules))
                             @foreach($modules as $author=>$data)
-                                <tr>
-                                    <td class="bold" id="{{ $author }}">{{ $author }}</td>
+                                <tr class="author" id="{{ strtolower($author) }}">
+                                    <td class="bold" >{{ $author }}&nbsp;&nbsp;<i class="fa fa-angle-left"></i></td>
                                     <td></td>
                                     <td></td>
                                 </tr>
                                 @foreach($data as $module)
-                                    <tr class="{{ $author }}">
+                                    <tr class="{{ strtolower($author) }} hidden">
                                         <td>{{$module['name']}}</td>
                                         <td>{{ $module['version'] }}</td>
                                         <td>@include('admin.module.actions')</td>

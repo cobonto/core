@@ -52,15 +52,16 @@ class Assign
     /**
      * add js file to system
      * @param array|string file name $files
+     * @param bool $external file may be external of admin path
      * @return void
      */
-    public function addJS($files,$module=false)
+    public function addJS($files,$external=false)
     {
         if (!is_array($files))
             $files = array($files);
         foreach ($files as $file)
         {
-            if(!$module)
+            if(!$external)
                 $file = $this->environment.$file;
             if ($this->files->exists(public_path($file)))
             {

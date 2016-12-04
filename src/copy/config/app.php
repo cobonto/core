@@ -18,7 +18,7 @@ return [
       | This value for theme front
       |
       */
-    'theme'=>env('APP_FRONT_THEME','default'),
+    'theme'=>env('APP_FRONT_THEME','themes.default'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment

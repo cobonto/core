@@ -30,14 +30,7 @@ class ModulesController extends AdminController
     protected function index()
     {
         // get modules name from disk
-        $modules = \Cache::remember('modules', 604800, function ()
-        {
-            $diskModules = Module::getModulesFromDisk();
-            if ($diskModules)
-                return $this->checkModulesInDb($diskModules);
-            else
-                return [];
-        });
+        $modules = Module::getModules();
         $this->assign->params(
             [
                 'modules' => $modules,
@@ -315,29 +308,5 @@ class ModulesController extends AdminController
                 $this->inDisk = 1;
         }
         $this->modulePath = app_path('/Modules/' . $this->author . '/' . $this->name);
-    }
-
-    protected function checkModulesInDb($modules)
-    {
-        foreach ($modules as $author => &$module)
-        {
-            foreach ($module as &$subModule)
-            {
-                if ($data = Module::isInstalled($author, $subModule['name']))
-                {
-                    $subModule['installed'] = 1;
-                    $subModule['active'] = $data->active;
-                    $moduleClass = Module::getInstance($author, $subModule['name']);
-                    if (is_object($moduleClass))
-                    {
-                        if (method_exists($moduleClass, 'configuration'))
-                            $subModule['configurable'] = 1;
-
-                            $subModule['core']=$moduleClass->core;
-                    }
-                }
-            }
-        }
-        return $modules;
     }
 }

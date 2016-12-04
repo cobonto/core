@@ -2,6 +2,8 @@
 
 namespace Cobonto\Classes;
 
+use Module\Classes\Module;
+
 class Tools
 {
     /**
@@ -11,7 +13,7 @@ class Tools
      * @param $value
      * @return array
      */
-    public static function searchInMultiArray(array $array, $key, $value,$firstResult=false)
+    public static function searchInMultiArray(array $array, $key, $value, $firstResult = false)
     {
         $results = [];
 
@@ -20,7 +22,7 @@ class Tools
             if (isset($array[$key]) && $array[$key] == $value)
             {
                 // check if we need to first result
-                if($firstResult)
+                if ($firstResult)
                     return $array;
                 $results[] = $array;
             }
@@ -32,5 +34,53 @@ class Tools
         }
 
         return $results;
+    }
+
+    /**
+     * get specific methods name
+     * @param \ReflectionClass $class
+     * @param int $filter
+     * @param bool $containName
+     * @return array|\ReflectionMethod[]
+     */
+    public static function getMethods(\ReflectionClass $class, $filter = \ReflectionMethod::IS_PUBLIC, $containName = false)
+    {
+        $methods = $class->getMethods($filter);
+        if ($methods && count($methods) && $containName)
+        {
+            $remove = 'first';
+            if ($containName[0] == '%' && $containName[strlen($containName) - 1] == '%')
+            {
+
+                $remove = false;
+            }
+
+            elseif ($containName[0] != '%' && $containName[strlen($containName) - 1] == '%')
+            {
+                $remove = 'first';
+            }
+            elseif ($containName[0] == '%' && $containName[strlen($containName) - 1] != '%')
+            {
+                $remove = 'last';
+            }
+            $containName = trim($containName,'%');
+            $newMethods = [];
+            foreach ($methods as $method)
+            {
+                if (strpos($method->name,$containName) !== false)
+                    if ($remove == 'first')
+                    {
+
+                        $newMethods[] = lcfirst(substr($method->name,strlen($containName),strlen($method->name)));
+                    }
+                    elseif ($remove == 'last')
+                    {
+                        $newMethods[] = lcfirst(substr($method->name,-strlen($containName),strlen($method->name)));
+                    }
+            }
+            return $newMethods;
+        }
+        else
+            return $methods;
     }
 }

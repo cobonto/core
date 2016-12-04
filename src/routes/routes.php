@@ -41,6 +41,9 @@ Route::group(
     Route::get('modules/positions', 'ModulePositionsController@index')->name($admin_url.'.positions.index');
     Route::post('modules/positions/update', 'ModulePositionsController@updatePositions')->name($admin_url.'.positions.update');
     Route::post('modules/positions/unregister', 'ModulePositionsController@unRegister')->name($admin_url.'.positions.unregister');
+    Route::get('modules/positions/set', 'ModulePositionsController@set')->name($admin_url.'.positions.set');
+    Route::post('modules/positions/register', 'ModulePositionsController@register')->name($admin_url.'.positions.register');
+    Route::post('modules/positions/loadhooks', 'ModulePositionsController@loadHooks')->name($admin_url.'.positions.loadhooks');
     // permissions route
     Route::get('permissions', 'PermissionsController@index')->name($admin_url.'.permissions.index');
     Route::post('permissions/update', 'PermissionsController@updatePermissions')->name($admin_url.'.permissions.update');

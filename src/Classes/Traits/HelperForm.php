@@ -16,7 +16,7 @@ trait HelperForm
     /** @var  array $fields form */
     protected $fields_values = [];
     /** @var array $tpl_form */
-    private $tpl_form = 'admin.helpers.form.main';
+    protected $tpl_form = 'admin.helpers.form.main';
     /** @var array available plugin for form */
     private $available_plugins = [
         'selecttwo',
