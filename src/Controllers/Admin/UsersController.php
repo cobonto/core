@@ -5,7 +5,7 @@ use App\User;
 use Cobonto\Controllers\AdminController;
 
 
-class UserController extends AdminController
+class UsersController extends AdminController
 {
 
     protected $table = 'users';
@@ -141,10 +141,5 @@ class UserController extends AdminController
             }
         }
 
-    }
-    protected function listQuery()
-    {
-        parent::listQuery();
-        return  $this->sql->where('is_admin',0);
     }
 }

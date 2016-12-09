@@ -16,23 +16,12 @@ class AdminAuthenticate
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
+     * @param string $guard
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next,$guard ='admin')
     {
-        if (\Auth::check())
-        {
-            if(!\Auth::user()->is_admin)
-            {
-
-                if ($request->ajax() || $request->wantsJson()) {
-                    return response('Unauthorized.', 401);
-                } else {
-                    return redirect()->guest(config('app.admin_url').'/login');
-                }
-            }
-        }
-        else
+        if(!\Auth::guard($guard)->check())
         {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);

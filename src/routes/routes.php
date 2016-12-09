@@ -55,11 +55,11 @@ Route::group(
     Route::post('translates/environment','TranslatesController@loadEnvironment')->name($admin_url.'.translates.environment');
     Route::resources([
         'dashboard' => 'DashboardController',
-        'users' => 'UserController',
+        'users' => 'UsersController',
         'modules' => 'ModulesController',
         'roles'=>'RolesController',
         'groups'=>'GroupsController',
-        'employees'=>'EmployeesController'
+        'admins'=>'AdminsController'
     ]);
 /*
 |--------------------------------------------------------------------------

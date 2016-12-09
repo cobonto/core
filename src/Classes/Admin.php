@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace Cobonto\Classes;
 
 use Cobonto\Classes\Roles\Role;
 use Illuminate\Auth\Authenticatable;
@@ -10,12 +10,13 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use LaravelArdent\Ardent\Ardent;
 
-class User extends Ardent implements
+class Admin extends Ardent implements
     AuthenticatableContract,
     AuthorizableContract,
     CanResetPasswordContract
 {
     use Authenticatable, Authorizable, CanResetPassword;
+    protected $table ='admins';
     public $autoHydrateEntityFromInput = true;    // hydrates on new entries' validation
     public $forceEntityHydrationFromInput = true; // hydrates whenever validation is called
     public $autoPurgeRedundantAttributes = true;
@@ -27,14 +28,16 @@ class User extends Ardent implements
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'active', 'is_admin','password_confirmation','role_id'
+        'firstname','lastname', 'lang','email', 'password', 'active','password_confirmation','role_id'
     ];
     public static $rules = [
-        'name' => 'required|string|between:3,255',
+        'firstname' => 'required|alpha_spaces|between:3,255',
+        'lastname' => 'required|alpha_spaces|between:3,255',
+        'lang' => 'required|alpha',
         'email' => 'required|email',
         'active' => 'required|boolean',
-        'password' => 'required|between:6,20|confirmed',
-        'password_confirmation' => 'between:9,20',
+        'password' => 'between:6,20|confirmed',
+        'password_confirmation' => 'between:6,20',
         'role_id' => 'required|numeric',
     ];
     /**
@@ -57,7 +60,7 @@ class User extends Ardent implements
      */
     public static function getByEmail($email,$returId=false)
     {
-       $result = \DB::table('users')->where('email',$email)->first();
+       $result = Admin::where('email',$email)->first();
         if($result)
         {
             if($returId)
@@ -78,7 +81,10 @@ class User extends Ardent implements
     {
         return Role::find($this->role_id);
     }
-    /**
-     * The roles that belong to the user.
-     */
+    public function setLocale()
+    {
+        app('translator')->setLocale($this->lang);
+        if($this->lang=='fa')
+            config(['app.rtl'=>1]);
+    }
 }

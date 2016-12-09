@@ -19,11 +19,6 @@ class ModuleAdminController extends AdminController
     protected $module;
     /** @var bool ovveride_view_files */
     protected $ovverrideViewFile = false;
-    public function __construct(\Illuminate\Http\Request $request)
-    {
-        parent::__construct($request);
-    }
-
     protected function setProperties()
     {
         parent::setProperties();
@@ -74,5 +69,14 @@ class ModuleAdminController extends AdminController
     public function l($string)
     {
         return $this->module->lang($string);
+    }
+
+    /**
+     * get Module instance
+     * @return Module
+     */
+    public function getModule()
+    {
+        return $this->module;
     }
 }

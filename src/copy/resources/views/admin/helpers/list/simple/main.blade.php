@@ -27,7 +27,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">{{ $title }}</h3>
+                   {!! $listTitle !!}
                     @if($search)
                         <div class="box-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -60,12 +60,16 @@
                         <tbody>
                         @if(count($rows))
                             @foreach($rows as $row)
-                                <tr>
+                                <tr @if($position_identifier) id="positions_{{ $row->{$position_identifier} }}|{{ $row->position }}"@endif>
                                     @foreach($fields as $name=>$options)
+                                        @if(isset($options['type']) && $options['type']=='position')
+                                            <td style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}"><div class="icon_position"><i class="fa fa-arrows"></div></td>
+                                        @else
                                         <td id="{{ isset($options['id'])?$options['id']:$name}}"
                                             class="{{ isset($options['class'])?$options['class']:''}}"
                                             style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">{!! isset($options['function'])?$controller->{$options['function']}($row):$row->{$name} !!}
                                         </td>
+                                        @endif
                                     @endforeach
                                     @if(count($actions))
                                         @include('admin.helpers.list.simple.actions')

@@ -62,7 +62,13 @@ class Roles extends Migration
                 ->references('id')
                 ->on('roles');
         });
-
+        Schema::table('admins', function (Blueprint $table)
+        {
+            $table->integer('role_id')->unsigned()->default(1);
+            $table->foreign('role_id')
+                ->references('id')
+                ->on('roles');
+        });
     }
 
     /**

@@ -7,7 +7,7 @@ return [
     'admin_title'=>'Admin Panel',
     'admin_title_mini'=>'APL',
     // dashboard controller
-    'dashboard'=>'Dashboard',
+    'dashboard'=>'داشبرد',
     // Modules controller
     'modules'=>'Modules',
     'module_already_is_installed'=>'Module already is installed',

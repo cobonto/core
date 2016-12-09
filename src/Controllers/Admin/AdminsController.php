@@ -13,33 +13,39 @@ use App\User;
 use Cobonto\Classes\Roles\Role;
 use Cobonto\Controllers\AdminController;
 
-class EmployeesController extends AdminController
+class AdminsController extends AdminController
 {
 
     protected function setProperties()
     {
-         parent::setProperties();
-         $this->title = $this->lang('employees');
-         $this->table = 'users';
-         $this->route_name = 'employees';
-         $this->model_name = 'User';
+        $this->route_name = 'admins';
+        $this->model_name = 'Admin';
+        $this->table = 'admins';
+        $this->prefix_model = 'Cobonto\\Classes\\';
+        parent::setProperties();
+        $this->title = $this->lang('admins');
+
+
     }
 
     protected function fieldList()
     {
-        $this->skip_actions['destroy']=[1];
+        $this->skip_actions['destroy'] = [1];
         $this->fields_list = [
             'id' => [
                 'title' => $this->lang('id'),
             ],
-            'name' => [
+            'firstname' => [
+                'title' => $this->lang('name'),
+            ],
+            'lastname' => [
                 'title' => $this->lang('name'),
             ],
             'email' => [
                 'title' => $this->lang('email'),
             ],
             'active' => [
-                'type'=>'bool',
+                'type' => 'bool',
                 'title' => $this->lang('status'),
                 'function' => 'displayStatus',
             ],
@@ -48,17 +54,31 @@ class EmployeesController extends AdminController
 
     protected function fieldForm()
     {
+        $languages = app('files')->directories(resource_path('lang'));
+        foreach ($languages as $language)
+            $data[] = ['lang' => basename($language), 'name' => basename($language)];
         $this->fields_form = [
             [
-                'title' => $this->lang('edit_employee'),
+                'title' => $this->lang('edit_admin'),
                 'input' => [
                     // text
                     [
-                        'name' => 'name',
+                        'name' => 'firstname',
                         'type' => 'text',
                         'class' => '',
                         'col' => '6',
-                        'title' => $this->lang('name'),
+                        'title' => $this->lang('firstname'),
+                        //  'suffix' => '$',
+                        //  'prefix' => '00.0',
+
+                    ],
+                    // text
+                    [
+                        'name' => 'lastname',
+                        'type' => 'text',
+                        'class' => '',
+                        'col' => '6',
+                        'title' => $this->lang('lastname'),
                         //  'suffix' => '$',
                         //  'prefix' => '00.0',
 
@@ -90,7 +110,6 @@ class EmployeesController extends AdminController
                         'title' => $this->lang('passwd_confirm'),
 
                     ],
-                    // date picker
                     [
                         'name' => 'active',
                         'type' => 'switch',
@@ -105,18 +124,20 @@ class EmployeesController extends AdminController
                             'offText' => $this->lang('no'),
                         ]
                     ],
-                      [
-                              'type' => 'select',
-                              'title' => $this->l('role'),
-                              'name' => 'role_id',
-                              'options' =>
-                               [
-                                'query' => Role::where(['admin'=>1])->get()->toArray(),
-                                'key' => 'id',
-                                'name' => 'name',
-                              ],
-                              'required' => false,
-                            ],
+                    [
+                    'type' => 'select',
+                    'title' => $this->l('language'),
+                    'name' => 'lang',
+                    'col'=>2,
+                    'options' =>
+                        [
+                            'query' => $data,
+                            'key' => 'lang',
+                            'name' => 'name',
+                        ],
+                    'required' => false,
+                ],
+
                 ],
                 'submit' => [
                     [
@@ -135,35 +156,44 @@ class EmployeesController extends AdminController
 
             ],
         ];
+        // add role
+        $id = $this->request->route()->parameter('admins');
+        if (!$id || ($id && $id != $this->admin->id) || ($id !=1))
+            $this->fields_form[0]['input'][] = [
+                'type' => 'select',
+                'title' => $this->l('role'),
+                'name' => 'role_id',
+                'col'=>'2',
+                'options' =>
+                    [
+                        'query' => Role::where(['admin' => 1])->get()->toArray(),
+                        'key' => 'id',
+                        'name' => 'name',
+                    ],
+                'required' => false,
+            ];
     }
 
     protected function beforeAdd()
     {
-        $this->request->merge(['is_admin'=>1]);
         $email = $this->request->input('email');
-        if($email)
-            if(User::getByEmail($email))
+        if ($email)
+            if (User::getByEmail($email))
                 $this->errors[] = $this->lang('email_used');
     }
 
     protected function beforeUpdate($id)
     {
-        $this->request->merge(['is_admin'=>1]);
         $email = $this->request->input('email');
-        if($email)
+        if ($email)
         {
-            $new_id = User::getByEmail($email,true);
-            if($new_id)
+            $new_id = User::getByEmail($email, true);
+            if ($new_id)
             {
-                if($new_id !=$id)
+                if ($new_id != $id)
                     $this->errors[] = $this->lang('email_used');
             }
         }
 
-    }
-    protected function listQuery()
-    {
-        parent::listQuery();
-        return  $this->sql->where('is_admin',1);
     }
 }

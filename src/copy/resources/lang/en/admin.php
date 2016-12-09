@@ -58,8 +58,8 @@ return [
     'roles'=>'Roles',
     // employeesController
     'email_used'=>'This email is already used',
-    'edit_employee'=>'Edit employee',
-    'employees'=>'Employees',
+    'edit_admin'=>'Edit admins',
+    'admins'=>'Admins',
     'role'=>'Role',
     // groupscontroller
     'groups'=>'Groups',
@@ -90,4 +90,9 @@ return [
     'register'=>'Register',
     'hook_registered_successfully'=>'Hook successfully is registered',
     'problem_register'=>'Problem in register hook',
+    'firstname'=>'First name',
+    'lastname'=>'Last name',
+    'confirm_passwd'=>'Confirm password',
+    'view'=>'View',
+    'position'=>'Position'
     ];

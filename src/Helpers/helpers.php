@@ -9,7 +9,7 @@ if (!function_exists('hasAccess'))
      */
     function hasAccess($routes, $method = 'index')
     {
-        if (\Auth::user()->role_id == 1)
+        if (\Auth::guard('admin')->user()->role_id == 1)
             return true;
         // we check at least one them is true or all of theme must be true
         $allTrue = true;
@@ -20,7 +20,7 @@ if (!function_exists('hasAccess'))
         $result = true;
         foreach ($routes as $route)
         {
-            $hasPermission =\Auth::user()->role()->hasPermission($route . '.' . $method);
+            $hasPermission =\Auth::guard('admin')->user()->role()->hasPermission($route . '.' . $method);
             if (!$hasPermission && $allTrue)
                 return false;
             elseif($hasPermission && !$allTrue)

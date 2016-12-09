@@ -92,4 +92,4 @@ Route::post('list/filters',function(){
         \Cache::forget($controller->getRoute('filter',false));
     }
     return redirect(route($controller->getRoute('index',false)));
-})->name('admin.list.filters');
+})->name('list.filters');

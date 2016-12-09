@@ -9,14 +9,16 @@
 namespace Cobonto\Classes\Traits;
 
 use Carbon\Carbon;
+use Cobonto\Controllers\ModuleAdminController;
 
 trait SimpleHelperList
 {
+    protected $position_identifier = false;
     protected $per_page=false;
     protected function generateList()
     {
         if ($this->tpl == false)
-            $this->tpl = 'admin.helpers.list.simple.main';
+            $this->tpl = $this->theme.'.helpers.list.simple.main';
         $rows = [];
         if (count($this->fields_list))
         {
@@ -28,7 +30,12 @@ trait SimpleHelperList
            $rows = $this->pagination();
         }
         //add javascript vars
-        $this->assign->addJSVars(['alert_msg'=>$this->lang('sure_to_delete')]);
+        $this->assign->addJSVars(
+            ['alert_msg'=>$this->lang('sure_to_delete'),
+            'list_positions_update'=>route('list.positions.update'),
+                'controller'=>get_class($this),
+                'module'=>($this instanceof ModuleAdminController)?$this->getModule()->name:false,
+            ]);
         // add css and img files
         $this->listAssets();
         // call helper method before render view
@@ -36,9 +43,11 @@ trait SimpleHelperList
         // assign variables to view
         $this->assign->params([
             'search' => false,
+            'listTitle'=>$this->listTitle(),
             'create' => $this->create,
             'fields' => $this->fields_list,
             'rows' => $rows,
+            'position_identifier'=>$this->position_identifier,
             'actions' => $this->actions,
             'skip_actions' => $this->skip_actions,
             'filters' => $this->filter,
@@ -52,6 +61,7 @@ trait SimpleHelperList
         $this->assign->addJS(['js/list.js']);
         $this->assign->addJS(['js/simple.list.js']);
         $this->assign->addPlugin('confirm');
+        $this->assign->addPlugin('growl');
         $this->assign->addPlugin('selecttwo');
         $this->assign->addPlugin('datepicker');
     }
@@ -88,5 +98,12 @@ trait SimpleHelperList
     public function displayStatus($row)
     {
         return '<i class="fa '.($row->active?'fa-check btn btn-success':'fa-remove btn btn-danger').'"></i>';
+    }
+    protected function listTitle($titles=[],$id=1)
+    {
+        if(!count($titles))
+            $titles[] =['id'=>0,'name'=>$this->title,'link'=>false];
+
+        return view($this->theme.'.helpers.list.simple.list_title',['titles'=>$titles,'id'=>$id]);
     }
 }

@@ -28,7 +28,7 @@ class AuthController extends Controller
      */
     protected $redirectPath  = false;
     protected $redirectAfterLogout  = false;
-    protected $guard = null;
+    protected $guard = 'admin';
     /**
      * Create a new authentication controller instance.
      *
@@ -45,7 +45,6 @@ class AuthController extends Controller
     {
         $credentials = $request->only($this->loginUsername(), 'password');
 
-        $credentials =  array_add($credentials, 'active', '1');
-        return array_add($credentials, 'is_admin', '1');
+        return array_add($credentials, 'active', '1');
     }
 }

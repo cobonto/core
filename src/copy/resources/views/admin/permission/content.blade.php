@@ -48,7 +48,7 @@
                     <input type="checkbox" {{ isset($permissions["{$controller['route']}.destroy"])?'checked="checked"':'' }}  data-controller="{{ $controller['name'] }}" data-route="{{$controller['route']}}.destroy" data-role="{{  $role->id }}" class="ajaxPower destroy">
                 </td>
                 <td>
-                    <input disabled="disabled" type="checkbox" data-controller="{{ $controller['name'] }}" data-route="{{$controller['route']}}'.index" data-role="{{ \Auth::user()->role_id }}" class="all">
+                    <input disabled="disabled" type="checkbox" data-controller="{{ $controller['name'] }}" data-route="{{$controller['route']}}'.index" data-role="{{ $admin->role_id }}" class="all">
                 </td>
             </tr>
         @endforeach

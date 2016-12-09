@@ -57,7 +57,7 @@ class ModulePositionsController extends AdminController
 
     }
 
-    public function updatePositions()
+    public function updatePositions($positions=[])
     {
         $modules = $this->request->input('module');
         if (count($modules) && $modules)

@@ -105,6 +105,7 @@ class PermissionsController extends AdminController
                 'permissions'=>$permissions,
                 'controllers'=>Permission::getControllers(),
                 'role'=>$Role,
+                'admin'=>$this->admin
             ])->render();
             return response()->json(['status'=>'success','html'=>$html]);
         }

@@ -7,7 +7,7 @@ return [
     'position_modules'=>'Positions',
     'groups'=>'Groups',
     'management'=>'Management',
-    'employees'=>'Employees',
+    'admins'=>'Admins',
     'roles'=>'Roles',
     'permissions'=>'Permissions',
     'settings'=>'Settings',

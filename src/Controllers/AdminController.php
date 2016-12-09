@@ -4,6 +4,7 @@ namespace Cobonto\Controllers;
 
 use App\Http\Requests\Request;
 use App\User;
+use Cobonto\Classes\Admin;
 use Cobonto\Classes\Assign;
 use Cobonto\Classes\Roles\Role;
 use Cobonto\Classes\Traits\HelperList;
@@ -80,7 +81,10 @@ abstract class AdminController extends Controller
      * @var array $permissions
      */
     protected $permissions;
-
+    /**
+     * @var Admin instance;
+     */
+    protected $admin;
     /**
      * AdminController constructor.
      * @param \Illuminate\Http\Request $request
@@ -90,6 +94,16 @@ abstract class AdminController extends Controller
         $this->request = app('request');
         $this->theme = 'admin';
         $this->app = \App::getInstance();
+
+        // for debug and artisan
+        if(\Auth::guard('admin')->check())
+        {
+            /** @var Admin admin */
+            $this->admin = \Auth::guard('admin')->user();
+            $this->admin->setLocale();
+            $this->permissions = Role::getRolePermissions($this->admin->role_id);
+        }
+
         /**
          * @var Assign
          */
@@ -102,9 +116,6 @@ abstract class AdminController extends Controller
         //run some method before routing
         //$this->beforeProcess(\Route::getCurrentRoute()->getActionName());
         $this->setProperties();
-        // for debug and artisan
-        if(\Auth::check())
-             $this->permissions = Role::getRolePermissions(\Auth::user()->role_id);
         $this->route_name = config('app.admin_url') . '.' . $this->route_name . '.';
         $this->setMedia();
     }
@@ -112,6 +123,7 @@ abstract class AdminController extends Controller
     // we need some properties if not set it this method set theme
     protected function setProperties()
     {
+        if(!$this->prefix_model)
         $this->prefix_model = $this->app->getNamespace();
         $controller_name = substr(class_basename($this), 0, -10);
         /**
@@ -164,6 +176,7 @@ abstract class AdminController extends Controller
             'HOOK_HEADER' => Hook::execute('displayAdminHeader'),
             'route_name' => $this->route_name,
             'controller' => $this,
+            'admin'=>$this->admin,
         ]);
         // assign general hooks
         // to override all plugins and buttons
@@ -430,7 +443,26 @@ abstract class AdminController extends Controller
         else
             return $this->redirect($this->lang('delete_success'));
     }
-
+    public function updatePositions($positions=[])
+    {
+        if(count($positions))
+        {
+            $ids =[];
+            $postionIds=[];
+            foreach($positions as $position)
+            {
+                list($id,$id_position) = explode('|',$position);
+                $ids[] = $id;
+                $positionsIds[] = $id_position;
+            }
+            sort($postionIds,SORT_NUMERIC);
+            foreach($ids as $key=>$id)
+            {
+                \DB::table($this->table)->where($this->position_identifier,$id)->update(['position'=>$positionsIds[$key]]);
+            }
+            return ['status'=>'success','msg'=>$this->lang('update_success')];
+        }
+    }
     protected function beforeDelete($object, $id)
     {
 
@@ -516,6 +548,9 @@ abstract class AdminController extends Controller
                 // select
                 $select[] = isset($options['real_field']) ? $options['real_field'] . ' as ' . $field : $field;
             }
+            /**
+             * @var \DB
+             */
             $this->sql = \DB::table($this->table . ' AS a')->select($select);
         }
         return $this->sql;
@@ -528,17 +563,17 @@ abstract class AdminController extends Controller
      * @param array $params
      * @return string
      */
-    public function getRoute($route_name,$route=true)
+    public function getRoute($route_name,$route=true,$params=[])
     {
         if ($route)
-            return route($this->route_name . $route_name);
+            return route($this->route_name . $route_name,$params);
         else
             return $this->route_name.$route_name;
     }
 
     protected function checkPermissions()
     {
-        if (\Auth::user()->role_id == 1)
+        if ($this->admin->role_id == 1)
             return true;
         foreach ($this->actions as $action => $params)
         {
@@ -555,7 +590,7 @@ abstract class AdminController extends Controller
 
     protected function hasPermission($permission)
     {
-        if (\Auth::user()->role_id == 1)
+        if ($this->admin->role_id == 1)
             return true;
         return isset($this->permissions[$this->route . '.' . $permission]);
     }
