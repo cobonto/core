@@ -27,41 +27,41 @@
             @if(hasAccess(['users','groups']))
                 <li class="treeview {{ activeMenu('users') }} {{ activeMenu('admin/groups') }}">
                     <a href="{{ adminRoute('users.index') }}">
-                        <i class="fa fa-user"></i> <span>{{ transTpl('users','sidebar') }}</span><i class="fa fa-angle-left pull-right"></i>
+                        <i class="fa fa-user"></i> <span>{{ transTpl('users','sidebar') }}</span><i class="fa fa-caret-down pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                       @if(hasAccess('users')) <li class="{{ activeMenu('users') }}"><a href="{{ adminRoute('users.index') }}"><i class="fa fa-circle-o"></i>{{ transTpl('users','sidebar') }}</a></li>@endif
-                        @if(hasAccess('groups'))<li class="{{ activeMenu('groups') }}"><a href="{{ adminRoute('groups.index') }}"><i class="fa fa-circle-o"></i> {{ transTpl('groups','sidebar') }}</a></li>@endif
+                       @if(hasAccess('users')) <li class="{{ activeMenu('users') }}"><a href="{{ adminRoute('users.index') }}"><i class="fa fa-circle"></i>{{ transTpl('users','sidebar') }}</a></li>@endif
+                        @if(hasAccess('groups'))<li class="{{ activeMenu('groups') }}"><a href="{{ adminRoute('groups.index') }}"><i class="fa fa-circle"></i> {{ transTpl('groups','sidebar') }}</a></li>@endif
                     </ul>
                 </li>
             @endif
             @if(hasAccess(['modules','positions']))
                 <li class="treeview {{ activeMenu('modules') }}">
                     <a href="{{ adminRoute('modules.index') }}">
-                        <i class="fa fa-th"></i> <span>{{ transTpl('modules','sidebar') }}</span><i class="fa fa-angle-left pull-right"></i>
+                        <i class="fa fa-th"></i> <span>{{ transTpl('modules','sidebar') }}</span><i class="fa fa-caret-down pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        @if(hasAccess('modules')) <li class=""><a href="{{ adminRoute('modules.index') }}"><i class="fa fa-circle-o"></i>{{ transTpl('list_modules','sidebar') }}</a></li>@endif
-                        @if(hasAccess('positions'))<li class=""><a href="{{ adminRoute('positions.index') }}"><i class="fa fa-circle-o"></i> {{ transTpl('position_modules','sidebar') }}</a>
+                        @if(hasAccess('modules')) <li class=""><a href="{{ adminRoute('modules.index') }}"><i class="fa fa-circle"></i>{{ transTpl('list_modules','sidebar') }}</a></li>@endif
+                        @if(hasAccess('positions'))<li class=""><a href="{{ adminRoute('positions.index') }}"><i class="fa fa-circle"></i> {{ transTpl('position_modules','sidebar') }}</a>
                         </li>@endif
                     </ul>
                 </li>
             @endif
                 @if(hasAccess(['admins','roles','permissions']))
             <li class="treeview {{ activeMenu('admins') }} {{ activeMenu('roles') }} {{ activeMenu('permissions') }}">
-                <a href=""><i class="fa fa-cog"></i> <span>{{ transTpl('management','sidebar') }}</span><i class="fa fa-angle-left pull-right"></i></a>
+                <a href=""><i class="fa fa-cog"></i> <span>{{ transTpl('management','sidebar') }}</span><i class="fa fa-caret-down pull-right"></i></a>
                 <ul class="treeview-menu">
-                    @if(hasAccess('admins')) <li class="{{ activeMenu('admins') }}"><a href="{{ adminRoute('admins.index') }}"><i class="fa fa-circle-o"></i>{{ transTpl('admins','sidebar') }}</a></li>@endif
-                    @if(hasAccess('roles'))<li class="{{ activeMenu('roles') }}"><a href="{{ adminRoute('roles.index') }}"><i class="fa fa-circle-o"></i> {{ transTpl('roles','sidebar') }}</a></li>@endif
-                    @if(hasAccess('permissions'))<li class="{{ activeMenu('permissions') }}"><a href="{{ adminRoute('permissions.index') }}"><i class="fa fa-circle-o"></i> {{ transTpl('permissions','sidebar') }}</a></li>@endif
+                    @if(hasAccess('admins')) <li class="{{ activeMenu('admins') }}"><a href="{{ adminRoute('admins.index') }}"><i class="fa fa-circle"></i>{{ transTpl('admins','sidebar') }}</a></li>@endif
+                    @if(hasAccess('roles'))<li class="{{ activeMenu('roles') }}"><a href="{{ adminRoute('roles.index') }}"><i class="fa fa-circle"></i> {{ transTpl('roles','sidebar') }}</a></li>@endif
+                    @if(hasAccess('permissions'))<li class="{{ activeMenu('permissions') }}"><a href="{{ adminRoute('permissions.index') }}"><i class="fa fa-circle"></i> {{ transTpl('permissions','sidebar') }}</a></li>@endif
                 </ul>
             </li>
                 @endif
                 @if(hasAccess(['settings','translates','performances']))
                     <li class="treeview {{ activeMenu('translates') }} {{ activeMenu('settings') }} {{ activeMenu('performances') }}">
-                        <a href=""><i class="fa fa-wrench"></i> <span>{{ transTpl('settings','sidebar') }}</span><i class="fa fa-angle-left pull-right"></i></a>
+                        <a href=""><i class="fa fa-wrench"></i> <span>{{ transTpl('settings','sidebar') }}</span><i class="fa fa-caret-down pull-right"></i></a>
                         <ul class="treeview-menu">
-                            @if(hasAccess('translates')) <li class="{{ activeMenu('translates') }}"><a href="{{ adminRoute('translates.index') }}"><i class="fa fa-circle-o"></i>{{ transTpl('translates','sidebar') }}</a></li>@endif
+                            @if(hasAccess('translates')) <li class="{{ activeMenu('translates') }}"><a href="{{ adminRoute('translates.index') }}"><i class="fa fa-circle"></i>{{ transTpl('translates','sidebar') }}</a></li>@endif
                         </ul>
                     </li>
                 @endif

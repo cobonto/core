@@ -187,7 +187,6 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Module\ModuleServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         \Cobonto\CmsServiceProvider::class,
