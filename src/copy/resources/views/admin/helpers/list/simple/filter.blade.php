@@ -40,7 +40,6 @@
                         @endpush
                         <input class="datepicker" type="text" name="filter_{{ $name }}_from"
                                value="{{ isset($filter_values["{$name}_from"])?$filter_values["{$name}_from"]['value']:'' }}"/>
-                        <br/>
                         <input class="datepicker" type="text" name="filter_{{ $name }}_to"
                                value="{{ isset($filter_values["{$name}_to"])?$filter_values["{$name}_to"]['value']:'' }}"/>
                     @endif

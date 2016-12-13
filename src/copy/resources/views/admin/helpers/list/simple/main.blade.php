@@ -8,12 +8,7 @@
                 </h5>
             </div>
             <div class="col-lg-6">
-                @if($create)
-                    <a class="create btn btn-default btn-circle btn-info" href="{!! route($route_name.'create') !!}">
-                        <i class="fa fa-plus"></i>
-                        {{ transTpl('new') }}
-                    </a>
-                @endif
+                
             </div>
         </div>
         <ol class="breadcrumb">
@@ -27,7 +22,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                   {!! $listTitle !!}
+                   {{--{!! $listTitle !!}--}}
                     @if($search)
                         <div class="box-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -38,6 +33,12 @@
                                 </div>
                             </div>
                         </div>
+                    @endif
+                    @if($create)
+                        <a class="create btn btn-default btn-circle btn-info" href="{!! route($route_name.'create') !!}">
+                            <i class="fa fa-plus"></i>
+                            {{ transTpl('new') }}
+                        </a>
                     @endif
                 </div>
                 <div class="box-body no-padding">
@@ -84,7 +85,7 @@
 
                 </div>
                 <!-- /.box-body -->
-                <div class="row box-footer clearfix">
+                <div class="box-footer clearfix">
                     @if($rows->total()>10)
                         <div class="col-lg-3 ">
                             <div class="pagination pull-left">
