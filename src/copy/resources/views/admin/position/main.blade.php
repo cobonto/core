@@ -1,33 +1,16 @@
 @extends('admin.layout.main')
-@section('header')
-    <section class="content-header" xmlns="http://www.w3.org/1999/html">
-        <div class="row">
-            <div class="col-lg-6">
-                <h5>
-                    {{ $title }}
-                </h5>
-            </div>
-            <div class="col-lg-6">
-                @if(hasAccess('positions','edit'))
-                    <a href="{{ $set_hook_url }}" class="pull-right rebuild btn btn-info">
-                            {{ transTpl('set_hook','positions') }}
-                    </a>
-                @endif
-            </div>
-        </div>
-        <ol class="breadcrumb">
-            @include('admin.layout.breadcrumb')
-        </ol>
-
-    </section>
-@endsection
 @section('content')
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">{{trans('List')}}</h3>
+                    <h3 class="box-title">{{ $title }}</h3>
                     <div class="box-tools">
+                        @if(hasAccess('positions','edit'))
+                            <a href="{{ $set_hook_url }}" class="pull-right rebuild btn btn-info">
+                                    {{ transTpl('set_hook','positions') }}
+                            </a>
+                        @endif
                         <div class="input-group input-group-sm" style="width: 150px;">
                             <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
 

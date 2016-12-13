@@ -13,12 +13,12 @@
     @hasSection ('header')
     @yield('header')
     @else
-        <section class="content-header">
+        {{--<section class="content-header">
             <h1>
                 {{ $title }}
             </h1>
             
-        </section>
+        </section>--}}
     @endif
     <section class="content">
         @include('admin.layout.messages')

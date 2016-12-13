@@ -1,5 +1,5 @@
 @extends('admin.layout.main')
-@section('header')
+{{--@section('header')
     <section class="content-header">
         <div class="row">
             <div class="col-lg-6">
@@ -11,18 +11,14 @@
                 
             </div>
         </div>
-        <ol class="breadcrumb">
-            @include('admin.layout.breadcrumb')
-        </ol>
-
     </section>
-@endsection
+@endsection--}}
 @section('content')
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                   {{--{!! $listTitle !!}--}}
+                   {{ $title }}
                     @if($search)
                         <div class="box-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
