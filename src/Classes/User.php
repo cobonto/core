@@ -37,7 +37,6 @@ class User extends Ardent implements
         'password' => 'between:6,20|confirmed',
         'password_confirmation' => 'between:6,20',
         'role_id' => 'required|numeric',
-        'last_login'=>'timestamps',
     ];
     /**
      * The attributes that should be hidden for arrays.
