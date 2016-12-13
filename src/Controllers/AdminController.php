@@ -181,6 +181,7 @@ abstract class AdminController extends Controller
         // assign general hooks
         // to override all plugins and buttons
         $this->assign->addCSS('css/AdminLTE.css');
+        $this->assign->addCSS('css/admin.css');
         // add rtl file if app is rtl
         if (config('app.rtl'))
         {

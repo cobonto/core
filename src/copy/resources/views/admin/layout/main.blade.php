@@ -4,6 +4,11 @@
 @include('admin.layout.header')
         <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
+    <div class="breadcrumb">
+        <ol>
+            @include('admin.layout.breadcrumb')
+        </ol>
+    </div>
     <!-- Content Header maybe yeild  -->
     @hasSection ('header')
     @yield('header')
@@ -12,9 +17,7 @@
             <h1>
                 {{ $title }}
             </h1>
-            <ol class="breadcrumb">
-                @include('admin.layout.breadcrumb')
-            </ol>
+            
         </section>
     @endif
     <section class="content">
