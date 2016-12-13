@@ -10,7 +10,6 @@ namespace Cobonto;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Engines\CompilerEngine;
-use Illuminate\View\Engines\EngineResolver;
 use Cobonto\Classes\Assign;
 use Cobonto\Classes\CmsBladeCompiler;
 use Cobonto\Classes\Settings;
@@ -22,9 +21,7 @@ class CmsServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->singleton('assign', function ($app) {
-            return new Assign($app['files']);
-        });
+        $this->registerProviders();
         $this->registerCommands();
         $this->registerSettings();
         $this->registerHelpers();
@@ -83,6 +80,9 @@ class CmsServiceProvider extends ServiceProvider
         });
     }
     protected function registerSettings(){
+        $this->app->singleton('assign', function ($app) {
+            return new Assign($app['files']);
+        });
         $this->app->singleton('settings', function ($app)
         {
             return new Settings([],true);
@@ -120,5 +120,13 @@ class CmsServiceProvider extends ServiceProvider
         {
             return preg_match('/^[\pL\s]+$/u', $value);
         });
+    }
+    protected function registerProviders()
+    {
+        $providers = [
+            'Cobonto\Providers\EventServiceProvider'
+        ];
+        foreach($providers as $provider)
+            $this->app->register($provider);
     }
 }
