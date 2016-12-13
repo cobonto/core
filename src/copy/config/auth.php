@@ -75,11 +75,11 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => \Cobonto\Classes\User::class,
         ],
         'user' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => \Cobonto\Classes\User::class,
         ],
         'admin' => [
             'driver' => 'eloquent',

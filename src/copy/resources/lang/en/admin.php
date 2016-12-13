@@ -94,5 +94,7 @@ return [
     'lastname'=>'Last name',
     'confirm_passwd'=>'Confirm password',
     'view'=>'View',
-    'position'=>'Position'
+    'position'=>'Position',
+    'group'=>'Group',
+    'save_and_stay'=>'Save and stay'
     ];

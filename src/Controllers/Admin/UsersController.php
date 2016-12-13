@@ -2,6 +2,7 @@
 
 namespace Cobonto\Controllers\Admin;
 use App\User;
+use Cobonto\Classes\Roles\Role;
 use Cobonto\Controllers\AdminController;
 
 
@@ -11,9 +12,11 @@ class UsersController extends AdminController
     protected $table = 'users';
     protected $route_name = 'users';
     protected $model_name = 'User';
+
     protected function setProperties()
     {
         $this->title = $this->lang('users');
+        $this->prefix_model = 'Cobonto\\Classes\\';
         parent::setProperties();
     }
 
@@ -23,8 +26,11 @@ class UsersController extends AdminController
             'id' => [
                 'title' => $this->lang('id'),
             ],
-            'name' => [
-                'title' => $this->lang('name'),
+            'firstname' => [
+                'title' => $this->lang('firstname'),
+            ],
+            'lastname' => [
+                'title' => $this->lang('lastname'),
             ],
             'email' => [
                 'title' => $this->lang('email'),
@@ -49,11 +55,22 @@ class UsersController extends AdminController
                 'input' => [
                     // text
                     [
-                        'name' => 'name',
+                        'name' => 'firstname',
                         'type' => 'text',
                         'class' => '',
                         'col' => '6',
-                        'title' => $this->lang('name'),
+                        'title' => $this->lang('firstname'),
+                        //  'suffix' => '$',
+                        //  'prefix' => '00.0',
+
+                    ],
+                    // text
+                    [
+                        'name' => 'lastname',
+                        'type' => 'text',
+                        'class' => '',
+                        'col' => '6',
+                        'title' => $this->lang('lastname'),
                         //  'suffix' => '$',
                         //  'prefix' => '00.0',
 
@@ -99,6 +116,18 @@ class UsersController extends AdminController
                             'onText' => $this->lang('yes'),
                             'offText' => $this->lang('no'),
                         ]
+                    ],
+                    [
+                    'type' => 'select',
+                    'title' => $this->l('group'),
+                    'name' => 'role_id',
+                    'col'=>'2',
+                    'options' =>
+                        [
+                            'query' => Role::where(['admin' => 0])->get()->toArray(),
+                            'key' => 'id',
+                            'name' => 'name',
+                        ],
                     ],
                 ],
                 'submit' => [

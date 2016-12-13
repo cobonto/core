@@ -36,9 +36,7 @@ class ImportCommand extends CobontoCommand
         $files = [
             'config/app.php',
             'config/auth.php',
-            'app/Http/Kernel.php',
-            #'app/Http/routes.php',
-            'app/User.php',
+            'app/Http/Kernel.php'
         ];
         $file_changes = [];
         foreach ($folders as $folder)
