@@ -3,6 +3,8 @@
 namespace Cobonto\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Cobonto\Classes\Admin;
+use Cobonto\Events\AdminLoggedIn;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -46,5 +48,10 @@ class AuthController extends Controller
         $credentials = $request->only($this->loginUsername(), 'password');
 
         return array_add($credentials, 'active', '1');
+    }
+    protected function authenticated($request,$user)
+    {
+        \Event::fire(new AdminLoggedIn(\Auth::guard('admin')->user()));
+        return redirect()->intended($this->redirectPath());
     }
 }

@@ -14,7 +14,7 @@ class EventServiceProvider extends ServiceProvider
     public function register()
     {
         // we read from events from bootstrap cache if not we created it and leave it alone
-        if(app('files')->exists($this->getEventCachedPath()))
+       if(app('files')->exists($this->getEventCachedPath()))
         {
             // fill listen and subscribe
             $event = app('files')->getRequire($this->getEventCachedPath());
@@ -23,7 +23,6 @@ class EventServiceProvider extends ServiceProvider
         }
         else
             $this->createEventCachedFile();
-
         parent::register();
     }
     public function getEventCachedPath()
