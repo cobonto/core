@@ -103,14 +103,6 @@ class AdminsController extends AdminController
 
                     ],
                     [
-                        'name' => 'password_confirmation',
-                        'type' => 'password',
-                        'class' => '',
-                        'col' => '3',
-                        'title' => $this->lang('passwd_confirm'),
-
-                    ],
-                    [
                         'name' => 'active',
                         'type' => 'switch',
                         'class' => '',

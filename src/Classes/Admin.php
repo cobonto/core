@@ -28,7 +28,7 @@ class Admin extends Ardent implements
      * @var array
      */
     protected $fillable = [
-        'firstname','lastname', 'lang','email', 'password', 'active','password_confirmation','role_id'
+        'firstname','lastname', 'lang','email','remember_token','password', 'active','password_confirmation','role_id'
     ];
     public static $rules = [
         'firstname' => 'required|alpha_spaces|between:3,255',
@@ -36,8 +36,7 @@ class Admin extends Ardent implements
         'lang' => 'required|alpha',
         'email' => 'required|email',
         'active' => 'required|boolean',
-        'password' => 'between:6,20|confirmed',
-        'password_confirmation' => 'between:6,20',
+        'password' => 'between:6,20',
         'role_id' => 'required|numeric',
     ];
     /**
@@ -49,7 +48,7 @@ class Admin extends Ardent implements
         'password', 'remember_token',
     ];
     protected $guarded = [
-        'password', 'remember_token',
+        'password'
     ];
 
     /**
