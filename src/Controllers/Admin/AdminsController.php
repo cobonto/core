@@ -11,6 +11,7 @@ namespace Cobonto\Controllers\Admin;
 
 use App\User;
 use Cobonto\Classes\Roles\Role;
+use Cobonto\Classes\Translate;
 use Cobonto\Controllers\AdminController;
 
 class AdminsController extends AdminController
@@ -54,7 +55,7 @@ class AdminsController extends AdminController
 
     protected function fieldForm()
     {
-        $languages = app('files')->directories(resource_path('lang'));
+        $languages = Translate::getLanguages();
         foreach ($languages as $language)
             $data[] = ['lang' => basename($language), 'name' => basename($language)];
         $this->fields_form = [
@@ -100,14 +101,6 @@ class AdminsController extends AdminController
                         'class' => '',
                         'col' => '3',
                         'title' => $this->lang('password'),
-
-                    ],
-                    [
-                        'name' => 'password_confirmation',
-                        'type' => 'password',
-                        'class' => '',
-                        'col' => '3',
-                        'title' => $this->lang('passwd_confirm'),
 
                     ],
                     [

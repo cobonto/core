@@ -18,7 +18,9 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
+                        @if($route_list)
                         <a class="btn btn-default" href="{{ $route_list }}"><i class="fa fa-remove"></i>{{ transTpl('cancel','helpers') }}</a>
+                        @endif
                         @if(isset($form['links']))
                             @foreach($form['links'] as $link)
                                 <a href="{{ $link['link'] }}"

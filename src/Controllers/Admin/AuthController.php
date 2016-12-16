@@ -51,7 +51,7 @@ class AuthController extends Controller
     }
     protected function authenticated($request,$user)
     {
-        \Event::fire(new AdminLoggedIn(\Auth::guard('admin')->user()));
+        \Event::fire(new AdminLoggedIn(\Auth::guard($this->getGuard())->user()));
         return redirect()->intended($this->redirectPath());
     }
 }

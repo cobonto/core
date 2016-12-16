@@ -11,13 +11,13 @@ class RedirectIfAuthenticatedAdmin
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param $guest
+     * @param string $guest
      * @return mixed
      */
-    public function handle($request, Closure $next,$guard = null)
+    public function handle($request, Closure $next,$guard = 'admin')
     {
         if (\Auth::guard($guard)->check()) {
-            return redirect('/admin/dashboard');
+            return redirect(route(config('app.admin_url').'.dashboard.index'));
         }
 
         return $next($request);

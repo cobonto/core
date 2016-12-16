@@ -11,9 +11,9 @@ Route::group(
     function ()
     {
         $admin_url = config('app.admin_url');
-        Route::get($admin_url.'/login', 'AuthController@showLoginForm')->name('admin.login');
-        Route::post($admin_url.'/login', 'AuthController@login')->name('admin.login.auth');
-        Route::get($admin_url.'/logout', 'AuthController@logout')->name('admin.logout');
+        Route::get($admin_url.'/login', 'AuthController@showLoginForm')->name($admin_url.'.login');
+        Route::post($admin_url.'/login', 'AuthController@login')->name($admin_url.'.login.auth');
+        Route::get($admin_url.'/logout', 'AuthController@logout')->name($admin_url.'.logout');
     });
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +48,10 @@ Route::group(
     Route::get('permissions', 'PermissionsController@index')->name($admin_url.'.permissions.index');
     Route::post('permissions/update', 'PermissionsController@updatePermissions')->name($admin_url.'.permissions.update');
     Route::post('permissions/role', 'PermissionsController@Role')->name($admin_url.'.permissions.role');
+    // settings route
+    Route::get('settings/{settings}', 'SettingsController@settings')->name($admin_url.'.settings.settings');
+    Route::post('settings/update', 'SettingsController@updateSettings')->name($admin_url.'.settings.update');
+    Route::post('settings/load', 'SettingsController@load')->name($admin_url.'.settings.load');
     // translate controller
     Route::get('translates','TranslatesController@index')->name($admin_url.'.translates.index');
     Route::post('translates/load','TranslatesController@loadFile')->name($admin_url.'.translates.load');
@@ -59,7 +63,7 @@ Route::group(
         'modules' => 'ModulesController',
         'roles'=>'RolesController',
         'groups'=>'GroupsController',
-        'admins'=>'AdminsController'
+        'admins'=>'AdminsController',
     ]);
 /*
 |--------------------------------------------------------------------------
@@ -79,3 +83,6 @@ Route::group(
 | Routes front
 |--------------------------------------------------------------------------
 */
+Route::get('/url-changed',function(){
+    return 'Url changed type new admin url link and back to dashboard';
+})->name('url.changed');

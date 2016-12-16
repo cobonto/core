@@ -1,12 +1,11 @@
 @foreach($titles as $key=>$title)
     @if($key==0)
-        <div class="bold box-title">{{ $title['name'] }}</div>
+        <li>{{ $title['name'] }}<</li>
     @else
-        &nbsp;<i class="fa fa-angle-right"></i>&nbsp;
         @if($id !=$title['id'])
-            <a href="{{ $title['link'] }}">{{ $title['name'] }}</a>
+            <li><i class="fa fa-angle-right"></i><a href="{{ $title['link'] }}">{{ $title['name'] }}</a></li>
         @else
-            {{ $title['name'] }}
+        <li><i class="fa fa-angle-right"></i> {{ $title['name'] }}</li>
         @endif
     @endif
 

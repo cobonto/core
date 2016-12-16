@@ -89,7 +89,7 @@ trait SimpleHelperList
     }
     protected function pagination()
     {
-        $perPage = \Cache::get($this->getRoute('perPage',false),$this->per_page);
+        $perPage = \Cache::get($this->getRoute('perPage',[],false),$this->per_page);
         if(!$perPage)
             $perPage=10;
         $this->assign->params(['per_page'=>$perPage]);

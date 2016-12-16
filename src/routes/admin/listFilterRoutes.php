@@ -79,17 +79,17 @@ Route::post('list/filters',function(){
                 }
             }
         }
-        \Cache::forget($controller->getRoute('filter',false));
+        \Cache::forget($controller->getRoute('filter',[],false));
         if($filters && count($filters))
-            \Cache::add($controller->getRoute('filter',false),$filters,1440);
+            \Cache::add($controller->getRoute('filter',[],false),$filters,1440);
     }
-    elseif($perPage = $request->input('perPage',false))
+    elseif($perPage = $request->input('perPage',[],false))
     {
-        \Cache::put($controller->getRoute('perPage',false),$perPage,1440);
+        \Cache::put($controller->getRoute('perPage',[],false),$perPage,1440);
     }
-    elseif($request->input('resetFilter',false))
+    elseif($request->input('resetFilter',[],false))
     {
-        \Cache::forget($controller->getRoute('filter',false));
+        \Cache::forget($controller->getRoute('filter',[],false));
     }
-    return redirect(route($controller->getRoute('index',false)));
+    return redirect(route($controller->getRoute('index',[],false)));
 })->name('list.filters');

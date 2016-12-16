@@ -35,10 +35,9 @@ class PermissionsController extends AdminController
     {
         // get all roles
         $this->assign->addJSVars([
-           'load_role_url'=>route('admin.permissions.role'),
-           'update_permissions_url'=>route('admin.permissions.update'),
+           'load_role_url'=>adminRoute('permissions.role'),
+           'update_permissions_url'=>adminRoute('permissions.update'),
         ]);
-
         $this->assign->params([
             'roles'=>Role::where('admin',1)->get(),
         ]);

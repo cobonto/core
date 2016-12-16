@@ -23,7 +23,6 @@
                     </a>
                 </li>
             @endif
-            {!! hook('displayAdminSideBar') !!}
             @if(hasAccess(['users','groups']))
                 <li class="treeview {{ activeMenu('users') }} {{ activeMenu('admin/groups') }}">
                     <a href="{{ adminRoute('users.index') }}">
@@ -57,14 +56,16 @@
                 </ul>
             </li>
                 @endif
-                @if(hasAccess(['settings','translates','performances']))
+                @if(hasAccess(['settings','translates']))
                     <li class="treeview {{ activeMenu('translates') }} {{ activeMenu('settings') }} {{ activeMenu('performances') }}">
                         <a href=""><i class="fa fa-wrench"></i> <span>{{ transTpl('settings','sidebar') }}</span><i class="fa fa-caret-right pull-right"></i></a>
                         <ul class="treeview-menu">
+                            @if(hasAccess('settings')) <li class="{{ activeMenu('settings') }}"><a href="{{ adminRoute('settings.settings',['settings'=>'general']) }}"><i class="fa fa-circle"></i>{{ transTpl('settings','sidebar') }}</a></li>@endif
                             @if(hasAccess('translates')) <li class="{{ activeMenu('translates') }}"><a href="{{ adminRoute('translates.index') }}"><i class="fa fa-circle"></i>{{ transTpl('translates','sidebar') }}</a></li>@endif
                         </ul>
                     </li>
                 @endif
+                {!! hook('displayAdminSideBar') !!}
         </ul>
     </section>
     <!-- /.sidebar -->

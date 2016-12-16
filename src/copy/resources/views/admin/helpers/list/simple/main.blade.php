@@ -18,7 +18,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                   {{ $title }}
+                    {{ $title }}
                     @if($search)
                         <div class="box-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -109,8 +109,6 @@
                             {{ $rows->render() }}
                         </div>
                     </div>
-
-
                 </div>
             </div>
             <!-- /.box -->

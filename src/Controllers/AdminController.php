@@ -564,7 +564,7 @@ abstract class AdminController extends Controller
      * @param array $params
      * @return string
      */
-    public function getRoute($route_name,$route=true,$params=[])
+    public function getRoute($route_name,$params=[],$route=true)
     {
         if ($route)
             return route($this->route_name . $route_name,$params);
