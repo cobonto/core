@@ -32,8 +32,7 @@
       "yajra/laravel-datatables-oracle": "^6.15",
       "intervention/image": "^2.3",
       "barryvdh/laravel-elfinder": "^0.3.8",
-      "mews/purifier": "^2.0",
-      "doctrine/dbal":"2.5.x-dev"
+      "mews/purifier": "^2.0"
     },
     "require-dev":{
       "itsgoingd/clockwork": "^1.12",
