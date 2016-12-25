@@ -1,7 +1,7 @@
 <?php
 
 namespace Cobonto\Controllers\Admin;
-use App\User;
+use Cobonto\Classes\User;
 use Cobonto\Classes\Roles\Role;
 use Cobonto\Controllers\AdminController;
 
@@ -12,7 +12,7 @@ class UsersController extends AdminController
     protected $table = 'users';
     protected $route_name = 'users';
     protected $model_name = 'User';
-
+    protected $prefix_model ='Cobonto\Classes';
     protected function setProperties()
     {
         $this->title = $this->lang('users');

@@ -449,20 +449,29 @@ abstract class AdminController extends Controller
         if(count($positions))
         {
             $ids =[];
-            $postionIds=[];
+            $positionsIds=[];
             foreach($positions as $position)
             {
                 list($id,$id_position) = explode('|',$position);
                 $ids[] = $id;
                 $positionsIds[] = $id_position;
             }
-            sort($postionIds,SORT_NUMERIC);
+            sort($positionsIds,SORT_NUMERIC);
             foreach($ids as $key=>$id)
             {
                 \DB::table($this->table)->where($this->position_identifier,$id)->update(['position'=>$positionsIds[$key]]);
             }
             return ['status'=>'success','msg'=>$this->lang('update_success')];
         }
+    }
+
+    /**
+     * getHighestPosition
+     * @return int
+     */
+    protected function getHighestPosition()
+    {
+         return (int)$this->model->getHighestPosition()->position+1;
     }
     protected function beforeDelete($object, $id)
     {

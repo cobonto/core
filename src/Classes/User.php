@@ -34,8 +34,7 @@ class User extends Ardent implements
         'lastname' => 'required|alpha|between:3,255',
         'email' => 'required|email',
         'active' => 'required|boolean',
-        'password' => 'between:6,20|confirmed',
-        'password_confirmation' => 'between:6,20',
+        'password' => 'between:6,20|',
         'role_id' => 'required|numeric',
     ];
     /**

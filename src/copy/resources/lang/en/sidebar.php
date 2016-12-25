@@ -12,4 +12,5 @@ return [
     'permissions'=>'Permissions',
     'settings'=>'Settings',
     'translates'=>'Translates',
+    'system_menu'=>'System menu',
 ];

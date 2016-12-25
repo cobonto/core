@@ -24,7 +24,7 @@ Route::post('list/filters',function(){
                 {
 
                     $value = $request->input('filter_' . $field);
-                    $column = isset($options['real_field']) ? $options['real_field'] . ' as ' . $field : $field;
+                    $column = isset($options['filter_key']) ? $options['filter_key']: $field;
                     if (!$value && !$filter_type)
                         continue;
                     if ($filter_type && $options['filter_type'] == 'date')

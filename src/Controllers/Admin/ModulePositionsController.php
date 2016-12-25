@@ -259,13 +259,13 @@ class ModulePositionsController extends AdminController
                 if(method_exists($Module,'hook'.ucfirst($hook)))
                 {
                     // check hook registered
-                    $id_hook = Hook::isRegistered($hook);
-                    if($id_hook)
+                    $hook = Hook::isRegistered($hook);
+                    if($hook && is_object($hook))
                     {
                       // check Module is registered in this hook
-                        if(Hook::find($id_hook)->moduleIsRegistered($Module->id))
+                        if(Hook::find($hook->id)->moduleIsRegistered($Module->id))
                             return redirect($this->getRoute('set'))->withErrors([$this->lang('hook_already_set')]);
-
+                        $id_hook = $hook->id;
                     }
                     else
                     {

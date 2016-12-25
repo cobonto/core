@@ -23,6 +23,7 @@
                     </a>
                 </li>
             @endif
+            <li class="header">{{ transTpl('system_menu','sidebar') }}</li>
             @if(hasAccess(['users','groups']))
                 <li class="treeview {{ activeMenu('users') }} {{ activeMenu('admin/groups') }}">
                     <a href="{{ adminRoute('users.index') }}">

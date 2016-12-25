@@ -33,7 +33,7 @@
       "intervention/image": "^2.3",
       "barryvdh/laravel-elfinder": "^0.3.8",
       "mews/purifier": "^2.0",
-      "ddoctrine/dbal":"dev-master"
+      "ddoctrine/dbal":"2.5.*"
     },
     "require-dev":{
       "itsgoingd/clockwork": "^1.12",

@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class AdminPermission
 {
-    protected $globalPages= ['admin.403','admin.404'];
+    protected $globalPages;
     /**
      * @param Request $request
      * @param Closure $next
@@ -20,6 +20,7 @@ class AdminPermission
      */
     public function handle($request, Closure $next)
     {
+        $this->globalPages = [adminRoute('404'),adminRoute('403')];
         if (\Auth::check())
         {
             $user = \Auth::user();

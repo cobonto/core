@@ -42,15 +42,35 @@ if (!function_exists('activeLink'))
     /**
      * determine menu is active or not
      * @param $string
+     * @param string $class_name
+     * @param bool $admin
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */
-    function activeMenu($string,$class_name='active')
+    function activeMenu($string,$class_name='active',$admin=true)
     {
-        $string = config('app.admin_url').'/'.$string;
-        if(\Request::is($string) || \Request::is($string.'/*'))
-            return $class_name;
+        if(!is_array($string))
+        {
+            if($admin)
+                $string = config('app.admin_url').'/'.$string;
+
+            if(\Request::is($string) || \Request::is($string.'/*'))
+                return $class_name;
+            else
+                return '';
+        }
         else
+        {
+            foreach($string as $menu)
+            {
+                if($admin)
+                    $string = config('app.admin_url').'/'.$menu;
+
+                if(\Request::is($string) || \Request::is($menu.'/*'))
+                    return $class_name;
+            }
             return '';
+        }
+
 
     }
 }

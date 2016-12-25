@@ -36,7 +36,7 @@ abstract class Controller extends BaseController
     /**
      * @string tpl view file
      */
-    protected $tpl = false;
+    protected  $tpl = false;
     /**
      * @var string theme directory
      */

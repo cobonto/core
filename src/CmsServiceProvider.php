@@ -124,7 +124,8 @@ class CmsServiceProvider extends ServiceProvider
     protected function registerProviders()
     {
         $providers = [
-            'Cobonto\Providers\EventServiceProvider'
+            'Cobonto\Providers\EventServiceProvider',
+            'Cobonto\Providers\MiddlewareServiceProvider'
         ];
         foreach($providers as $provider)
             $this->app->register($provider);
