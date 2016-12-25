@@ -10,6 +10,7 @@ namespace Cobonto\Controllers\Admin;
 
 
 use App\User;
+use Cobonto\Classes\Admin;
 use Cobonto\Classes\Roles\Role;
 use Cobonto\Classes\Translate;
 use Cobonto\Controllers\AdminController;
@@ -171,7 +172,7 @@ class AdminsController extends AdminController
     {
         $email = $this->request->input('email');
         if ($email)
-            if (User::getByEmail($email))
+            if (Admin::getByEmail($email))
                 $this->errors[] = $this->lang('email_used');
     }
 
@@ -180,7 +181,7 @@ class AdminsController extends AdminController
         $email = $this->request->input('email');
         if ($email)
         {
-            $new_id = User::getByEmail($email, true);
+            $new_id = Admin::getByEmail($email, true);
             if ($new_id)
             {
                 if ($new_id != $id)
