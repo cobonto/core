@@ -74,7 +74,7 @@
                                 </tr>
                             @endforeach
                         @else
-                            <td>{{ transTpl('no_data') }}</td>
+                            <td colspan="99"><div class="no_data bg-warning">{{ transTpl('no_data') }}</div></td>
                         @endif
                         </tbody>
                     </table>

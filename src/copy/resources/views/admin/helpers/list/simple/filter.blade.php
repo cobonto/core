@@ -48,7 +48,7 @@
         </th>
         @endforeach
 
-        <th style="width:auto">
+        <th class="filters_btn" style="width:auto">
             <input type="submit" name="submitFilter" value="{{ transTpl('filter') }}" class="btn btn-warning">
             @if($filter_values)
                 <input type="submit" name="resetFilter" value="{{ transTpl('reset') }}" class="btn btn-default">
