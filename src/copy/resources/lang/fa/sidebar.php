@@ -1,15 +1,15 @@
-<?php
-return [
-    'dashboard'=>'Dashboard',
-    'users'=>'Users',
-    'modules'=>'Modules',
-    'list_modules'=>'List',
-    'position_modules'=>'Positions',
-    'groups'=>'Groups',
-    'management'=>'Management',
-    'employees'=>'Employees',
-    'roles'=>'Roles',
-    'permissions'=>'Permissions',
-    'settings'=>'Settings',
-    'translates'=>'Translates',
-];
+<?php 
+ return array (
+  'dashboard' => 'داشبورد',
+  'users' => 'کاربر ها',
+  'modules' => 'ماژول ها',
+  'list_modules' => 'لیست',
+  'position_modules' => 'موقعیت',
+  'groups' => 'گروه ها',
+  'management' => 'مدیریت',
+  'employees' => 'کارمندان',
+  'roles' => 'نقش ها',
+  'permissions' => 'دسترسی ها',
+  'settings' => 'تنظیمات',
+  'translates' => 'ترجمه ها',
+);

@@ -1,4 +1,4 @@
-<?php
-return [
-    'toggle_nav'=>'Toggle navigation',
-];
+<?php 
+ return array (
+  'toggle_nav' => 'تعویض ناوبری',
+);

@@ -1,9 +1,8 @@
-<?php
-
-return [
-    'language'=>'Language',
-    'environment'=>'Environment',
-    'translate_file'=>'Translate file',
-    'file'=>'File',
-    'load'=>'Load',
-];
+<?php 
+ return array (
+  'language' => 'زبان',
+  'environment' => 'Environment',
+  'translate_file' => 'Translate file',
+  'file' => 'فایل',
+  'load' => 'بارگذاری',
+);

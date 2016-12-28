@@ -1,22 +1,8 @@
-<?php
-
-return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are the default lines which match reasons
-    | that are given by the password broker for a password update attempt
-    | has failed, such as for an invalid token or invalid new password.
-    |
-    */
-
-    'password' => 'Passwords must be at least six characters and match the confirmation.',
-    'reset' => 'Your password has been reset!',
-    'sent' => 'We have e-mailed your password reset link!',
-    'token' => 'This password reset token is invalid.',
-    'user' => "We can't find a user with that e-mail address.",
-
-];
+<?php 
+ return array (
+  'password' => 'کلمه عبور حداقل باید 6 کاراکتر و با تایید کلمه عبور همانند باشد',
+  'reset' => 'کلمه عبور شما بازنشانی شد!',
+  'sent' => 'لینک بازنشانی کلمه عبور برای شما ایمیل شد',
+  'token' => 'توکن بازنشانی کلمه عبور نامعتبر میباشد',
+  'user' => 'کاربری با این ایمیل آدرس پیدا نشد',
+);

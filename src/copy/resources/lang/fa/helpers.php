@@ -1,9 +1,9 @@
-<?php
-return [
-    'actions'=>'Actions',
-    'form'=>'Form',
-    'cancel'=>'Cancel',
-    'have_errors'=>'You have Error(s):',
-    'note'=>'Note!',
-    'info'=>'Information!'
-];
+<?php 
+ return array (
+  'actions' => 'فعالیت',
+  'form' => 'فرم',
+  'cancel' => 'انصراف',
+  'have_errors' => 'شما خطا دارید:',
+  'note' => 'توجه!',
+  'info' => 'اطلاعات!',
+);
