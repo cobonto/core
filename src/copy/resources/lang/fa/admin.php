@@ -62,6 +62,6 @@
   'module_translate' => 'ترجمه ماژول',
   'front_translate' => 'ترجمه بخش کاربری',
   'language' => 'زبان',
-  'unknown_envrionment' => 'Unknown environment',
+  'unknown_envrionment' => 'بخش نامشخص',
   'this_file_not_found' => 'این فیلد پیدا نشد',
 );

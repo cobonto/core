@@ -1,4 +1,4 @@
-<?php
-return [
-    'no_edit_administrator'=>'Can not edit administrator permissions',
-];
+<?php 
+ return array (
+  'no_edit_administrator' => 'سطح دسترسی مدیرکل را نمی توان تغییر داد',
+);
