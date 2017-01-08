@@ -8,16 +8,16 @@
                     <div class="box-tools">
                         @if(hasAccess('positions','edit'))
                             <a href="{{ $set_hook_url }}" class="pull-right rebuild btn btn-info">
-                                    {{ transTpl('set_hook','positions') }}
+                                    {{ transTpl('register_module_in_hook','positions') }}
                             </a>
                         @endif
-                        <div class="input-group input-group-sm" style="width: 150px;">
+                        {{--<div class="input-group input-group-sm" style="width: 150px;">
                             <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
 
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                             </div>
-                        </div>
+                        </div>--}}
                     </div>
                 </div>
                 <!-- /.box-header -->

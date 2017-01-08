@@ -51,7 +51,7 @@
             <li class="treeview {{ activeMenu('admins') }} {{ activeMenu('roles') }} {{ activeMenu('permissions') }}">
                 <a href=""><i class="fa fa-cog"></i> <span>{{ transTpl('management','sidebar') }}</span><i class="fa fa-caret-right pull-right"></i></a>
                 <ul class="treeview-menu">
-                    @if(hasAccess('admins')) <li class="{{ activeMenu('admins') }}"><a href="{{ adminRoute('admins.index') }}"><i class="fa fa-circle"></i>{{ transTpl('admins','sidebar') }}</a></li>@endif
+                    @if(hasAccess('admins')) <li class="{{ activeMenu('admins') }}"><a href="{{ adminRoute('admins.index') }}"><i class="fa fa-circle"></i>{{ transTpl('employees','sidebar') }}</a></li>@endif
                     @if(hasAccess('roles'))<li class="{{ activeMenu('roles') }}"><a href="{{ adminRoute('roles.index') }}"><i class="fa fa-circle"></i> {{ transTpl('roles','sidebar') }}</a></li>@endif
                     @if(hasAccess('permissions'))<li class="{{ activeMenu('permissions') }}"><a href="{{ adminRoute('permissions.index') }}"><i class="fa fa-circle"></i> {{ transTpl('permissions','sidebar') }}</a></li>@endif
                 </ul>

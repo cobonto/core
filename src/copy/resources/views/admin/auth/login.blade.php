@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AdminLTE 2 | Log in</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -12,11 +13,14 @@
     <link rel="stylesheet" href="{{ asset('admin/css/font-awesome/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('admin/css/ionicons/css/ionicons.min.css') }}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('admin/css/AdminLTE.css') }}">
+    <!-- Theme style
+    <link rel="stylesheet" href="{{ asset('admin/css/AdminLTE.css') }}"> -->
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset('plugins/iCheck/square/blue.css') }}">
-
+    <!-- auth -->
+    <link rel="stylesheet" href="{{ asset('admin/css/auth.css') }}">
+    <!-- rtl
+    <link rel="stylesheet" href="{{ asset('admin/css/rtl.css') }}"> -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -24,58 +28,52 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="hold-transition login-page">
-<div class="login-box">
-    <div class="login-logo">
-        <a href="">{{ transTpl('welcome_title','auth') }}</a>
-    </div>
-    <!-- /.login-logo -->
-    <div class="login-box-body">
-        <p class="login-box-msg">{{ transTpl('sign_in_title','auth') }}</p>
-
-        <form class="form-horizontal" method="POST" action="{{ route('admin.login') }}">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
-                <input type="email" class="form-control" placeholder="{{ transTpl('email','auth')}}" name="email">
-                @if ($errors->has('email'))
-                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                @endif
+<body>
+    <div id="auth">
+        <div class="login-box">
+            <div class="login-head">
+                <div class="title">
+                    <i class="fa fa-sign-in"></i>
+                    {{ transTpl('welcome_title','auth') }}
+                </div>
             </div>
-            <div class="form-group has-feedback {{ $errors->has('password') ? ' has-error' : '' }}">
-                <input type="password" class="form-control" placeholder="{{ transTpl('password','auth')}}" name="password">
-                @if ($errors->has('password'))
-                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                @endif
-            </div>
-            <div class="row">
-                <div class="col-xs-8">
-                    <div class="checkbox icheck">
-                        <label>
-                            <input name="remember" type="checkbox"> {{ transTpl('remember','auth') }}
-                        </label>
+            <div class="login-body">
+                <form method="POST" action="{{ route('admin.login') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <div class="form-group username {{ $errors->has('email') ? ' has-error' : '' }}">
+                        <input type="email" class="form-control" placeholder="{{ transTpl('email','auth')}}" name="email">
+                        <span class="icon"></span>
+                        @if ($errors->has('email'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
+                        @endif
                     </div>
-                </div>
-                <!-- /.col -->
-                <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">{{ transTpl('sign_in_btn','auth') }}</button>
-                </div>
-                <!-- /.col -->
+                    <div class="form-group password {{ $errors->has('password') ? ' has-error' : '' }}">
+                        <input type="password" class="form-control" placeholder="{{ transTpl('password','auth')}}" name="password">
+                        <span class="icon"></span>
+                        @if ($errors->has('password'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('password') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="checkbox icheck">
+                            <label>
+                                <input name="remember" type="checkbox"> {{ transTpl('remember','auth') }}
+                            </label>
+                        </div>
+                        <button type="submit" class="login-btn">{{ transTpl('sign_in_btn','auth') }}</button>
+                    </div>
+                    <div class="form-group forget-pwd">
+                        <a href="{{ url('admin/password/reset') }}">{{ transTpl('forget_passwd','auth') }}</a>
+                    </div>
+               </form>
             </div>
-       </form>
-        <!-- /.social-auth-links -->
-
-        <a href="{{ url('admin/password/reset') }}">{{ transTpl('forget_passwd','auth') }}</a><br>
-        <!--<a href="register.html" class="text-center">Register a new membership</a>-->
-        <!--<p class="login-box-msg">{{ transTpl('copy_right','auth') }}</p>-->
-
-    <!-- /.login-box-body -->
-    <div class
-</div>
-<!-- /.login-box -->
+        </div>
+        <div class="copyright">{{ transTpl('copy_right','auth') }}</div>
+    </div>
 
 <!-- jQuery 2.2.0 -->
 <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>

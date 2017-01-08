@@ -1,10 +1,10 @@
 <?php 
  return array (
-  'controllers' => 'کنترلرها',
-  'add' => 'افزودن',
-  'edit' => 'ویرایش',
-  'view' => 'نمایش',
+  'controllers' => 'Controllers',
+  'add' => 'Add',
+  'edit' => 'Edit',
+  'view' => 'View',
   'destroy' => 'Destroy',
-  'all' => 'همه',
-  'set_hook' => 'تنظیم هوک',
+  'all' => 'All',
+  'register_module_in_hook' => 'Register module in hook',
 );

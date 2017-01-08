@@ -172,7 +172,7 @@ class SettingsController extends AdminController
                         'type' => 'text',
                         'class' => '',
                         'col' => '6',
-                        'title' => $this->lang('mail_driver'),
+                        'title' => $this->lang('mail_api'),
 
                     ],
                     [

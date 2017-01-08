@@ -1,9 +1,8 @@
-<?php
-
- return [
-     'email'=>'Email',
-     'general'=>'General',
-     'settings'=>'Settings',
-     'admin_url'=>'Admin url',
-     'deployment'=>'Deployment',
- ];
+<?php 
+ return array (
+  'email' => 'ایمیل',
+  'general' => 'کلی',
+  'settings' => 'تنظیمات',
+  'admin_url' => 'آدرس مدیریت',
+  'deployment' => 'گسترشات',
+);

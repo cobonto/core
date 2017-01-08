@@ -51,7 +51,7 @@ class UsersController extends AdminController
     {
         $this->fields_form = [
             [
-                'title' => 'Edit user',
+                'title' => $this->lang('edit_user'),
                 'input' => [
                     // text
                     [
@@ -119,7 +119,7 @@ class UsersController extends AdminController
                     ],
                     [
                     'type' => 'select',
-                    'title' => $this->l('group'),
+                    'title' => $this->lang('group'),
                     'name' => 'role_id',
                     'col'=>'2',
                     'options' =>
@@ -138,7 +138,7 @@ class UsersController extends AdminController
                     ],
                     [
                         'name' => 'saveAndStay',
-                        'title' => $this->lang('save_and_stay'),
+                        'title' => $this->lang('save_stay'),
                         'type' => 'submit',
                         'class' => 'btn-warning'
                     ]
