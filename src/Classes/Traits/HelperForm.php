@@ -109,8 +109,21 @@ trait HelperForm
                     }
                     elseif ($field['type'] == 'textarea' && isset($field['class']) && $field['class'] == 'ckeditor')
                     {
+                        $contentsLangDirection='ltr';
+                        $cke_lang = 'en';
                         $this->assign->addJS('plugins/ckeditor/ckeditor.js',true);
-                        $this->assign->addJSVars(['eldifnder_url'=>route('elfinder.ckeditor')]);
+                        if(config('app.rtl'))
+                        {
+                            $contentsLangDirection='rtl';
+                            $cke_lang ='fa';
+                        }
+                        $this->assign->addJSVars(
+                            [
+                                'eldifnder_url'=>route('elfinder.ckeditor'),
+                                'contentsLangDirection'=>$contentsLangDirection,
+                                'cke_lang'=>$cke_lang,
+                            ]
+                            );
 
                     }
                     elseif ($field['type'] == 'switch')
