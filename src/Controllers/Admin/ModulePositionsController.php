@@ -241,25 +241,19 @@ class ModulePositionsController extends AdminController
     }
     public function register(Request $request)
     {
-        $validate = \Validator::make($request->all(),
+        $this->validate($request,
             ['module'=>'required|string'],
             ['hook'=>'required|string']
         );
-        if($validate->fails())
-        {
-            return redirect($this->getRoute('set'))->withErrors($validate->errors());
-        }
-        else
-        {
-            $hook = $request->input('hook');
+            $hook_name = $request->input('hook');
             $Module = $this->loadModule($request->input('module'));
             if($Module && is_object($Module) && $Module->id)
             {
                 // check method is exits
-                if(method_exists($Module,'hook'.ucfirst($hook)))
+                if(method_exists($Module,'hook'.ucfirst($hook_name)))
                 {
                     // check hook registered
-                    $hook = Hook::isRegistered($hook);
+                    $hook = Hook::isRegistered($hook_name);
                     if($hook && is_object($hook))
                     {
                       // check Module is registered in this hook
@@ -271,7 +265,7 @@ class ModulePositionsController extends AdminController
                     {
                         // register hook
                         $object = new Hook();
-                        $object->name= $hook;
+                        $object->name= $hook_name;
                         $object->save();
                         $id_hook = $object->id;
                     }
@@ -292,7 +286,7 @@ class ModulePositionsController extends AdminController
             }
             else
                return redirect($this->getRoute('set'))->withErrors([$this->lang('invalid_data')]);
-        }
+
     }
 
     /**

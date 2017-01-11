@@ -20,46 +20,46 @@
         <!-- install or unistall link -->
         @if(!isset($module['core']) || $module['core']==false)
             <li>
-                <a href="{{isset($module['installed'])?route('admin.modules.uninstall',[
+                <a href="{{isset($module['installed'])?adminRoute('modules.uninstall',[
                     'author'=>strtolower(camel_case($module['author'])),
                     'name'=>strtolower(camel_case($module['name'])),
                     ]):
-                    route('admin.modules.install',[
+                    adminRoute('modules.install',[
                     'author'=>strtolower(camel_case($module['author'])),
                     'name'=>strtolower(camel_case($module['name'])),
                     ])}}">{{isset($module['installed'])?'Uninstall':'Install'}}</a>
             </li>
-        @endif
+            @endif
                     <!-- disable and enable -->
-         @if(isset($module['installed']))
+            @if(isset($module['installed']))
                 @if(!isset($module['core']) || $module['core']==false)
                     <li>
-                        <a href="{{$module['active'] ?route('admin.modules.disable',[
+                        <a href="{{$module['active'] ?adminRoute('modules.disable',[
                     'author'=>strtolower(camel_case($module['author'])),
                     'name'=>strtolower(camel_case($module['name'])),
                     ]):
-                    route('admin.modules.enable',[
+                    adminRoute('modules.enable',[
                     'author'=>strtolower(camel_case($module['author'])),
                     'name'=>strtolower(camel_case($module['name'])),
                     ])}}">{{$module['active']?'Disable':'Enable'}}</a>
                     </li>
-                @endif
+                    @endif
                             <!-- configuration module -->
-                @if(isset($module['configurable']) && $module['configurable'])
+                    @if(isset($module['configurable']) && $module['configurable'])
                         <li>
-                            <a href="{{route('admin.modules.configure',['author'=>strtolower(camel_case($module['author'])),
+                            <a href="{{adminRoute('modules.configure',['author'=>strtolower(camel_case($module['author'])),
                     'name'=>strtolower(camel_case($module['name'])),
                     ])}}">Configuration</a>
                         </li>
-                @endif
-         @endif
+                        @endif
+                        @endif
                                 <!-- remove module -->
-         @if(!isset($module['core']) || $module['core']==false)
+                        @if(!isset($module['core']) || $module['core']==false)
                             <li>
                                 <a class="delete" href="">Delete</a>
                                 <form style="display:none"
                                       id="delete_{{ $module['author'] }}_{{ $module['name']}}"
-                                      action="{{ route('admin.modules.destroy',['id'=>'null']) }}"
+                                      action="{{ adminRoute('modules.destroy',['id'=>'null']) }}"
                                       method="POST">
                                     <input type="hidden" name="author"
                                            value="{{ strtolower(camel_case($module['author'])) }}"/>
@@ -69,6 +69,6 @@
                                     {!! csrf_field() !!}
                                 </form>
                             </li>
-         @endif
+                        @endif
     </ul>
 </div>
