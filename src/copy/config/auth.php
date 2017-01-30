@@ -42,8 +42,8 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
+            'driver' => 'session',
+            'provider' => 'domains',
         ],
         'user' =>[
             'driver' => 'session',
@@ -75,16 +75,20 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => \Cobonto\Classes\User::class
+            'model' => env('CUSTOMER_AUTH',\Cobonto\Classes\User::class),
         ],
         'user' => [
             'driver' => 'eloquent',
-            'model' =>  \Cobonto\Classes\User::class,
+            'model' => env('CUSTOMER_AUTH',\Cobonto\Classes\User::class),
         ],
         'admin' => [
             'driver' => 'eloquent',
-            'model' =>\Cobonto\Classes\Admin::class,
-        ]
+            'model' =>env('ADMIN_AUTH',\Cobonto\Classes\Admin::class),
+        ],
+        'domains' => [
+            'driver' => 'eloquent',
+            'model' =>\App\Modules\Cobonto\Accounts\Models\Domain::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',

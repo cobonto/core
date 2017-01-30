@@ -32,6 +32,9 @@ class ExportCommand extends CobontoCommand
         $files = [
             'config/app.php',
             'config/auth.php',
+            'config/api.php',
+            'config/jwt.php',
+            'config/javascript.php',
             'app/Http/Kernel.php',
             #'app/Http/routes.php',
            # 'app/User.php',

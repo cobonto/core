@@ -31,6 +31,7 @@ class Kernel extends HttpKernel
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
+            \Cobonto\Middleware\HttpsProtocol::class,
         ],
 
         'api' => [
@@ -56,5 +57,8 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'guest.admin' =>  \Cobonto\Middleware\RedirectIfAuthenticatedAdmin::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+
+        'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
+        'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
     ];
 }

@@ -29,7 +29,8 @@ class Tools
 
             foreach ($array as $subarray)
             {
-                $results = array_merge($results, self::search($subarray, $key, $value));
+                if(is_array($subarray))
+                $results = array_merge($results, self::searchInMultiArray($subarray, $key, $value));
             }
         }
 

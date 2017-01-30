@@ -36,6 +36,9 @@ class ImportCommand extends CobontoCommand
         $files = [
             'config/app.php',
             'config/auth.php',
+            'config/jwt.php',
+            'config/javascript.php',
+            'config/api.php',
             'app/Http/Kernel.php'
         ];
         $file_changes = [];
@@ -47,7 +50,7 @@ class ImportCommand extends CobontoCommand
             {
                 $file_with_folder = str_replace($this->package_path . $folder, '', $file->getRealPath());
                 $file = $folder . $file_with_folder;
-                if ($this->files->isFile(base_path($file)))
+                if ($this->files->exists(base_path($file)) && $this->files->isFile(base_path($file)))
                     $systemTime = $this->files->lastModified(base_path($file));
                 else
                     $systemTime = 0;
@@ -74,7 +77,8 @@ class ImportCommand extends CobontoCommand
         foreach ($files as $file)
         {
             $file = str_replace('/', $sp, $file);
-            $systemTime = $this->files->lastModified(base_path($file));
+
+            $systemTime = $this->files->exists(base_path($file))?$this->files->lastModified(base_path($file)):0;
             $packageTime = $this->files->lastModified($this->package_path . $file);
 
             if ($systemTime != $packageTime)

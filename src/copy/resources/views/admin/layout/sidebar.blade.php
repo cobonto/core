@@ -23,8 +23,9 @@
                     </a>
                 </li>
             @endif
+
             <li class="header">{{ transTpl('system_menu','sidebar') }}</li>
-            @if(hasAccess(['users','groups']))
+            @if(hasAccess(['users','groups']) && config('app.core_user_controller'))
                 <li class="treeview {{ activeMenu('users') }} {{ activeMenu('admin/groups') }}">
                     <a href="{{ adminRoute('users.index') }}">
                         <i class="fa fa-user"></i> <span>{{ transTpl('users','sidebar') }}</span><i class="fa fa-caret-right pull-right"></i>
@@ -35,6 +36,7 @@
                     </ul>
                 </li>
             @endif
+
             @if(hasAccess(['modules','positions']))
                 <li class="treeview {{ activeMenu('modules') }}">
                     <a href="{{ adminRoute('modules.index') }}">
@@ -47,7 +49,8 @@
                     </ul>
                 </li>
             @endif
-                @if(hasAccess(['admins','roles','permissions']))
+
+            @if(hasAccess(['admins','roles','permissions']) && config('app.core_admin_controller'))
             <li class="treeview {{ activeMenu('admins') }} {{ activeMenu('roles') }} {{ activeMenu('permissions') }}">
                 <a href=""><i class="fa fa-cog"></i> <span>{{ transTpl('management','sidebar') }}</span><i class="fa fa-caret-right pull-right"></i></a>
                 <ul class="treeview-menu">

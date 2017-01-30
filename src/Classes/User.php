@@ -2,6 +2,7 @@
 namespace Cobonto\Classes;
 
 use Cobonto\Classes\Roles\Role;
+use Cobonto\Classes\Traits\Model;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
@@ -15,7 +16,7 @@ class User extends Ardent implements
     AuthorizableContract,
     CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword;
+    use Model,Authenticatable, Authorizable, CanResetPassword;
     public $autoHydrateEntityFromInput = true;    // hydrates on new entries' validation
     public $forceEntityHydrationFromInput = true; // hydrates whenever validation is called
     public $autoPurgeRedundantAttributes = true;
@@ -52,22 +53,17 @@ class User extends Ardent implements
     /**
      *  Get user by email
      * @param string $email
-     * @param bool|false $returId
+     * @param bool|false $returnId
      * @return bool|mixed|static
      */
-    public static function getByEmail($email,$returId=false)
+    public static function getByEmail($email, $returnId=false)
     {
         $result = \DB::table('users')->where('email',$email)->first();
         if($result)
-        {
-            if($returId)
-                return (int)$result->id;
-            else
-                return true;
-        }
+            return ($returnId)? (int)$result->id:  true;
+
         else
             return false;
-
     }
 
     /**

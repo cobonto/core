@@ -13,5 +13,4 @@
         'settings' => 'تنظیمات',
         'translates' => 'ترجمه ها',
         'system_menu' => 'منوهای سیستمی',
-        'employees' => 'کارمندان',
 );

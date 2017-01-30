@@ -52,6 +52,7 @@ Route::group(
     Route::get('settings/{settings}', 'SettingsController@settings')->name($admin_url.'.settings.settings');
     Route::post('settings/update', 'SettingsController@updateSettings')->name($admin_url.'.settings.update');
     Route::post('settings/load', 'SettingsController@load')->name($admin_url.'.settings.load');
+    Route::post('settings/ajax/actions', 'SettingsController@ajaxActions')->name($admin_url.'.settings.ajax.actions');
     // translate controller
     Route::get('translates','TranslatesController@index')->name($admin_url.'.translates.index');
     Route::post('translates/load','TranslatesController@loadFile')->name($admin_url.'.translates.load');
@@ -84,5 +85,5 @@ Route::group(
 |--------------------------------------------------------------------------
 */
 Route::get('/url-changed',function(){
-    return 'Url changed type new admin url link and back to dashboard';
+
 })->name('url.changed');

@@ -163,24 +163,26 @@ trait HelperForm
     // do something before update or add
     protected function calcPost($request=false)
     {
-        if(property_exists($this,'request'))
-            $request = $this->request;
+       if(!$request && property_exists($this,'request'))
+             $Request = $this->request;
+        else
+            $Request = $request;
         // switchers
         if(is_array($this->switchers) && count($this->switchers))
         {
             foreach($this->switchers as $switch)
             {
-                if(!$request->has($switch))
-                    $request->merge([$switch=>0]);
+                if(!$Request->has($switch))
+                    $Request->merge([$switch=>0]);
                 else
-                    $request->merge([$switch=>1]);
+                    $Request->merge([$switch=>1]);
             }
         }
         // check for return request or add to property
-        if(property_exists($this,'request'))
-            $this->request = $request;
+        if(!$request && property_exists($this,'request'))
+            $this->request = $Request;
         else
-            return $request;
+            return $Request;
     }
 
     /**

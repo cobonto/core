@@ -32,7 +32,7 @@ class SettingsController extends AdminController
             return $html;
         $this->assign->params([
             'active_settings' => $tab,
-            'html' => $html
+            'html' => $html,
         ]);
         $this->tpl = 'settings';
         return parent::view();
@@ -102,6 +102,37 @@ class SettingsController extends AdminController
     }
 
     /**
+     * ajax actions
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ajaxActions(Request $request)
+    {
+        $validate = \Validator::make($request->all(),[
+            'action'=>'string|required',
+        ]);
+        if($validate->fails())
+            return response()->json(['status' => 'error', 'msg' => $this->lang('invalid_data')]);
+
+        $action ='ajaxAction'.ucfirst(camel_case($request->input('action')));
+       if(method_exists($this,$action))
+            $this->{$action}();
+        else
+            return response()->json(['status' => 'error', 'msg' => $this->lang('method_not_exists')]);
+
+        return response()->json(['status' => 'success', 'msg' => $this->lang('action_successfully_done')]);
+    }
+
+    protected function ajaxActionClearCache()
+    {
+        \Cache::flush();
+    }
+
+    protected function ajaxActionCacheRoute()
+    {
+        \Artisan::call('route:cache');
+    }
+    /**
      * load settings for specific tab
      * @param string $tab
      */
@@ -144,6 +175,7 @@ class SettingsController extends AdminController
         $this->assign->addJSVars([
             'load_settings' => adminRoute('settings.load'),
             'page_url'=>url(config('app.admin_url').'/settings/').'/',
+            'ajax_cache_url'=>adminRoute('settings.ajax.actions'),
             'offText'=>$this->lang('no'),
             'onText'=>$this->lang('yes'),
         ]);
@@ -318,6 +350,24 @@ class SettingsController extends AdminController
                         'type' => 'submit',
                     ],
                 ],
+                'links'=>[
+                    [
+                        'name' => $this->l('clear_cache'),
+                        'title' => $this->l('clear_cache'),
+                        'icon' => 'paint-brush',
+                        'link' => '#clear_cache',
+                        'id'=>'clear_cache',
+                        'class' => 'ajax-btn btn-info'
+                    ],
+                    [
+                        'name' => $this->l('cache_route'),
+                        'title' => $this->l('cache_route'),
+                        'icon' => 'compress',
+                        'link' => '#cache_route',
+                        'id'=>'cache_route',
+                        'class' => 'ajax-btn btn-primary'
+                    ],
+                ],
             ],
         ];
     }
@@ -385,19 +435,18 @@ class SettingsController extends AdminController
     }
     public function saveDeploymentSettings(Request $request)
     {
-        $this->calcPost($request);
-        /** @var debug saving */
-        $value = 'true';
-        $request = $this->request;
-        if($request->input('APP_DEBUG')==0)
-            $value = 'false';
+        $this->switchers = array_merge($this->switchers,['APP_DEBUG']);
+        $this->calcPost();
+        // app_debug $value
+        $debug = 'true';
+        if($this->request->input('APP_DEBUG')==0)
+            $debug = 'false';
         $key = 'APP_DEBUG';
         return file_put_contents(app()->environmentFilePath(), str_replace(
-            $key.'='.(env($key)?'true':'false'),
-            $key.'='.(string)$value,
+            $key.'='.(env($key)?strval('true'):strval('false')),
+            $key.'='.strval($debug),
             file_get_contents(app()->environmentFilePath())
         ));
-        return true;
     }
     protected function fillValues()
     {

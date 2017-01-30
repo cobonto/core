@@ -99,4 +99,12 @@ return array(
     'nodata_for_settings'=>'No data found for this settings',
     'url'=>'Url',
     'rtl'=>'RTL',
+    'mail_api'=>'API',
+    'debug'=>'Debug',
+    'clear_cache'=>'Clear cache',
+    'clear_session'=>'Clear session',
+    'cache_route'=>'Cache route',
+    'method_not_exists'=>'Method not exits',
+    'action_successfully_done'=>'Action successfully done',
+    'url_changed'=>'Url changed type new admin url link and back to dashboard',
 );

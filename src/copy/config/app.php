@@ -10,6 +10,17 @@ return [
        |
        */
     'admin_url'=>env('APP_ADMIN_URL','admin'),
+
+    /*
+       |--------------------------------------------------------------------------
+       | Admin controller settings
+       |--------------------------------------------------------------------------
+       |
+       | Use default core controller for users and admins
+       |
+    */
+      'core_user_controller'=>env('CORE_USER_CONTROLLER',true),
+      'core_admin_controller'=>env('CORE_ADMIN_CONTROLLER',true),
     /*
       |--------------------------------------------------------------------------
       | Application theme front
@@ -44,6 +55,16 @@ return [
     */
 
     'debug' => env('APP_DEBUG', true),
+    /*
+    |--------------------------------------------------------------------------
+    | Application install Mode
+    |--------------------------------------------------------------------------
+    |
+    | When install is 0 route of modules is disabled
+    | because hooks of modules use database and when database and info is not
+    | you got error that module table not found
+    |
+    */
     'install' => env('APP_INSTALL', 0),
 
     /*
@@ -58,7 +79,17 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    /*
+   |--------------------------------------------------------------------------
+   | Application Secure protocol
+   |--------------------------------------------------------------------------
+   |
+   | Enable this when you have https on your host
+   | if you don't have https disable this because this redirect to https and you have problem
+   |
+   */
 
+    'secure_protocol' => env('SECURE_PROTOCOL', '0'),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -183,6 +214,7 @@ return [
         /*
          * Application Service Providers...
          */
+        \Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
@@ -195,6 +227,9 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\Elfinder\ElfinderServiceProvider::class,
         \Mews\Purifier\PurifierServiceProvider::class,
+        \Dingo\Api\Provider\LaravelServiceProvider::class,
+        \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
     ],
 
     /*

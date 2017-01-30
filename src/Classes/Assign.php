@@ -65,6 +65,7 @@ class Assign
                 $file = $this->environment.$file;
             if ($this->files->exists(public_path($file)))
             {
+                if(!in_array($file,$this->JSFiles))
                 $this->JSFiles[] = $file;
             }
         }
@@ -98,6 +99,7 @@ class Assign
 
             if ($this->files->exists(public_path($file)))
             {
+                if(!in_array($file,$this->CSSFiles))
                 $this->CSSFiles[] = $file;
             }
         }
