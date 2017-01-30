@@ -33,7 +33,7 @@
       "intervention/image": "^2.3",
       "barryvdh/laravel-elfinder": "^0.3.8",
       "mews/purifier": "^2.0",
-      "dingo/api": "1.0.x@dev",
+      "dingo/api": "1.0.x-dev",
       "tymon/jwt-auth": "0.5.*"
     },
     "require-dev":{
