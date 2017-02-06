@@ -9,4 +9,4 @@ Route::post('list/positions/update',function(\Illuminate\Http\Request $request){
 
     return response()->json($controller->updatePositions($positions));
 
-})->name('list.positions.update');
+})->name(config('app.admin_url').'.list.positions.update');

@@ -8,6 +8,7 @@
 
 namespace Cobonto;
 
+use Dingo\Api\Auth\Provider\JWT;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Engines\CompilerEngine;
 use Cobonto\Classes\Assign;
@@ -40,7 +41,7 @@ class CmsServiceProvider extends ServiceProvider
             __DIR__.'/copy/app'=>app_path(),
             __DIR__.'/copy/database'=>database_path(),
         ]);
-
+        $this->registerApi();
     }
     protected function registerCommands()
     {
@@ -129,5 +130,12 @@ class CmsServiceProvider extends ServiceProvider
         ];
         foreach($providers as $provider)
             $this->app->register($provider);
+    }
+
+    protected function registerApi()
+    {
+        app('Dingo\Api\Auth\Auth')->extend('jwt', function ($app) {
+            return new JWT($app['tymon.jwt.auth']);
+        });
     }
 }

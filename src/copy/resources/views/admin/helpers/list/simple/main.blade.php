@@ -85,7 +85,7 @@
                     @if($rows->total()>10)
                         <div class="col-lg-3 ">
                             <div class="pagination pull-left">
-                                <form id="per_page_form" method="post" action="{{ route('admin.list.filters') }}">
+                                <form id="per_page_form" method="post" action="{{ adminRoute('list.filters') }}">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="class_name" value="{{ get_class($controller) }}"/>
                                     <select name="perPage" onchange="$('#per_page_form').submit()" class="select2">

@@ -1,5 +1,5 @@
 @foreach($fields as $name=>$options)
-    <form method="post" action="{{ route('list.filters') }}">
+    <form method="post" action="{{ adminRoute('list.filters') }}">
         {{ csrf_field() }}
         <input type="hidden" name="class_name" value="{{ get_class($controller) }}"/>
         <th style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">

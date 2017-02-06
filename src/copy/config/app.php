@@ -214,20 +214,22 @@ return [
         /*
          * Application Service Providers...
          */
-        \Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Module\ModuleServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        \Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        \Dingo\Api\Provider\LaravelServiceProvider::class,
         \Cobonto\CmsServiceProvider::class,
         \Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         \Yajra\Datatables\DatatablesServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\Elfinder\ElfinderServiceProvider::class,
         \Mews\Purifier\PurifierServiceProvider::class,
-        \Dingo\Api\Provider\LaravelServiceProvider::class,
+
         \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
     ],
@@ -246,6 +248,7 @@ return [
     'aliases' => [
 
         'App' => Illuminate\Support\Facades\App::class,
+        'JWTAuth'=>Tymon\JWTAuth\Facades\JWTAuth::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
         'Blade' => Illuminate\Support\Facades\Blade::class,

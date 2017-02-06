@@ -36,6 +36,7 @@ class ImportCommand extends CobontoCommand
         $files = [
             'config/app.php',
             'config/auth.php',
+            'config/elfinder.php',
             'config/jwt.php',
             'config/javascript.php',
             'config/api.php',
@@ -60,6 +61,7 @@ class ImportCommand extends CobontoCommand
                 {
                     if ($systemTime < $packageTime)
                     {
+                        $this->files->makeDirectory(dirname(base_path($file)));
                         if ($this->files->copy($this->package_path . $file, base_path($file)))
                             $this->info($file . ' is imported');
                         else

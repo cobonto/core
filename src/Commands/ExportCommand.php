@@ -34,6 +34,7 @@ class ExportCommand extends CobontoCommand
             'config/auth.php',
             'config/api.php',
             'config/jwt.php',
+            'config/elfinder.php',
             'config/javascript.php',
             'app/Http/Kernel.php',
             #'app/Http/routes.php',
