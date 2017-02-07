@@ -34,8 +34,8 @@ class ModulesController extends AdminController
         $this->assign->params(
             [
                 'modules' => $modules,
-                'upload_url' => route($this->route_name . 'uploadModule'),
-                'clear_cache_url' => route($this->route_name . 'rebuildList'),
+                'upload_url' => $this->getRoute('uploadModule'),
+                'clear_cache_url' => $this->getRoute('rebuildList'),
             ]
         );
         return parent::index();
@@ -204,9 +204,9 @@ class ModulesController extends AdminController
                 if (method_exists($module, 'saveConfigure'))
                 {
                     if (!$result = $module->saveConfigure($request))
-                        return redirect(route($this->route_name . 'configure', ['author' => strtolower(camel_case($this->author)), 'name' => strtolower(camel_case($this->name))]))->withErrors($module->errors);
+                        return redirect($this->getRoute('configure', ['author' => strtolower(camel_case($this->author)), 'name' => strtolower(camel_case($this->name))]))->withErrors($module->errors);
                     else
-                        return redirect(route($this->route_name . 'configure', ['author' => strtolower(camel_case($this->author)), 'name' => strtolower(camel_case($this->name))]))->with('success', $result);
+                        return redirect($this->getRoute('configure', ['author' => strtolower(camel_case($this->author)), 'name' => strtolower(camel_case($this->name))]))->with('success', $result);
                 }
                 else
                     $this->errors[] = $this->lang('saveconfigure_not_exists');
@@ -216,7 +216,7 @@ class ModulesController extends AdminController
             {
                 $this->errors[] =$this->lang('module_not_exists');
             }
-            return redirect(route($this->route_name . 'configure', ['author' => strtolower(camel_case($this->author)), 'name' => strtolower(camel_case($this->name))]))->withErrors($this->errors);
+            return redirect($this->getRoute('configure', ['author' => strtolower(camel_case($this->author)), 'name' => strtolower(camel_case($this->name))]))->withErrors($this->errors);
 
         }
         else
@@ -266,14 +266,12 @@ class ModulesController extends AdminController
     {
         $this->clearCache();
         if (count($this->errors))
-            return redirect(route($this->route_name . 'index'))->withErrors($this->errors);
+            return redirect($this->getRoute('index'))->withErrors($this->errors);
         else
         {
-            $this->loadMsgs();
-
+            $this->loadMessages();
             return parent::redirect($msg);
         }
-
     }
 
     protected function clearCache()

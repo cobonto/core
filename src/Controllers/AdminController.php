@@ -94,21 +94,12 @@ abstract class AdminController extends Controller
         $this->request = app('request');
         $this->theme = 'admin';
         $this->app = \App::getInstance();
-
-        // for debug and artisan
-        if(\Auth::guard('admin')->check())
-        {
-            /** @var Admin admin */
-            $this->admin = \Auth::guard('admin')->user();
-            $this->admin->setLocale();
-            $this->permissions = Role::getRolePermissions($this->admin->role_id);
-        }
-
+        $this->setPermissions();
         /**
          * @var Assign
          */
         $this->assign = app('assign');
-        // set login enviroment
+        // set login environment
         $this->assign->setEnvironment('admin');
         // load module
         if ($this instanceof ModuleAdminController)
@@ -194,7 +185,7 @@ abstract class AdminController extends Controller
             'title' => $this->title,
         ]);
         $tpl = $this->renderTplName();
-        $this->loadMsgs();
+        $this->loadMessages();
         ;
         // add javascript vars to front
         $this->assign->addJSVars([
@@ -330,14 +321,14 @@ abstract class AdminController extends Controller
         {
             // check permissions
             if (!$this->hasPermission('edit'))
-                return redirect(route(config('api.admin_url') . '.403'));
+                return redirect(adminRoute('403'));
             return $this->update($id);
         }
         else
         {
             // check permissions
             if (!$this->hasPermission('create'))
-                return redirect(route(config('api.admin_url') . '.403'));
+                return redirect(adminRoute('403'));
             return $this->add();
         }
 
@@ -506,7 +497,7 @@ abstract class AdminController extends Controller
     protected function redirect($msg)
     {
         if ($this->request->input('saveAndStay'))
-            return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->with('success', $msg);
+            return redirect($this->getRoute('edit', ['id' => $this->model->id]))->with('success', $msg);
         else
             return redirect($this->getRoute('index'))->with('success', $msg);
     }
@@ -514,7 +505,7 @@ abstract class AdminController extends Controller
     /**
      * load messages for errors warning info
      */
-    protected function loadMsgs()
+    protected function loadMessages()
     {
         if (count($this->errors))
             \Session::flash('errors', new MessageBag($this->errors));
@@ -603,5 +594,17 @@ abstract class AdminController extends Controller
         if ($this->admin->role_id == 1)
             return true;
         return isset($this->permissions[$this->route . '.' . $permission]);
+    }
+
+    protected function setPermissions()
+    {
+        // for debug and artisan
+        if (\Auth::guard('admin')->check())
+        {
+            /** @var Admin admin */
+            $this->admin = \Auth::guard('admin')->user();
+            $this->admin->setLocale();
+            $this->permissions = Role::getRolePermissions($this->admin->role_id);
+        }
     }
 }

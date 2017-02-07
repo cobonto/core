@@ -32,7 +32,7 @@ trait SimpleHelperList
         //add javascript vars
         $this->assign->addJSVars(
             ['alert_msg'=>$this->lang('sure_to_delete'),
-            'list_positions_update'=>route('list.positions.update'),
+            'list_positions_update'=>adminRoute('list.positions.update'),
                 'controller'=>get_class($this),
                 'module'=>($this instanceof ModuleAdminController)?$this->getModule()->name:false,
             ]);
