@@ -61,7 +61,9 @@ class ImportCommand extends CobontoCommand
                 {
                     if ($systemTime < $packageTime)
                     {
-                        $this->files->makeDirectory(dirname(base_path($file)));
+                        if(!$this->files->exists(dirname(base_path($file))))
+                            $this->files->makeDirectory(dirname(base_path($file)));
+
                         if ($this->files->copy($this->package_path . $file, base_path($file)))
                             $this->info($file . ' is imported');
                         else
