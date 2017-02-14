@@ -23,9 +23,9 @@ trait Model
     {
         $data = \DB::table($this->table)->orderBy($this->position_column,'DESC')->first([$this->position_column]);
         if(!$data)
-            return 0;
+            return -1;
         else
-            $data->{$this->position_column};
+           return (int)$data->{$this->position_column};
     }
 
     /**

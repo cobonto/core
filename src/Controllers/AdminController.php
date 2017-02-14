@@ -462,7 +462,7 @@ abstract class AdminController extends Controller
      */
     protected function getHighestPosition()
     {
-         return (int)$this->model->getHighestPosition()->position+1;
+         return $this->model->getHighestPosition()+1;
     }
     protected function beforeDelete($object, $id)
     {
