@@ -296,8 +296,8 @@ abstract class AdminController extends Controller
     // edit method
     protected function edit($id)
     {
-        $this->fieldForm();
         $this->loadObject($id, true);
+        $this->fieldForm();
         // add some variable for view
         if ($this->tpl == false)
             $this->tpl = $this->tpl_form;
