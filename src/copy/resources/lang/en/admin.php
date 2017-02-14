@@ -107,4 +107,18 @@ return array(
     'method_not_exists'=>'Method not exits',
     'action_successfully_done'=>'Action successfully done',
     'url_changed'=>'Url changed type new admin url link and back to dashboard',
+
+    // module
+
+    'module_not_found'=>'Module not found',
+    'module_already_installed'=>'Module is already installed',
+    'problem_install_module'=>'Problem in install module',
+    'can_not_uninstall_core_module'=>'Can not uninstall core modules',
+    'problem_unregister_events'=>'problem in unregister Events',
+    'problem_unregister_middleware'=>'problem in unregister middleware',
+    'problem_unregister_configuration'=>'problem in unregister configuration',
+    'problem_uninstall_module'=>'problem in uninstall module',
+    'module_currently_uninstalled'=>'Module is currently is uninstalled',
+    'problem_install_configuration'=>'Problem install configuration',
+
 );

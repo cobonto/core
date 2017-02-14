@@ -73,7 +73,7 @@ return [
     |
     */
 
-    'user' =>\App\Modules\Cobonto\Accounts\Models\Domain::class ,
+    'user' =>env('JWT_USER_MODEL',\Cobonto\Classes\User::class) ,
 
     /*
     |--------------------------------------------------------------------------
@@ -155,7 +155,7 @@ return [
         |
         */
 
-        'auth' =>\App\Modules\Cobonto\Accounts\Providers\JWTAuthAdapter::class ,
+        'auth' =>env('JWT_USER_AUTH_PROVIDER',\Tymon\JWTAuth\Providers\Auth\IlluminateAuthAdapter::class) ,
 
         /*
         |--------------------------------------------------------------------------

@@ -21,7 +21,11 @@ trait Model
      */
     public function getHighestPosition()
     {
-        return \DB::table($this->table)->orderBy($this->position_column,'DESC')->first([$this->position_column]);
+        $data = \DB::table($this->table)->orderBy($this->position_column,'DESC')->first([$this->position_column]);
+        if(!$data)
+            return 0;
+        else
+            $data->{$this->position_column};
     }
 
     /**
