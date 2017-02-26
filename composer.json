@@ -23,7 +23,7 @@
       "intervention/image": "^2.3",
       "barryvdh/laravel-elfinder": "^0.3.8",
       "mews/purifier": "^2.0",
-      "kalnoy/nestedset":"dev-master"
+      "kalnoy/nestedset":"4.x-dev"
     },
     "require-dev":{
       "itsgoingd/clockwork": "^1.12"
