@@ -43,12 +43,11 @@ if (!function_exists('diffTime')){
      * @param $format
      * @return int
      */
-    function diffTime($first_date,$second_date='NOW',$type='Seconds')
+    function diffTime($first_date,$second_date='NOW',$type='Seconds',$abs=true)
     {
         $second = new \Carbon\Carbon($second_date);
         $first = new \Carbon\Carbon($first_date);
-
-        return $second->{"diffIn".$type}($first);
+       return $first->{"diffIn".$type}($second,$abs);
     }
 }
 

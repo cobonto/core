@@ -26,23 +26,27 @@ class CmsServiceProvider extends ServiceProvider
         $this->registerCommands();
         $this->registerSettings();
         $this->registerHelpers();
-     //   $this->registerCompiler();
+        //   $this->registerCompiler();
     }
+
     public function boot()
     {
-        if (! $this->app->routesAreCached()) {
-            require __DIR__.'/routes/routes.php';
+        if (!$this->app->routesAreCached())
+        {
+            require __DIR__ . '/routes/routes.php';
         }
         $this->bootValidators();
         $this->publishes([
-            __DIR__.'/copy/config'=>base_path('config'),
-            __DIR__.'/copy/resources/views'=>resource_path('views'),
-            __DIR__.'/copy/resources/lang'=>resource_path('lang'),
-            __DIR__.'/copy/app'=>app_path(),
-            __DIR__.'/copy/database'=>database_path(),
+            __DIR__ . '/copy/config' => base_path('config'),
+            __DIR__ . '/copy/resources/views' => resource_path('views'),
+            __DIR__ . '/copy/resources/lang' => resource_path('lang'),
+            __DIR__ . '/copy/app' => app_path(),
+            __DIR__ . '/copy/database' => database_path(),
         ]);
         $this->registerApi();
+        $this->bootBladeSet();
     }
+
     protected function registerCommands()
     {
         $commands = ['Import', 'Model', 'Export'];
@@ -57,6 +61,7 @@ class CmsServiceProvider extends ServiceProvider
             'cobonto.export'
         );
     }
+
     protected function registerImportCommand()
     {
         $this->app->singleton('cobonto.import', function ($app)
@@ -80,62 +85,83 @@ class CmsServiceProvider extends ServiceProvider
             return new ExportCommand($app['files']);
         });
     }
-    protected function registerSettings(){
-        $this->app->singleton('assign', function ($app) {
+
+    protected function registerSettings()
+    {
+        $this->app->singleton('assign', function ($app)
+        {
             return new Assign($app['files']);
         });
         $this->app->singleton('settings', function ($app)
         {
-            return new Settings([],true);
+            return new Settings([], true);
         });
     }
 
     /**
-     * @param  \Illuminate\View\Engines\EngineResolver  $resolver
+     * @param  \Illuminate\View\Engines\EngineResolver $resolver
      */
     protected function registerCompiler()
     {
         $resolver = app('view.engine.resolver');
         $app = $this->app;
-        $app->singleton('blade.compiler', function($app)
+        $app->singleton('blade.compiler', function ($app)
         {
             $cache = $app['config']['view.compiled'];
             return new CmsBladeCompiler($app['files'], $cache);
         });
 
-        $resolver->register('blade', function () use ($app) {
+        $resolver->register('blade', function () use ($app)
+        {
             return new CompilerEngine($app['blade.compiler']);
         });
     }
+
     /** register helpers functions */
     protected function registerHelpers()
     {
         // require all helpers files in Helper folder
-        foreach (glob(dirname(__FILE__).'/Helpers/*.php') as $filename){
+        foreach (glob(dirname(__FILE__) . '/Helpers/*.php') as $filename)
+        {
             require_once($filename);
         }
     }
+
     protected function bootValidators()
     {
-        \Validator::extend('alpha_spaces', function($attribute, $value)
+        \Validator::extend('alpha_spaces', function ($attribute, $value)
         {
             return preg_match('/^[\pL\s]+$/u', $value);
         });
     }
+
     protected function registerProviders()
     {
         $providers = [
             'Cobonto\Providers\EventServiceProvider',
             'Cobonto\Providers\MiddlewareServiceProvider'
         ];
-        foreach($providers as $provider)
+        foreach ($providers as $provider)
             $this->app->register($provider);
     }
 
     protected function registerApi()
     {
-        app('Dingo\Api\Auth\Auth')->extend('jwt', function ($app) {
+        app('Dingo\Api\Auth\Auth')->extend('jwt', function ($app)
+        {
             return new JWT($app['tymon.jwt.auth']);
         });
+    }
+
+    protected function bootBladeSet()
+    {
+        $variables =  ['set', 'var', 'assign'];
+        foreach ($variables as $variable)
+        {
+            \Blade::extend(function ($value) use ($variable)
+            {
+                return preg_replace("/@{$variable}\(['\"](.*?)['\"]\,(.*)\)/", '<?php $$1 =$2; ?>', $value);
+            });
+        }
     }
 }
