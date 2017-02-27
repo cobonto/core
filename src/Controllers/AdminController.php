@@ -271,8 +271,8 @@ abstract class AdminController extends Controller
 
     protected function create()
     {
-        $this->fieldForm();
         $this->loadObject();
+        $this->fieldForm();
         // add some variable for view
         if ($this->tpl == false)
             $this->tpl = $this->tpl_form;
