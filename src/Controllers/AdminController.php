@@ -21,11 +21,6 @@ abstract class AdminController extends Controller
     use DataTableHelperList;
     use HelperForm;
     use SimpleHelperList;
-
-    /**
-     * @string tpl view file
-     */
-    protected $tpl = false;
     /**
      * @string title of page
      */
@@ -563,6 +558,7 @@ abstract class AdminController extends Controller
      * @param bool $route
      * @param array $params
      * @return string
+     * @deprecated
      */
     public function getRoute($route_name,$params=[],$route=true)
     {
@@ -571,7 +567,20 @@ abstract class AdminController extends Controller
         else
             return $this->route_name.$route_name;
     }
-
+    /**
+     * get route from controller
+     * @param string $route_name
+     * @param bool $route
+     * @param array $params
+     * @return string
+     */
+    public function route($route_name,$params=[],$route=true)
+    {
+        if ($route)
+            return route($this->route_name . $route_name,$params);
+        else
+            return $this->route_name.$route_name;
+    }
     protected function checkPermissions()
     {
         if ($this->admin->role_id == 1)
