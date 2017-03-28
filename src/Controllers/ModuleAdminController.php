@@ -19,11 +19,13 @@ class ModuleAdminController extends AdminController
     protected $module;
     /** @var bool ovveride_view_files */
     protected $ovverrideViewFile = false;
+
     protected function setProperties()
     {
         parent::setProperties();
-        $this->prefix_model = $this->app->getNamespace().'Modules\\'.$this->module->author.'\\'.$this->module->name.'\\Models\\';
+        $this->prefix_model = $this->app->getNamespace() . 'Modules\\' . $this->module->author . '\\' . $this->module->name . '\\Models\\';
     }
+
     protected function loadModule()
     {
         //
@@ -43,29 +45,33 @@ class ModuleAdminController extends AdminController
 
     protected function renderTplName()
     {
-        if(!$this->ovverrideViewFile)
+        if (!$this->ovverrideViewFile)
         {
             return parent::renderTplName();
         }
         else
         {
             // check module is loaded or not
-            if(!is_object($this->module))
+            if (!is_object($this->module))
             {
                 return parent::renderTplName();
             }
+            else
+            {
+                // assign module to blade
+                $this->assign->params(['module' => $this->module]);
                 $data = explode('.', $this->tpl);
                 if (count($data) == 1)
                     $this->tpl = 'admin.' . $this->tpl . '.main';
                 elseif (count($data) == 2)
                     $this->tpl = 'admin.' . $this->tpl;
-                else
-                    return 'module_resource::' . $this->module->author . '.' . $this->module->name . '.resources.' . $this->tpl;
-
+                return 'module_resource::' . $this->module->author . '.' . $this->module->name . '.resources.' . $this->tpl;
+            }
 
         }
 
     }
+
     public function l($string)
     {
         return $this->module->lang($string);
