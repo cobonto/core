@@ -147,7 +147,7 @@ class CmsServiceProvider extends ServiceProvider
 
     protected function registerApi()
     {
-        if(config('app.enable_api'))
+        if(config('api.enable'))
         {
             app('Dingo\Api\Auth\Auth')->extend('jwt', function ($app)
             {
