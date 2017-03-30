@@ -28,7 +28,7 @@ class User extends Ardent implements
      * @var array
      */
     protected $fillable = [
-        'firstname','lastname', 'email', 'password', 'active','password_confirmation','role_id','last_login'
+        'firstname','lastname','mobile','email','password','active','password_confirmation','role_id','last_login'
     ];
     public static $rules = [
         'firstname' => 'required|alpha|between:3,255',
@@ -36,6 +36,7 @@ class User extends Ardent implements
         'email' => 'required|email',
         'active' => 'required|boolean',
         'password' => 'between:6,20|',
+        'mobile'=>'string',
         'role_id' => 'required|numeric',
     ];
     /**

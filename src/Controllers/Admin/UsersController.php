@@ -102,6 +102,16 @@ class UsersController extends AdminController
                         'title' => $this->lang('password_confirmed'),
 
                     ],
+                    // text
+                    [
+                        'name' => 'mobile',
+                        'type' => 'text',
+                        'class' => '',
+                        'col' => '6',
+                        'title' => $this->lang('mobile'),
+                        //  'suffix' => '$',
+                        //  'prefix' => '00.0',
+                    ],
                     // date picker
                     [
                         'name' => 'active',
