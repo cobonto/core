@@ -147,10 +147,14 @@ class CmsServiceProvider extends ServiceProvider
 
     protected function registerApi()
     {
-        app('Dingo\Api\Auth\Auth')->extend('jwt', function ($app)
+        if(config('app.enable_api'))
         {
-            return new JWT($app['tymon.jwt.auth']);
-        });
+            app('Dingo\Api\Auth\Auth')->extend('jwt', function ($app)
+            {
+                return new JWT($app['tymon.jwt.auth']);
+            });
+        }
+
     }
 
     protected function bootBladeSet()
