@@ -542,7 +542,11 @@ abstract class AdminController extends Controller
             foreach ($this->fields_list as $field => $options)
             {
                 // select
-                $select[] = isset($options['real_field']) ? $options['real_field'] . ' as ' . $field : $field;
+                if(!isset($options['sql_method']))
+                    $select[] = isset($options['real_field']) ? $options['real_field'] . ' as ' . $field : $field;
+                // sql method like concat and....
+                else
+                    $select[]= \DB::raw(isset($options['real_field']) ? $options['real_field'] . ' as ' . $field : $field);
             }
             /**
              * @var \DB
