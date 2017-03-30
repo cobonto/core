@@ -231,7 +231,7 @@ return [
         \Mews\Purifier\PurifierServiceProvider::class,
 
         \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
@@ -283,6 +283,7 @@ return [
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Purifier' => Mews\Purifier\Facades\Purifier::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];
