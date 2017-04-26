@@ -15,9 +15,7 @@
                 {{ $key }}="{{ $value }}"
             @endforeach
         @endif
-            >
-            {{ $values[$input['name']] }}
-        </textarea>
+        >{{ $values[$input['name']] }}</textarea>
         @if(isset($input['suffix']))<span class="input-group-addon">{!!  $input['suffix']  !!}</span>@endif
         @if(isset($input['desc']))<span class="help-block">{{ $input['desc'] }}</span>@endif
     </div>

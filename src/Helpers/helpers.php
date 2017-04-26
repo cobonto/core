@@ -20,10 +20,10 @@ if (!function_exists('hasAccess'))
         $result = true;
         foreach ($routes as $route)
         {
-            $hasPermission =\Auth::guard('admin')->user()->role()->hasPermission($route . '.' . $method);
+            $hasPermission = \Auth::guard('admin')->user()->role()->hasPermission($route . '.' . $method);
             if (!$hasPermission && $allTrue)
                 return false;
-            elseif($hasPermission && !$allTrue)
+            elseif ($hasPermission && !$allTrue)
                 return true;
             else
                 $result &= $hasPermission;
@@ -39,8 +39,24 @@ if (!function_exists('hook'))
      * @param array $params
      * @return html
      */
-    function hook($hook, $params=[])
+    function hook($hook, $params = [])
     {
-        return \Module\Classes\Hook::execute($hook,$params);
+        return \Module\Classes\Hook::execute($hook, $params);
+    }
+}
+
+if (!function_exists('displayPrice'))
+{
+    /**
+     * Display price
+     * @param $price
+     * @param string $sign
+     * @return string
+     */
+    function displayPrice($price, $sign = false)
+    {
+        if (!$sign)
+            $sign = config('app.currency', 'ریال');
+        return number_format($price, 0, '.', ',') . ' ' . $sign;
     }
 }
