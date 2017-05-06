@@ -45,8 +45,8 @@ class FrontController extends Controller
             $this->assign->addCSS('rtl.css');
         }
         $this->assign->params([
-            'css' => $this->assign->getCSS(),
-            'javascript_files' => $this->assign->getJS(),
+            'css' => array_unique($this->assign->getCSS()),
+            'javascript_files' => array_unique($this->assign->getJS()),
         ]);
         // add javascript vars to front
         $this->assign->addJSVars([
