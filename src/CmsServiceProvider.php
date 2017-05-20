@@ -133,6 +133,11 @@ class CmsServiceProvider extends ServiceProvider
         {
             return preg_match('/^[\pL\s]+$/u', $value);
         });
+        //
+        \Validator::extend('phone_mobile', function($attribute, $value, $parameters)
+        {
+            return substr($value, 0, 2) == '09';
+        });
     }
 
     protected function registerProviders()
