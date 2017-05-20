@@ -136,7 +136,7 @@ class CmsServiceProvider extends ServiceProvider
         //
         \Validator::extend('phone_mobile', function($attribute, $value, $parameters)
         {
-            return substr($value, 0, 2) == '09';
+            return substr($value, 0, 2) == '09' && strlen($value)==11;
         });
     }
 

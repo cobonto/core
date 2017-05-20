@@ -31,7 +31,8 @@
                         </div>
                     @endif
                     @if($create)
-                        <a class="create btn btn-default btn-circle btn-info" href="{!! route($route_name.'create') !!}">
+                        <a class="create btn btn-default btn-circle btn-info"
+                           href="{!! route($route_name.'create') !!}">
                             <i class="fa fa-plus"></i>
                             {{ transTpl('new') }}
                         </a>
@@ -60,12 +61,19 @@
                                 <tr @if($position_identifier) id="positions_{{ $row->{$position_identifier} }}|{{ $row->position }}"@endif>
                                     @foreach($fields as $name=>$options)
                                         @if(isset($options['type']) && $options['type']=='position')
-                                            <td style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}"><div class="icon_position"><i class="fa fa-arrows"></div></td>
+                                            <td style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">
+                                                <div class="icon_position"><i class="fa fa-arrows"></i></div>
+                                            </td>
+                                        @elseif(isset($options['type']) && $options['type']=='price')
+                                            <td id="{{ isset($options['id'])?$options['id']:$name}}"
+                                                class="{{ isset($options['class'])?$options['class']:''}}"
+                                                style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">{!! isset($options['function'])?$controller->{$options['function']}($row):displayPrice($row->{$name}) !!}
+                                            </td>
                                         @else
-                                        <td id="{{ isset($options['id'])?$options['id']:$name}}"
-                                            class="{{ isset($options['class'])?$options['class']:''}}"
-                                            style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">{!! isset($options['function'])?$controller->{$options['function']}($row):$row->{$name} !!}
-                                        </td>
+                                            <td id="{{ isset($options['id'])?$options['id']:$name}}"
+                                                class="{{ isset($options['class'])?$options['class']:''}}"
+                                                style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">{!! isset($options['function'])?$controller->{$options['function']}($row):$row->{$name} !!}
+                                            </td>
                                         @endif
                                     @endforeach
                                     @if(count($actions))
@@ -74,7 +82,9 @@
                                 </tr>
                             @endforeach
                         @else
-                            <td colspan="99"><div class="no_data bg-warning">{{ transTpl('no_data') }}</div></td>
+                            <td colspan="99">
+                                <div class="no_data bg-warning">{{ transTpl('no_data') }}</div>
+                            </td>
                         @endif
                         </tbody>
                     </table>
@@ -90,15 +100,20 @@
                                     <input type="hidden" name="class_name" value="{{ get_class($controller) }}"/>
                                     <select name="perPage" onchange="$('#per_page_form').submit()" class="select2">
                                         @if($rows->total()>10)
-                                            <option value="10" @if($per_page==10)selected="selected" @endif>10</option>@endif
+                                            <option value="10" @if($per_page==10)selected="selected" @endif>10
+                                            </option>@endif
                                         @if($rows->total()>20)
-                                            <option value="20" @if($per_page==20)selected="selected" @endif>20</option>@endif
+                                            <option value="20" @if($per_page==20)selected="selected" @endif>20
+                                            </option>@endif
                                         @if($rows->total()>50)
-                                            <option value="50" @if($per_page==50)selected="selected" @endif>50</option>@endif
+                                            <option value="50" @if($per_page==50)selected="selected" @endif>50
+                                            </option>@endif
                                         @if($rows->total()>100)
-                                            <option value="100" @if($per_page==100)selected="selected" @endif>100</option>@endif
+                                            <option value="100" @if($per_page==100)selected="selected" @endif>100
+                                            </option>@endif
                                         @if($rows->total()>300)
-                                            <option value="300" @if($per_page==300)selected="selected" @endif>300</option>@endif
+                                            <option value="300" @if($per_page==300)selected="selected" @endif>300
+                                            </option>@endif
                                     </select>
                                 </form>
                             </div>

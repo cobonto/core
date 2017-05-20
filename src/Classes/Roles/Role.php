@@ -18,7 +18,7 @@ class Role extends Ardent
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name','admin',
     ];
     public static $rules = [
         'name' => 'required|string|between:3,255',

@@ -72,7 +72,7 @@ trait SimpleHelperList
     }
     protected function filters()
     {
-        $filters = \Cache::get($this->route_name.'filter');
+        $filters = \Cache::get($this->route('filter',[],false));
         if (count($this->fields_list) && $filters &&  is_array($filters))
         {
             foreach ($filters as $field=>$filter)
