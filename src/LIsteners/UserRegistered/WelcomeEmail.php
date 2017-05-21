@@ -14,6 +14,9 @@ use Illuminate\Queue\InteractsWithQueue;
 class WelcomeEmail implements ShouldQueue
 {
     use InteractsWithQueue;
+    public function __construct()
+    {
+    }
 
     public function handle(UserRegistered $event)
     {

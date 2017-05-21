@@ -60,3 +60,12 @@ if (!function_exists('displayPrice'))
         return number_format($price, 0, '.', ',') . ' ' . $sign;
     }
 }
+
+if(!function_exists('settings')){
+    function settings($key=null){
+        if(!$key)
+            return app('settings');
+        else
+            return app('settings')->get($key);
+    }
+}
