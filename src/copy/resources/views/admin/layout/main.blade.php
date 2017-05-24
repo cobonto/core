@@ -3,12 +3,8 @@
 <!--header-->
 @include('admin.layout.header')
         <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <div class="breadcrumb">
-        <ol>
-            @include('admin.layout.breadcrumb')
-        </ol>
-    </div>
+<div class="content">
+        @include('admin.layout.breadcrumb')
     <!-- Content Header maybe yeild  -->
     @hasSection ('header')
     @yield('header')
@@ -20,10 +16,10 @@
             
         </section>--}}
     @endif
-    <section class="content">
-        @include('admin.layout.messages')
+    <div class="page-content">
+        <div class="row">@include('admin.layout.messages')</div>
         @yield('content')
-    </section>
+    </div>
 </div>
 
 <!-- footer -->

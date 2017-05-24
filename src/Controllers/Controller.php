@@ -54,7 +54,7 @@ abstract class Controller extends BaseController
     {
         $this->assign->addCSS(
             ['admin/css/bootstrap.min.css',
-                'admin/css/font-awesome/css/font-awesome.min.css']
+                'admin/css/font-awesome/font-awesome.min.css']
             ,true);
         $this->assign->addPlugin('jquery');
         $this->assign->addPlugin('jquery-ui');

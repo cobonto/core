@@ -13,12 +13,10 @@ use Illuminate\Support\MessageBag;
 use LaravelArdent\Ardent\Ardent;
 use Module\Classes\Hook;
 use Cobonto\Classes\Traits\HelperForm;
-use Cobonto\Classes\Traits\DataTableHelperList;
 
 abstract class AdminController extends Controller
 {
     use HelperList;
-    use DataTableHelperList;
     use HelperForm;
     use SimpleHelperList;
     /**
@@ -142,14 +140,14 @@ abstract class AdminController extends Controller
         parent::setMedia();
         // css
         $this->assign->addCSS([
-            'css/ionicons/css/ionicons.min.css',
-            'css/skins/_all-skins.min.css',
+            #'css/ionicons/css/ionicons.min.css',
+           # 'css/skins/_all-skins.min.css',
         ]);
         //js
-        $this->assign->addJS('js/app.js');
+     #   $this->assign->addJS('js/app.js');
         // plugins
-        $this->assign->addPlugin('morris');
-        $this->assign->addPlugin('pace');
+      #  $this->assign->addPlugin('morris');
+      #  $this->assign->addPlugin('pace');
     }
 
     /**
@@ -166,17 +164,16 @@ abstract class AdminController extends Controller
         ]);
         // assign general hooks
         // to override all plugins and buttons
-        $this->assign->addCSS('css/AdminLTE.css');
+        #$this->assign->addCSS('css/AdminLTE.css');
         $this->assign->addCSS('css/admin.css');
         // add rtl file if app is rtl
         if (config('app.rtl'))
         {
             $this->assign->addCSS('css/rtl.css');
         }
-
         $this->assign->params([
-            'css' => $this->assign->getCSS(),
-            'javascript_files' => $this->assign->getJS(),
+            'css' => array_unique($this->assign->getCSS()),
+            'javascript_files' => array_unique($this->assign->getJS()),
             'title' => $this->title,
         ]);
         $tpl = $this->renderTplName();

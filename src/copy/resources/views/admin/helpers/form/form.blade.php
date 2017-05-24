@@ -4,20 +4,20 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="hidden" name="id" value="{{ $id or '' }}"/>
             @foreach($forms as $form)
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">@if(isset($form['title'])) {{ $form['title'] }}@else {{ transTpl('form','helpers')}} @endif</h3>
+                <div class="panel panel-flat">
+                    <div class="panel-heading with-border">
+                        <h3 class="panel-title">@if(isset($form['title'])) {{ $form['title'] }}@else {{ transTpl('form','helpers')}} @endif</h3>
                     </div>
                     <!-- /.box-header -->
                     <!-- form start -->
 
-                    <div class="box-body">
+                    <div class="panel-body">
                         @foreach($form['input'] as $input)
                             @include('admin.helpers.form.input.'.$input['type'])
                         @endforeach
                     </div>
                     <!-- /.box-body -->
-                    <div class="box-footer">
+                    <div class="panel-footer">
                         @if($route_list)
                         <a class="btn btn-default" href="{{ $route_list }}"><i class="fa fa-remove"></i>{{ transTpl('cancel','helpers') }}</a>
                         @endif

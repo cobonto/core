@@ -17,27 +17,14 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body>
 <div class="wrapper">
-    <header class="main-header">
+    <div class="header">
         <!-- Logo -->
-        <a href="{{ url('admin/dashboard') }}" class="logo">
-            <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini">{{ transTpl('admin_title_mini') }}</span>
-            <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg">{{ transTpl('admin_title') }}</span>
+        <div class="logo"><a href="{{ adminRoute('dashboard.index') }}" class="logo">
+                <img src="{{ asset('img/logo.png') }}" class="img-responsive">
         </a>
-        <nav class="navbar navbar-static-top">
-            <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                <span class="sr-only">{{ transTpl('toggle_nav','tpl') }}</span>
-            </a>
-
-            <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
-                    {!! hook('displayAdminNav') !!}
-                </ul>
-            </div>
-        </nav>
-    </header>
+        </div>
+        {!! hook('displayAdminNav') !!}
+    </div>
 @include('admin.layout.sidebar')

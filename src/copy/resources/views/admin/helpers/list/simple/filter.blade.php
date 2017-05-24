@@ -2,7 +2,7 @@
     <form method="post" action="{{ adminRoute('list.filters') }}">
         {{ csrf_field() }}
         <input type="hidden" name="class_name" value="{{ get_class($controller) }}"/>
-        <th style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">
+        <td class="filter" style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">
             @if(isset($options['filter']) && $options['filter']==false)
                 --
                 @else
@@ -45,11 +45,11 @@
                     @endif
                 @endif
             @endif
-        </th>
+        </td>
         @endforeach
 
         <th class="filters_btn" style="width:auto">
-            <input type="submit" name="submitFilter" value="{{ transTpl('filter') }}" class="btn btn-warning">
+            <input type="submit" name="submitFilter" value="{{ transTpl('filter') }}" class="btn btn-primary">
             @if($filter_values)
                 <input type="submit" name="resetFilter" value="{{ transTpl('reset') }}" class="btn btn-default">
             @endif

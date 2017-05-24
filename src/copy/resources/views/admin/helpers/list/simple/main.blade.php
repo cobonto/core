@@ -15,83 +15,65 @@
 @endsection--}}
 @section('content')
     <div class="row">
-        <div class="col-xs-12">
-            <div class="box">
-                <div class="box-header">
-                    {{ $title }}
-                    @if($search)
-                        <div class="box-tools">
-                            <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="table_search" class="form-control pull-right"
-                                       placeholder="Search">
-                                <div class="input-group-btn">
-                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                </div>
-                            </div>
-                        </div>
+        <div class="col-lg-12">
+            <table class="table table-panel table-list table-hover">
+                <caption>
+                    {!!  $title !!}
+                    <a class="create btn btn-primary" href="{!! route($route_name.'create') !!}">
+                        <i class="fa fa-plus"></i>
+                        {{ transTpl('new') }}
+                    </a>
+                </caption>
+                <thead>
+                <tr>
+                    @foreach($fields as $name=>$options)
+                        <th style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: center">{{ $options['title'] }}</th>
+                    @endforeach
+                    @if(count($actions))
+                        <th style="width:auto;text-align: center">{{ transTpl('actions') }}</th>
                     @endif
-                    @if($create)
-                        <a class="create btn btn-default btn-circle btn-info"
-                           href="{!! route($route_name.'create') !!}">
-                            <i class="fa fa-plus"></i>
-                            {{ transTpl('new') }}
-                        </a>
-                    @endif
-                </div>
-                <div class="box-body no-padding">
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
+                </tr>
+                @if($filters)
+                    <tr class="filter">
+                        @include('admin.helpers.list.simple.filter')
+                    </tr>
+                @endif
+                </thead>
+                <tbody>
+                @if(count($rows))
+                    @foreach($rows as $row)
+                        <tr @if($position_identifier) id="positions_{{ $row->{$position_identifier} }}|{{ $row->position }}"@endif>
                             @foreach($fields as $name=>$options)
-                                <th style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: center">{{ $options['title'] }}</th>
+                                @if(isset($options['type']) && $options['type']=='position')
+                                    <td style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">
+                                        <div class="icon_position"><i class="fa fa-arrows"></i></div>
+                                    </td>
+                                @elseif(isset($options['type']) && $options['type']=='price')
+                                    <td id="{{ isset($options['id'])?$options['id']:$name}}"
+                                        class="{{ isset($options['class'])?$options['class']:''}}"
+                                        style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">{!! isset($options['function'])?$controller->{$options['function']}($row):displayPrice($row->{$name}) !!}
+                                    </td>
+                                @else
+                                    <td id="{{ isset($options['id'])?$options['id']:$name}}"
+                                        class="{{ isset($options['class'])?$options['class']:''}}"
+                                        style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">{!! isset($options['function'])?$controller->{$options['function']}($row):$row->{$name} !!}
+                                    </td>
+                                @endif
                             @endforeach
                             @if(count($actions))
-                                <th style="width:auto;text-align: center">{{ transTpl('actions') }}</th>
+                                @include('admin.helpers.list.simple.actions')
                             @endif
                         </tr>
-                        @if($filters)
-                            <tr class="filter">
-                                @include('admin.helpers.list.simple.filter')
-                            </tr>
-                        @endif
-                        </thead>
-                        <tbody>
-                        @if(count($rows))
-                            @foreach($rows as $row)
-                                <tr @if($position_identifier) id="positions_{{ $row->{$position_identifier} }}|{{ $row->position }}"@endif>
-                                    @foreach($fields as $name=>$options)
-                                        @if(isset($options['type']) && $options['type']=='position')
-                                            <td style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">
-                                                <div class="icon_position"><i class="fa fa-arrows"></i></div>
-                                            </td>
-                                        @elseif(isset($options['type']) && $options['type']=='price')
-                                            <td id="{{ isset($options['id'])?$options['id']:$name}}"
-                                                class="{{ isset($options['class'])?$options['class']:''}}"
-                                                style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">{!! isset($options['function'])?$controller->{$options['function']}($row):displayPrice($row->{$name}) !!}
-                                            </td>
-                                        @else
-                                            <td id="{{ isset($options['id'])?$options['id']:$name}}"
-                                                class="{{ isset($options['class'])?$options['class']:''}}"
-                                                style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">{!! isset($options['function'])?$controller->{$options['function']}($row):$row->{$name} !!}
-                                            </td>
-                                        @endif
-                                    @endforeach
-                                    @if(count($actions))
-                                        @include('admin.helpers.list.simple.actions')
-                                    @endif
-                                </tr>
-                            @endforeach
-                        @else
-                            <td colspan="99">
-                                <div class="no_data bg-warning">{{ transTpl('no_data') }}</div>
-                            </td>
-                        @endif
-                        </tbody>
-                    </table>
-
-                </div>
+                    @endforeach
+                @else
+                    <td colspan="99">
+                        <div class="no_data bg-warning">{{ transTpl('no_data') }}</div>
+                    </td>
+                @endif
+                </tbody>
+            </table>
                 <!-- /.box-body -->
-                <div class="box-footer clearfix">
+                <div class="box-footer clearfix row">
                     @if($rows->total()>10)
                         <div class="col-lg-3 ">
                             <div class="pagination pull-left">
@@ -128,5 +110,4 @@
             </div>
             <!-- /.box -->
         </div>
-    </div>
 @endsection

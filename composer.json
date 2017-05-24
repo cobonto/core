@@ -19,8 +19,7 @@
     ],
     "require": {
       "laracasts/utilities": "~2.0",
-      "yajra/laravel-datatables-oracle": "^6.15",
-      "intervention/image": "^2.3",
+     "intervention/image": "^2.3",
       "barryvdh/laravel-elfinder": "^0.3.8",
       "mews/purifier": "^2.0",
       "kalnoy/nestedset":"^4.0",
