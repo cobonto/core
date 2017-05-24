@@ -139,12 +139,12 @@ abstract class AdminController extends Controller
     {
         parent::setMedia();
         // css
-        $this->assign->addCSS([
+      /**  $this->assign->addCSS([
             #'css/ionicons/css/ionicons.min.css',
            # 'css/skins/_all-skins.min.css',
-        ]);
+        ]);*/
         //js
-     #   $this->assign->addJS('js/app.js');
+        $this->assign->addJS('js/global.js');
         // plugins
       #  $this->assign->addPlugin('morris');
       #  $this->assign->addPlugin('pace');
