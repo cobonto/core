@@ -49,9 +49,9 @@
         @endforeach
 
         <th class="filters_btn" style="width:auto">
-            <input type="submit" name="submitFilter" value="{{ transTpl('filter') }}" class="btn btn-primary">
+            <button type="submit" name="submitFilter" value="" class="btn btn-primary">{{ transTpl('filter') }}</button>
             @if($filter_values)
-                <input type="submit" name="resetFilter" value="{{ transTpl('reset') }}" class="btn btn-default">
+                <button type="submit" name="resetFilter" value="" class="btn btn-default">{{ transTpl('reset') }}</button>
             @endif
         </th>
     </form>
