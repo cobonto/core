@@ -30,7 +30,7 @@
                                class="col-md-4 control-label">{{ transTpl('firstname','auth') }}</label>
 
                         <div class="col-md-6">
-                            <input id="firstname" type="text" class="form-control" name="firtname"
+                            <input id="firstname" type="text" class="form-control" name="firstname"
                                    value="{{ old('firstname') }}">
 
                             @if ($errors->has('firstname'))
@@ -41,13 +41,13 @@
                         </div>
 
                     </div>
-                    <div class="form-group{{ $errors->has('firstname') ? ' has-error' : '' }}">
-                        <label for="firstname"
+                    <div class="form-group{{ $errors->has('lastname') ? ' has-error' : '' }}">
+                        <label for="lastname"
                                class="col-md-4 control-label">{{ transTpl('lastname','auth') }}</label>
 
                         <div class="col-md-6">
-                            <input id="firstname" type="text" class="form-control" name="firtname"
-                                   value="{{ old('firstname') }}">
+                            <input id="lastname" type="text" class="form-control" name="lastname"
+                                   value="{{ old('lastname') }}">
 
                             @if ($errors->has('lastname'))
                                 <span class="help-block">
@@ -107,63 +107,12 @@
                                class="col-md-4 control-label">{{ transTpl('mobile','auth') }}</label>
 
                         <div class="col-md-6">
-                            <input id="mobile" type="text" class="form-control" name="firtname"
+                            <input id="mobile" type="text" class="form-control" name="mobile"
                                    value="{{ old('mobile') }}">
 
                             @if ($errors->has('mobile'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('mobile') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
-
-                    </div>
-                    <div class="form-group{{ $errors->has('agent_code') ? ' has-error' : '' }}">
-                        <label for="agent_code"
-                               class="col-md-4 control-label">{{ transTpl('agent_code','auth') }}</label>
-
-                        <div class="col-md-6">
-                            <input id="agent_code" type="text" class="form-control" name="firtname"
-                                   value="{{ old('agent_code') }}">
-
-                            @if ($errors->has('agent_code'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('agent_code') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
-
-                    </div>
-                    <div class="form-group{{ $errors->has('state_id') ? ' has-error' : '' }}">
-                        <label for="state_id"
-                               class="col-md-4 control-label">{{ transTpl('state','auth') }}</label>
-
-                        <div class="col-md-6">
-                            <select class="form-control" name="state_id" id="state_id">
-                                @foreach(\App\Modules\Cobonto\Bill\Models\State::active()->get(['id','name']) as $state)
-                                    <option value="{{ $state->id }}">{{ $state->name }}</option>
-                                @endforeach
-                            </select>
-
-                            @if ($errors->has('state_id'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('state_id') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
-
-                    </div>
-                    <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
-                        <label for="city"
-                               class="col-md-4 control-label">{{ transTpl('city','auth') }}</label>
-
-                        <div class="col-md-6">
-                            <input id="city" type="text" class="form-control" name="firtname"
-                                   value="{{ old('city') }}">
-
-                            @if ($errors->has('city'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('city') }}</strong>
                                     </span>
                             @endif
                         </div>

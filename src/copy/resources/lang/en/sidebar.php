@@ -14,4 +14,5 @@ return [
     'translates'=>'Translates',
     'system_menu'=>'System menu',
     'employees'=>'Employees',
+    'quick_access'=>'Quick Access'
 ];

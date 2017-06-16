@@ -31,7 +31,6 @@
     @foreach($javascript_files as $file)
         <script type="text/javascript" src="{{ asset($file) }}"></script>
     @endforeach
-
 @endif
 @include('admin.layout.javascript')
 </html>

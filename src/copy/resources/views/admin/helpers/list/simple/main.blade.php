@@ -19,10 +19,12 @@
             <table class="table table-panel table-list table-hover">
                 <caption>
                     {!!  $title !!}
+                    @if( $create )
                     <a class="create btn btn-primary" href="{!! route($route_name.'create') !!}">
                         <i class="fa fa-plus"></i>
                         {{ transTpl('new') }}
                     </a>
+                        @endif
                 </caption>
                 <thead>
                 <tr>

@@ -23,7 +23,8 @@
       "barryvdh/laravel-elfinder": "^0.3.8",
       "mews/purifier": "^2.0",
       "kalnoy/nestedset":"^4.0",
-      "guzzlehttp/guzzle": "~5.3|~6.0"
+      "guzzlehttp/guzzle": "~5.3|~6.0",
+      "pusher/pusher-php-server": "^2.6"
     },
     "require-dev":{
       "itsgoingd/clockwork": "^1.12"

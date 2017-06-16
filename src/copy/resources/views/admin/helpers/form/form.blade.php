@@ -19,12 +19,12 @@
                     <!-- /.box-body -->
                     <div class="panel-footer">
                         @if($route_list)
-                        <a class="btn btn-default" href="{{ $route_list }}"><i class="fa fa-remove"></i>{{ transTpl('cancel','helpers') }}</a>
+                            <a class="btn btn-default" href="{{ $route_list }}"><i class="fa fa-remove"></i>{{ transTpl('cancel','helpers') }}</a>
                         @endif
                         @if(isset($form['links']))
                             @foreach($form['links'] as $link)
                                 <a @if(isset($link['id'])) id="{{ $link['id'] }}" @endif href="{{ $link['link'] }}"
-                                        class="btn btn-default {{ isset($link['class'])?$link['class']:'' }}">
+                                   class="btn btn-default {{ isset($link['class'])?$link['class']:'' }}">
                                     @if(isset($link['icon']))<i class="fa fa-{{ $link['icon'] }}"></i>@endif
                                     {{ $link['name'] }}
                                 </a>

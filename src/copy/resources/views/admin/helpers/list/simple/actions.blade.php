@@ -1,4 +1,4 @@
-<td style="text-align: {{ isset($options['align'])?$options['align']:'center' }}">
+<td class="actions" style="text-align: {{ isset($options['align'])?$options['align']:'center' }}">
     @if(count($actions)>count($skip_actions))
         <div class="btn-group">
             <button class="btn btn-info" type="button">{{ transTpl('actions','helpers') }}</button>

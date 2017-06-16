@@ -14,6 +14,7 @@
                 <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul>
+            <li class="title">{{ transTpl('quick_access','sidebar') }}</li>
             @if(hasAccess('dashboard'))
                 <li class="menu" class="{{ activeMenu('dashboard') }}">
                     <a href="{{ adminRoute('dashboard.index') }}"><i class="fa fa-dashboard"></i> <span>{{ transTpl('dashboard','sidebar') }}</span>
@@ -26,7 +27,7 @@
             @if(hasAccess(['users','groups']) && config('app.core_user_controller'))
                 <li>
                     <a href="{{ adminRoute('users.index') }}">
-                        <i class="fa fa-user"></i> <span>{{ transTpl('users','sidebar') }}</span><i class="fa fa-caret-right pull-right"></i>
+                        <i class="fa fa-user"></i> <span>{{ transTpl('users','sidebar') }}</span><i class="fa fa-angle-right pull-right"></i>
                     </a>
                     <ul class="sub-menu">
                        @if(hasAccess('users')) <li class="{{ activeMenu('users') }}"><a href="{{ adminRoute('users.index') }}"><i class="fa fa-circle"></i>{{ transTpl('users','sidebar') }}</a></li>@endif
@@ -38,7 +39,7 @@
             @if(hasAccess(['modules','positions']))
                 <li class="menu {{ activeMenu('modules') }}">
                     <a>
-                        <i class="fa fa-th"></i> <span>{{ transTpl('modules','sidebar') }}</span><i class="fa fa-caret-right pull-right"></i>
+                        <i class="fa fa-th"></i> <span>{{ transTpl('modules','sidebar') }}</span><i class="fa fa-angle-right pull-right"></i>
                     </a>
                     <ul class="sub-menu">
                         @if(hasAccess('modules')) <li class=""><a href="{{ adminRoute('modules.index') }}"><i class="fa fa-circle"></i>{{ transTpl('list_modules','sidebar') }}</a></li>@endif
@@ -50,7 +51,7 @@
 
             @if(hasAccess(['admins','roles','permissions']) && config('app.core_admin_controller'))
             <li class="menu {{ activeMenu('admins') }} {{ activeMenu('roles') }} {{ activeMenu('permissions') }}">
-                <a><i class="fa fa-cog"></i> <span>{{ transTpl('management','sidebar') }}</span><i class="fa fa-caret-right pull-right"></i></a>
+                <a><i class="fa fa-cog"></i> <span>{{ transTpl('management','sidebar') }}</span><i class="fa fa-angle-right pull-right"></i></a>
                 <ul class="sub-menu">
                     @if(hasAccess('admins')) <li class="{{ activeMenu('admins') }}"><a href="{{ adminRoute('admins.index') }}"><i class="fa fa-circle"></i>{{ transTpl('employees','sidebar') }}</a></li>@endif
                     @if(hasAccess('roles'))<li class="{{ activeMenu('roles') }}"><a href="{{ adminRoute('roles.index') }}"><i class="fa fa-circle"></i> {{ transTpl('roles','sidebar') }}</a></li>@endif
@@ -60,7 +61,7 @@
                 @endif
                 @if(hasAccess(['settings','translates']))
                     <li class="menu {{ activeMenu('translates') }} {{ activeMenu('settings') }} {{ activeMenu('performances') }}">
-                        <a><i class="fa fa-wrench"></i> <span>{{ transTpl('settings','sidebar') }}</span><i class="fa fa-caret-right pull-right"></i></a>
+                        <a><i class="fa fa-wrench"></i> <span>{{ transTpl('settings','sidebar') }}</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sub-menu">
                             @if(hasAccess('settings')) <li class="{{ activeMenu('settings') }}"><a href="{{ adminRoute('settings.settings',['settings'=>'general']) }}"><i class="fa fa-circle"></i>{{ transTpl('settings','sidebar') }}</a></li>@endif
                             @if(hasAccess('translates')) <li class="{{ activeMenu('translates') }}"><a href="{{ adminRoute('translates.index') }}"><i class="fa fa-circle"></i>{{ transTpl('translates','sidebar') }}</a></li>@endif
