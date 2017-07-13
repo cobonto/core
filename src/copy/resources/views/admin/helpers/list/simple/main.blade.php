@@ -16,7 +16,7 @@
 @section('content')
     <div class="row">
         <div class="col-lg-12">
-            <table class="table table-panel table-list table-hover">
+            <table class="table @if($position_identifier) table_sortable @endif table-panel table-list table-hover">
                 <caption>
                     {!!  $title !!}
                     @if( $create )

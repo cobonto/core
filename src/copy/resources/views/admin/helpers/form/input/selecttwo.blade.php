@@ -13,8 +13,12 @@
         @endif
         >
         @foreach($input['options']['query'] as $option)
-            <option value="{{ $option[$input['options']['key']] }}" @if($option[$input['options']['key']]== $values[$input["name"]])selected="selected"@endif>{{ $option[$input['options']['name']] }}</option>
-            @endforeach
+            @if(!isset($input['attributes']['multiple']))
+                <option value="{{ $option[$input['options']['key']] }}" @if($option[$input['options']['key']]== $values[$input["name"]])selected="selected" @endif>{{ $option[$input['options']['name']] }}</option>
+            @else
+                <option value="{{ $option[$input['options']['key']] }}" @if($id && in_array($option[$input['options']['key']], $values[$input["name"]]))selected="selected" @endif>{{ $option[$input['options']['name']] }}</option>
+                @endif
+        @endforeach
             </select>
             @if(isset($input['desc']))<span class="help-block">{{ $input['desc'] }}</span>@endif
     </div>

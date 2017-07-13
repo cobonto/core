@@ -25,8 +25,8 @@
 
             <li class="title">{{ transTpl('system_menu','sidebar') }}</li>
             @if(hasAccess(['users','groups']) && config('app.core_user_controller'))
-                <li>
-                    <a href="{{ adminRoute('users.index') }}">
+                <li class="menu">
+                    <a>
                         <i class="fa fa-user"></i> <span>{{ transTpl('users','sidebar') }}</span><i class="fa fa-angle-right pull-right"></i>
                     </a>
                     <ul class="sub-menu">
