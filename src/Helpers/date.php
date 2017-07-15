@@ -13,6 +13,11 @@ if (!function_exists('diffForHumans'))
      */
     function diffForHumans($date,$other=null)
     {
+        if(config('app.rtl')){
+            JDate::setLocale('fa');
+            return JDate::parse($date)->diffForHumans($other);
+        }
+
         return \Carbon\Carbon::parse($date)->diffForHumans($other);
     }
 }
@@ -29,6 +34,8 @@ if (!function_exists('dateFormat'))
      */
     function dateFormat($date,$format)
     {
+        if(config('app.rtl'))
+            return Morilog\Jalali\jDateTime::strftime($format, strtotime($date)); // 1395-02-19
         return \Carbon\Carbon::parse($date)->format($format);
     }
 }
@@ -47,7 +54,7 @@ if (!function_exists('diffTime')){
     {
         $second = new \Carbon\Carbon($second_date);
         $first = new \Carbon\Carbon($first_date);
-       return $first->{"diffIn".$type}($second,$abs);
+        return $first->{"diffIn".$type}($second,$abs);
     }
 }
 

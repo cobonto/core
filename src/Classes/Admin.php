@@ -36,7 +36,7 @@ class Admin extends Ardent implements
         'lang' => 'required|alpha',
         'email' => 'required|email',
         'active' => 'required|boolean',
-        'password' => 'between:6,20',
+        'password' => 'between:6,300',
         'role_id' => 'required|numeric',
     ];
     /**
@@ -59,7 +59,7 @@ class Admin extends Ardent implements
      */
     public static function getByEmail($email,$returId=false)
     {
-       $result = Admin::where('email',$email)->first();
+        $result = Admin::where('email',$email)->first();
         if($result)
         {
             if($returId)
@@ -68,7 +68,7 @@ class Admin extends Ardent implements
                 return true;
         }
         else
-        return false;
+            return false;
 
     }
 
@@ -85,5 +85,7 @@ class Admin extends Ardent implements
         app('translator')->setLocale($this->lang);
         if($this->lang=='fa')
             config(['app.rtl'=>1]);
+        else
+            config(['app.rtl'=>0]);
     }
 }

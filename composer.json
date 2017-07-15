@@ -26,7 +26,11 @@
       "guzzlehttp/guzzle": "~5.3|~6.0",
       "pusher/pusher-php-server": "^2.6",
       "barryvdh/laravel-ide-helper": "^2.3",
-      "barryvdh/laravel-dompdf": "^0.8.0"
+      "barryvdh/laravel-dompdf": "^0.8.0",
+      "jenssegers/date": "^3.2",
+      "morilog/jalali": "^2.2",
+      "dingo/api": "1.0.x-dev",
+      "tymon/jwt-auth": "0.5.*"
     },
     "require-dev":{
       "itsgoingd/clockwork": "^1.12"

@@ -56,6 +56,14 @@ abstract class Controller extends BaseController
             ['admin/css/bootstrap.min.css',
                 'admin/css/font-awesome/font-awesome.min.css']
             ,true);
+        if(config('app.rtl'))
+            $this->assign->addCSS(
+                ['admin/css/bootstrap-rtl.css',
+                ]
+                ,true);
+        $this->assign->addCSS(
+            [    'admin/css/font-awesome/font-awesome.min.css']
+            ,true);
         $this->assign->addPlugin('jquery');
         $this->assign->addPlugin('jquery-ui');
         $this->assign->addJS('admin/js/bootstrap.min.js',true);
