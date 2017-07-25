@@ -18,6 +18,7 @@
         }
     ],
     "require": {
+      "php": "^5.5.9 || ^7.0",
       "laracasts/utilities": "~2.0",
       "intervention/image": "^2.3",
       "barryvdh/laravel-elfinder": "^0.3.8",
