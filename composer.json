@@ -41,7 +41,5 @@
         "psr-4": {
             "Cobonto\\": "src"
         }
-    },
-   "minimum-stability" : "dev",
-   "prefer-stable" : true
+    }
 }
