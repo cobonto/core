@@ -30,7 +30,7 @@
       "barryvdh/laravel-dompdf": "^0.8.0",
       "jenssegers/date": "^3.2",
       "morilog/jalali": "^2.2",
-      "dingo/api":"*",
+      "dingo/api":"~1.0",
       "tymon/jwt-auth": "0.5.*",
       "cobonto/module":"1.0.*"
     },
@@ -41,5 +41,7 @@
         "psr-4": {
             "Cobonto\\": "src"
         }
-    }
+    },
+     "minimum-stability" : "dev",
+     "prefer-stable" : true
 }
