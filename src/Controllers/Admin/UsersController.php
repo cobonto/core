@@ -169,6 +169,11 @@ class UsersController extends AdminController
 
     protected function beforeUpdate($id)
     {
+        $this->model->forceEntityHydrationFromInput = true;
+        if(!$this->request->password)
+            $this->request->merge([
+                'password'=>$this->model->password
+            ]);
         $email = $this->request->input('email');
         if($email)
         {

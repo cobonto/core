@@ -30,7 +30,8 @@
       "jenssegers/date": "^3.2",
       "morilog/jalali": "^2.2",
       "dingo/api": "1.0.x-dev",
-      "tymon/jwt-auth": "0.5.*"
+      "tymon/jwt-auth": "0.5.*",
+      "cobonto/module":"1.0.*"
     },
     "require-dev":{
       "itsgoingd/clockwork": "^1.12"
@@ -40,5 +41,6 @@
             "Cobonto\\": "src"
         }
     },
-     "minimum-stability": "stable"
+   "minimum-stability" : "dev",
+   "prefer-stable" : true
 }
