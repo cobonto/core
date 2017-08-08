@@ -21,13 +21,24 @@
     </div>
 
 </div>
-@if(isset($input['javascript']))
-    @push('scripts')
-    <script type="text/javascript">
-        $(document).ready(function () {
-            {!! $input['javascript'] !!}
+@if(isset($return) && $return)
+    @if(isset($input['javascript']))
+        <script type="text/javascript">
+            $(document).ready(function () {
+                {!! $input['javascript'] !!}
 
-        });
-    </script>
-    @endpush
+            });
+        </script>
+    @endif
+@else
+    @if(isset($input['javascript']))
+        @push('scripts')
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    {!! $input['javascript'] !!}
+
+                });
+            </script>
+        @endpush
+    @endif
 @endif

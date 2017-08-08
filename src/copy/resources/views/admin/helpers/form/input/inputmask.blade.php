@@ -18,11 +18,20 @@
     </div>
 
 </div>
-@push('scripts')
-<script type="text/javascript">
-    $(document).ready(function () {
-        {!! $input['javascript'] !!}
+@if(isset($return) && $return)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            {!! $input['javascript'] !!}
 
-    });
-</script>
-@endpush
+        });
+    </script>
+@else
+    @push('scripts')
+        <script type="text/javascript">
+            $(document).ready(function () {
+                {!! $input['javascript'] !!}
+
+            });
+        </script>
+    @endpush
+@endif

@@ -231,16 +231,14 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Module\ModuleServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
         \Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         \Dingo\Api\Provider\LaravelServiceProvider::class,
         \Cobonto\CmsServiceProvider::class,
         \Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\Elfinder\ElfinderServiceProvider::class,
-        \Mews\Purifier\PurifierServiceProvider::class,
-
         \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        \Morilog\Jalali\JalaliServiceProvider::class,
      //   Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
@@ -288,11 +286,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Form' => Collective\Html\FormFacade::class,
-        'Html' => Collective\Html\HtmlFacade::class,
-        'Image' => Intervention\Image\Facades\Image::class,
-        'Purifier' => Mews\Purifier\Facades\Purifier::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'JDate'=>Morilog\Jalali\Facades\jDate::class,
     ],
 
 ];

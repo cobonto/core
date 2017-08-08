@@ -16,6 +16,13 @@
     </div>
 
 </div>
+@if(isset($return) && $return)
+    <script type="text/javascript">
+        $(document).ready(function(){
+            {!! $input['javascript'] !!}
+        });
+    </script>
+@else
 @push('scripts')
 <script type="text/javascript">
     $(document).ready(function(){
@@ -23,3 +30,4 @@
     });
 </script>
 @endpush
+@endif

@@ -30,48 +30,40 @@ trait HelperForm
 
     /**
      * create form with helper form
+     * @param bool $return,if set true return array instead of go to assign
+     * This feature allows you to generate multiple forms from mutliple module in one page
+     * @return array
      */
-    protected function generateForm()
+    protected function generateForm($return = false)
     {
         // check fields_value for edit it
         $dataFormDb = true;
         if (count($this->fields_values))
             $dataFormDb = false;
-        if (count($this->fields_form))
-        {
+        if (count($this->fields_form)) {
             // add plugins
-            foreach ($this->fields_form as &$forms)
-            {
+            foreach ($this->fields_form as &$forms) {
                 if (isset($forms['input']))
-                    foreach ($forms['input'] as &$field)
-                    {
+                    foreach ($forms['input'] as &$field) {
                         // add field values
-                        if ($dataFormDb)
-                        {
-                            if (is_object($this->model) && $this->model->id)
-                            {
+                        if ($dataFormDb) {
+                            if (is_object($this->model) && $this->model->id) {
                                 $this->fields_values[$field['name']] = $this->model->{$field['name']};
-                            }
-                            else
-                            {
+                            } else {
                                 $this->fields_values[$field['name']] = (isset($field['default_value']) ? $field['default_value'] : null);
                             }
                         }
 
                         if (in_array($field['type'], $this->available_plugins))
                             $this->assign->addPlugin($field['type']);
-                        if ($field['type'] == 'selecttwo')
-                        {
+                        if ($field['type'] == 'selecttwo') {
                             $id = (isset($field['id']) ? $field['id'] : $field['name']);
                             $field['javascript'] = '$("#' . $id . '").select2({';
                             $this->addJqueryOptions($field);
-                        }
-                        elseif ($field['type'] == 'inputmask')
-                        {
+                        } elseif ($field['type'] == 'inputmask') {
                             $this->assign->addJS('plugins/inputmask/jquery.inputmask.js', true);
                             // check has extenstions
-                            if (isset($field['extensions']))
-                            {
+                            if (isset($field['extensions'])) {
                                 $this->assign->addJS([
                                     'plugins/inputmask/jquery.inputmask.' . $field['extensions'] . '.extensions.js',
                                     'plugins/inputmask/jquery.inputmask.extensions.js',
@@ -81,23 +73,17 @@ trait HelperForm
                             $id = (isset($field['id']) ? $field['id'] : $field['name']);
                             $field['javascript'] = '$("#' . $id . '").inputmask()';
 
-                        }
-                        elseif ($field['type'] == 'colorpicker')
-                        {
+                        } elseif ($field['type'] == 'colorpicker') {
                             $id = (isset($field['id']) ? $field['id'] : $field['name']);
                             $field['javascript'] = '$("#' . $id . '").colorpicker({';
                             $this->addJqueryOptions($field);
-                        }
-                        elseif ($field['type'] == 'datepicker')
-                        {
+                        } elseif ($field['type'] == 'datepicker') {
                             $id = (isset($field['id']) ? $field['id'] : $field['name']);
                             $field['javascript'] = '$("#' . $id . '").datepicker({';
                             // add options
                             $this->addJqueryOptions($field);
 
-                        }
-                        elseif ($field['type'] == 'tree')
-                        {
+                        } elseif ($field['type'] == 'tree') {
                             $id = (isset($field['id']) ? $field['id'] : $field['name']);
                             $field['javascript'] = '$("#' . $id . '").treeview({
                         data:' . $field['data'] . ',';
@@ -108,14 +94,11 @@ trait HelperForm
                                 'tree_name' => $field['name'],
                             ]);
                             $this->addJqueryOptions($field);
-                        }
-                        elseif ($field['type'] == 'textarea' && isset($field['class']) && $field['class'] == 'ckeditor')
-                        {
+                        } elseif ($field['type'] == 'textarea' && isset($field['class']) && $field['class'] == 'ckeditor') {
                             $contentsLangDirection = 'ltr';
                             $cke_lang = 'en';
                             $this->assign->addJS('plugins/ckeditor/ckeditor.js', true);
-                            if (config('app.rtl'))
-                            {
+                            if (config('app.rtl')) {
                                 $contentsLangDirection = 'rtl';
                                 $cke_lang = 'fa';
                             }
@@ -127,9 +110,7 @@ trait HelperForm
                                 ]
                             );
 
-                        }
-                        elseif ($field['type'] == 'switch')
-                        {
+                        } elseif ($field['type'] == 'switch') {
                             $this->assign->addPlugin('bootstrap-switch');
                             $id = (isset($field['id']) ? $field['id'] : $field['name']);
                             $field['javascript'] = '$("#' . $id . '").bootstrapSwitch({';
@@ -137,36 +118,27 @@ trait HelperForm
                         }
                     }
                 else
-                    foreach ($forms['form']['input'] as &$field)
-                        # foreach ($form['input'] as &$field)
+                    foreach ($forms['form']['input'] as &$field) # foreach ($form['input'] as &$field)
                     {
                         // add field values
-                        if ($dataFormDb)
-                        {
-                            if (is_object($this->model) && $this->model->id)
-                            {
+                        if ($dataFormDb) {
+                            if (is_object($this->model) && $this->model->id) {
                                 $this->fields_values[$field['name']] = $this->model->{$field['name']};
-                            }
-                            else
-                            {
+                            } else {
                                 $this->fields_values[$field['name']] = (isset($field['default_value']) ? $field['default_value'] : null);
                             }
                         }
 
                         if (in_array($field['type'], $this->available_plugins))
                             $this->assign->addPlugin($field['type']);
-                        if ($field['type'] == 'selecttwo')
-                        {
+                        if ($field['type'] == 'selecttwo') {
                             $id = (isset($field['id']) ? $field['id'] : $field['name']);
                             $field['javascript'] = '$("#' . $id . '").select2({';
                             $this->addJqueryOptions($field);
-                        }
-                        elseif ($field['type'] == 'inputmask')
-                        {
+                        } elseif ($field['type'] == 'inputmask') {
                             $this->assign->addJS('plugins/inputmask/jquery.inputmask.js', true);
                             // check has extenstions
-                            if (isset($field['extensions']))
-                            {
+                            if (isset($field['extensions'])) {
                                 $this->assign->addJS([
                                     'plugins/inputmask/jquery.inputmask.' . $field['extensions'] . '.extensions.js',
                                     'plugins/inputmask/jquery.inputmask.extensions.js',
@@ -176,23 +148,17 @@ trait HelperForm
                             $id = (isset($field['id']) ? $field['id'] : $field['name']);
                             $field['javascript'] = '$("#' . $id . '").inputmask()';
 
-                        }
-                        elseif ($field['type'] == 'colorpicker')
-                        {
+                        } elseif ($field['type'] == 'colorpicker') {
                             $id = (isset($field['id']) ? $field['id'] : $field['name']);
                             $field['javascript'] = '$("#' . $id . '").colorpicker({';
                             $this->addJqueryOptions($field);
-                        }
-                        elseif ($field['type'] == 'datepicker')
-                        {
+                        } elseif ($field['type'] == 'datepicker') {
                             $id = (isset($field['id']) ? $field['id'] : $field['name']);
                             $field['javascript'] = '$("#' . $id . '").datepicker({';
                             // add options
                             $this->addJqueryOptions($field);
 
-                        }
-                        elseif ($field['type'] == 'tree')
-                        {
+                        } elseif ($field['type'] == 'tree') {
                             $id = (isset($field['id']) ? $field['id'] : $field['name']);
                             $field['javascript'] = '$("#' . $id . '").treeview({
                         data:' . $field['data'] . ',';
@@ -203,14 +169,11 @@ trait HelperForm
                                 'tree_name' => $field['name'],
                             ]);
                             $this->addJqueryOptions($field);
-                        }
-                        elseif ($field['type'] == 'textarea' && isset($field['class']) && $field['class'] == 'ckeditor')
-                        {
+                        } elseif ($field['type'] == 'textarea' && isset($field['class']) && $field['class'] == 'ckeditor') {
                             $contentsLangDirection = 'ltr';
                             $cke_lang = 'en';
                             $this->assign->addJS('plugins/ckeditor/ckeditor.js', true);
-                            if (config('app.rtl'))
-                            {
+                            if (config('app.rtl')) {
                                 $contentsLangDirection = 'rtl';
                                 $cke_lang = 'fa';
                             }
@@ -222,9 +185,7 @@ trait HelperForm
                                 ]
                             );
 
-                        }
-                        elseif ($field['type'] == 'switch')
-                        {
+                        } elseif ($field['type'] == 'switch') {
                             $this->assign->addPlugin('bootstrap-switch');
                             $id = (isset($field['id']) ? $field['id'] : $field['name']);
                             $field['javascript'] = '$("#' . $id . '").bootstrapSwitch({';
@@ -235,21 +196,27 @@ trait HelperForm
             }
             // add more values to array before pass to view
             $this->addMoreValues();
-            $this->assign->params([
-                'forms' => $this->fields_form,
-                'values' => $this->fields_values,
-            ]);
+            if (!$return)
+                $this->assign->params([
+                    'forms' => $this->fields_form,
+                    'values' => $this->fields_values,
+                ]);
+            else
+                return [
+                    'forms' => $this->fields_form,
+                    'values' => $this->fields_values,
+                    'return' => true,
+                ];
         }
     }
+
     // helper method for add jquery options
     protected function addJqueryOptions(&$field)
     {
         // add options
-        if (isset($field['jqueryOptions']))
-        {
+        if (isset($field['jqueryOptions'])) {
             $options = '';
-            foreach ($field['jqueryOptions'] as $key => $value)
-            {
+            foreach ($field['jqueryOptions'] as $key => $value) {
                 $options .= $key . ':"' . $value . '",';
             }
             $options = trim($options, ',');
@@ -266,10 +233,8 @@ trait HelperForm
         else
             $Request = $request;
         // switchers
-        if (is_array($this->switchers) && count($this->switchers))
-        {
-            foreach ($this->switchers as $switch)
-            {
+        if (is_array($this->switchers) && count($this->switchers)) {
+            foreach ($this->switchers as $switch) {
                 if (!$Request->has($switch))
                     $Request->merge([$switch => 0]);
                 else
@@ -298,13 +263,10 @@ trait HelperForm
     {
         // check save or save and stay checked or not
         if ($this->request->old('saveAndStay') || $this->request->old('save'))
-            if (count($this->fields_form))
-            {
+            if (count($this->fields_form)) {
                 // add plugins
-                foreach ($this->fields_form as &$form)
-                {
-                    foreach ($form['input'] as &$field)
-                    {
+                foreach ($this->fields_form as &$form) {
+                    foreach ($form['input'] as &$field) {
                         $this->fields_values[$field['name']] = $this->request->old($field['name']);
                     }
                 }
