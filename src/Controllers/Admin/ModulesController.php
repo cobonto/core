@@ -204,9 +204,9 @@ class ModulesController extends AdminController
                 if (method_exists($module, 'saveConfigure'))
                 {
                     if (!$result = $module->saveConfigure($request))
-                        return redirect($this->getRoute('configure', ['author' => strtolower(camel_case($this->author)), 'name' => strtolower(camel_case($this->name))]))->withErrors($module->errors);
+                        return back()->withErrors($module->errors);
                     else
-                        return redirect($this->getRoute('configure', ['author' => strtolower(camel_case($this->author)), 'name' => strtolower(camel_case($this->name))]))->with('success', $result);
+                        return back()->with('success', $result);
                 }
                 else
                     $this->errors[] = $this->lang('saveconfigure_not_exists');
@@ -239,7 +239,7 @@ class ModulesController extends AdminController
                 $this->errors[] = $this->lang('can_not_delete_core_module');
             }
             else
-            $this->app->files->deleteDirectory($this->modulePath);
+                $this->app->files->deleteDirectory($this->modulePath);
         }
         else
             $this->errors[] = $this->lang('module_not_exists');
