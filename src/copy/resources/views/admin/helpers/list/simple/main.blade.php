@@ -55,6 +55,11 @@
                                         class="{{ isset($options['class'])?$options['class']:''}}"
                                         style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">{!! isset($options['function'])?$controller->{$options['function']}($row):displayPrice($row->{$name}) !!}
                                     </td>
+                                @elseif(isset($options['type']) && $options['type']=='date')
+                                    <td id="{{ isset($options['id'])?$options['id']:$name}}"
+                                        class="{{ isset($options['class'])?$options['class']:''}}"
+                                        style="width:{{ isset($options['width'])?$options['width']:'auto' }};text-align: {{ isset($options['align'])?$options['align']:'center' }}">{!! isset($options['function'])?$controller->{$options['function']}($row):dateFormat($row->{$name},'Y/m/d H:i:s') !!}
+                                    </td>
                                 @else
                                     <td id="{{ isset($options['id'])?$options['id']:$name}}"
                                         class="{{ isset($options['class'])?$options['class']:''}}"
