@@ -20,7 +20,6 @@
         @foreach($javascript_files as $file)
             <script type="text/javascript" src="{{ asset($file) }}"></script>
         @endforeach
-
     @endif
     @include('admin.layout.javascript')
 </head>
@@ -29,7 +28,7 @@
     <div class="header">
         <!-- Logo -->
         <div class="logo"><a href="{{ adminRoute('dashboard.index') }}" class="logo">
-                <img src="{{ asset('img/logo.png') }}" class="img-responsive">
+                <img src="{{ asset('img/admin-logo.png') }}" class="img-responsive">
         </a>
         </div>
         {!! hook('displayAdminNav') !!}

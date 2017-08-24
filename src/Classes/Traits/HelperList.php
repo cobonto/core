@@ -15,8 +15,8 @@ trait HelperList
     protected $filter = true;
     /** @var array $actions */
     protected $actions = [
-        'edit' => ['name' => 'Edit'],
-        'destroy' => ['name' => 'Delete'],
+        'edit' => ['name' => 'ویرایش'],
+        'destroy' => ['name' => 'حذف'],
     ];
     protected $skip_actions = [];
     /** @var string url */

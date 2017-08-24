@@ -40,10 +40,19 @@
                             @endforeach
                         @endif
                         @if(isset($form['submit']))
-                            @foreach($form['submit'] as $button)
-                                <button value="1" type="submit" name="{{ $button['name'] }}"
-                                        class="btn {{  isset($button['class'])?$button['class']:'btn-primary'}} pull-right">{{ $button['title'] }}</button>
-                            @endforeach
+                            @if(isset($controller))
+                                @if( (!isset($id) && ($controller->hasPermission('store'))) || ($controller->hasPermission('store') && $controller->hasPermission('store')))
+                                    @foreach($form['submit'] as $button)
+                                        <button value="1" type="submit" name="{{ $button['name'] }}"
+                                                class="btn {{  isset($button['class'])?$button['class']:'btn-primary'}} pull-right">{{ $button['title'] }}</button>
+                                    @endforeach
+                                @endif
+                            @else
+                                @foreach($form['submit'] as $button)
+                                    <button value="1" type="submit" name="{{ $button['name'] }}"
+                                            class="btn {{  isset($button['class'])?$button['class']:'btn-primary'}} pull-right">{{ $button['title'] }}</button>
+                                @endforeach
+                            @endif
                         @endif
                     </div>
                 </div>

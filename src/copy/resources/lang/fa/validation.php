@@ -16,7 +16,7 @@ return [
     'accepted'             => 'The :attribute must be accepted.',
     'active_url'           => 'The :attribute is not a valid URL.',
     'after'                => 'The :attribute must be a date after :date.',
-    'alpha'                => 'The :attribute may only contain letters.',
+    'alpha'                => ' :attribute باید فقط حروف باشد',
     'alpha_dash'           => 'The :attribute may only contain letters, numbers, and dashes.',
     'alpha_num'            => 'The :attribute may only contain letters and numbers.',
     'array'                => 'The :attribute must be an array.',
@@ -39,7 +39,7 @@ return [
     'email'                => 'The :attribute must be a valid email address.',
     'exists'               => 'The selected :attribute is invalid.',
     'file'                 => 'The :attribute must be a file.',
-    'filled'               => 'The :attribute field is required.',
+    'filled'               => ':attribute مورد نیاز است',
     'image'                => 'The :attribute must be an image.',
     'in'                   => 'The selected :attribute is invalid.',
     'in_array'             => 'The :attribute field does not exist in :other.',
@@ -54,7 +54,7 @@ return [
     ],
     'mimes'                => 'The :attribute must be a file of type: :values.',
     'min'                  => [
-        'numeric' => 'The :attribute must be at least :min.',
+        'numeric' => ':attribute حد اقل :min کاراکتر نیاز است.',
         'file'    => 'The :attribute must be at least :min kilobytes.',
         'string'  => 'The :attribute must be at least :min characters.',
         'array'   => 'The :attribute must have at least :min items.',
@@ -62,8 +62,8 @@ return [
     'not_in'               => 'The selected :attribute is invalid.',
     'numeric'              => 'The :attribute must be a number.',
     'present'              => 'The :attribute field must be present.',
-    'regex'                => 'The :attribute format is invalid.',
-    'required'             => 'The :attribute field is required.',
+    'regex'                => ':attribute فرمت اشتباه است.',
+    'required'             => ':attribute مورد نیاز است',
     'required_if'          => 'The :attribute field is required when :other is :value.',
     'required_unless'      => 'The :attribute field is required unless :other is in :values.',
     'required_with'        => 'The :attribute field is required when :values is present.',
@@ -79,10 +79,10 @@ return [
     ],
     'string'               => 'The :attribute must be a string.',
     'timezone'             => 'The :attribute must be a valid zone.',
-    'unique'               => 'The :attribute has already been taken.',
+    'unique'               => ':attribute درحال حاضر در سامانه ثبت شده است.',
     'url'                  => 'The :attribute format is invalid.',
     'alpha_spaces'    => 'The :attribute may only contain letters and spaces.',
-
+    'phone_mobile'=>'شماره موبایل نامعتبر است',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -111,6 +111,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'email'=>'ایمیل',
+        'firstname'=>'نام',
+        'lastname'=>'نام خانوادگی',
+        'mobile'=>'موبایل',
+        'password'=>'رمز عبور',
+    ],
 
 ];

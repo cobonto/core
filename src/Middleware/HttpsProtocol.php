@@ -23,7 +23,7 @@ class HttpsProtocol
         if(config('app.secure_protocol'))
         if (!$request->secure()) {
             $request->setTrustedProxies([$request->getClientIp()]);
-            return redirect()->secure($request->getRequestUri());
+            return redirect(env('APP_URL').'/'.ltrim($request->getRequestUri(),'/'));
         }
 
         return $next($request);

@@ -1,6 +1,6 @@
 <div class="btn-group">
     <button class="btn {{isset($module['installed'])?'btn-success':'btn-info'}}"
-            type="button">{{isset($module['installed'])?'Installed':'Uninstalled'}}</button>
+            type="button">{{isset($module['installed'])?'نصب شده':'نصب نشده'}}</button>
     @if(isset($module['core']) && $module['core'])
         @if(isset($module['configurable']) && $module['configurable'])
             <button data-toggle="dropdown"
@@ -27,7 +27,7 @@
                     adminRoute('modules.install',[
                     'author'=>strtolower(camel_case($module['author'])),
                     'name'=>strtolower(camel_case($module['name'])),
-                    ])}}">{{isset($module['installed'])?'Uninstall':'Install'}}</a>
+                    ])}}">{{isset($module['installed'])?'حذف نصب':'نصب'}}</a>
             </li>
             @endif
                     <!-- disable and enable -->
@@ -41,7 +41,7 @@
                     adminRoute('modules.enable',[
                     'author'=>strtolower(camel_case($module['author'])),
                     'name'=>strtolower(camel_case($module['name'])),
-                    ])}}">{{$module['active']?'Disable':'Enable'}}</a>
+                    ])}}">{{$module['active']?'غیرفعال':'فعال'}}</a>
                     </li>
                     @endif
                             <!-- configuration module -->
@@ -49,14 +49,14 @@
                         <li>
                             <a href="{{adminRoute('modules.configure',['author'=>strtolower(camel_case($module['author'])),
                     'name'=>strtolower(camel_case($module['name'])),
-                    ])}}">Configuration</a>
+                    ])}}">پیکربندی </a>
                         </li>
                         @endif
                         @endif
                                 <!-- remove module -->
                         @if(!isset($module['core']) || $module['core']==false)
                             <li>
-                                <a class="delete" href="">Delete</a>
+                                <a class="delete" href="">حذف</a>
                                 <form style="display:none"
                                       id="delete_{{ $module['author'] }}_{{ $module['name']}}"
                                       action="{{ adminRoute('modules.destroy',['id'=>'null']) }}"

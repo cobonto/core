@@ -88,21 +88,24 @@
                                     {{ csrf_field() }}
                                     <input type="hidden" name="class_name" value="{{ get_class($controller) }}"/>
                                     <select name="perPage" onchange="$('#per_page_form').submit()" class="select2">
-                                        @if($rows->total()>10)
+                                        @if($rows->total()>=10)
                                             <option value="10" @if($per_page==10)selected="selected" @endif>10
                                             </option>@endif
-                                        @if($rows->total()>20)
+                                        @if($rows->total()>=20)
                                             <option value="20" @if($per_page==20)selected="selected" @endif>20
                                             </option>@endif
-                                        @if($rows->total()>50)
+                                        @if($rows->total()>=50)
                                             <option value="50" @if($per_page==50)selected="selected" @endif>50
                                             </option>@endif
-                                        @if($rows->total()>100)
+                                        @if($rows->total()>=100)
                                             <option value="100" @if($per_page==100)selected="selected" @endif>100
                                             </option>@endif
-                                        @if($rows->total()>300)
+                                        @if($rows->total()>=300)
                                             <option value="300" @if($per_page==300)selected="selected" @endif>300
                                             </option>@endif
+                                            @if(!in_array($rows->total(),['10','20','50','100','300']))
+                                                <option value="{{ $rows->total() }}" @if($per_page==$rows->total())selected="selected" @endif>{{ $rows->total() }}</option>
+                                            @endif
                                     </select>
                                 </form>
                             </div>

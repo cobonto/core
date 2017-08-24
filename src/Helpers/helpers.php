@@ -20,7 +20,9 @@ if (!function_exists('hasAccess'))
         $result = true;
         foreach ($routes as $route)
         {
-            $hasPermission = \Auth::guard('admin')->user()->role()->hasPermission($route . '.' . $method);
+            if($method!=null)
+                $route .='.'.$method;
+            $hasPermission = \Auth::guard('admin')->user()->role()->hasPermission($route);
             if (!$hasPermission && $allTrue)
                 return false;
             elseif ($hasPermission && !$allTrue)

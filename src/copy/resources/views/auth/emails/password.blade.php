@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>پیامی از {shop_name}</title>
+    <title>{{ transTpl('message_from','email') }}:واریزی</title>
     <style>
         .tbl_child {
             -webkit-padding-start: inherit !important;
@@ -77,8 +77,8 @@
                             <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
                             <tr>
                                 <td>&nbsp;</td>
-                                <td class="shop_name"><font style="font-family:tahoma;font-size:13px;">{shop_name}</font></td>
-                                <td class="shop_link" style="text-align:left;"><font style="font-family:tahoma;font-size:13px;">{link_shop}</font></td>
+                                <td class="shop_name"><font style="font-family:tahoma;font-size:13px;">واریزی</font></td>
+                                <!--  <td class="shop_link" style="text-align:left;"><font style="font-family:tahoma;font-size:13px;">{link_shop}</font></td>  -->
                                 <td>&nbsp;</td>
                             </tr>
                             <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
@@ -88,72 +88,23 @@
                             <tbody>
                             <tr>
                                 <td></td>
-                                <td><font style="font-family:tahoma;font-size:14px;">سلام {firstname} {lastname}</font></td>
+                                <td><font style="font-family:tahoma;font-size:14px;">سلام</font></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><font style="font-family:tahoma;font-size:12px;">از ایجاد حساب کاربری در {shop_name} از شما سپاسگذاریم</font></td>
+                                <td><font style="font-family:tahoma;font-size:12px;">برای تغییر گذرواژه روی لینک زیر کلیک کنید</font></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><font style="font-family:tahoma;font-size:14px;">اطلاعات حساب کاربری:</font></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><font style="font-family:tahoma;font-size:12px;">آدرس ایمیل: {email}</font></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><font style="font-family:tahoma;font-size:12px;">کلمه عبور: {passwd}</font></td>
+                                <td> <a href="{{ $link = url('password/reset', $token).'?email='.urlencode($user->getEmailForPasswordReset()) }}"> <button>کلیک کنید</button> </a></td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr>
-                                <td></td>
-                                <td><font style="font-family:tahoma;font-size:14px;">نکات مهم امنیتی:</font></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><font style="font-family:tahoma;font-size:12px;">1. همیشه از اطلاعات حساب خود محافظت کنید.</font></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><font style="font-family:tahoma;font-size:12px;">2. کلمه عبور خود را به صورت دوره ای تغییر دهید.</font></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><font style="font-family:tahoma;font-size:12px;">3. هرگز اطلاعات ورود به حساب کاربری خود را در اختیار کسی قرار ندهید.</font></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><font style="font-family:tahoma;font-size:12px;">4. اگر مشکوک هستید که کسی بدون مجوز از حساب شما استفاده میکند، لطفا بلافاصله به ما اطلاع دهید.</font></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <table class="tbl_foot" style="width:100%;min-height:100px;background-color:#f6f7f9;color:#6b8288;border-radius:0 0 14px 14px;" cellspacing="0" cellpadding="10px">
-                            <tbody>
-                            <tr><td>&nbsp;</td></tr>
-                            <tr>
-                                <td class="links" style="text-align:center;">{link_1} {link_2} {link_3} {link_4}</td>
-                            </tr>
-                            <tr><td>&nbsp;</td></tr>
                             </tbody>
                         </table>
                     </td>
-                </tr>
-                </tbody>
-            </table>
-            <table class="tbl_child tbl_footer" style="width:600px;direction:rtl;margin:auto;color:#3d5e73;" cellspacing="0" cellpadding="10px">
-                <tbody>
-                <tr>
-                    {phone}
-                    {instagram}{telegram}{facebook}{twitter}{googleplus}{video}
                 </tr>
                 </tbody>
             </table>

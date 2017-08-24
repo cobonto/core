@@ -25,15 +25,15 @@
                 <form class="login-form" role="form" method="POST" action="{{ url('/login') }}">
                     {{ csrf_field() }}
 
-                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                    <div class="form-group{{ $errors->has('email') || $errors->has('mobile') ? ' has-error' : '' }}">
                         <label for="email" class="sr-only">{{ transTpl('email','auth') }}</label>
 
-                        <input id="email" placeholder="{{ transTpl('email','auth') }}" type="email" class="form-control" name="email"
-                               value="{{ old('email') }}">
+                        <input id="email" placeholder="{{ transTpl('email_or_mobile','auth') }}" type="text" class="form-control" name="email"
+                               value="{{ old('email')?:old('mobile') }}">
 
-                        @if ($errors->has('email'))
+                        @if ($errors->has('email') || $errors->has('mobile'))
                             <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->has('email')?$errors->first('email'):$errors->first('mobile') }}</strong>
                                     </span>
                         @endif
                     </div>
@@ -44,28 +44,25 @@
 
                         @if ($errors->has('password'))
                             <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                <strong>{{ $errors->first('password') }}</strong>
+                            </span>
                         @endif
                     </div>
-
                     <div class="form-group">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="remember"> Remember Me
+                                <input type="checkbox" name="remember"> {{ transTpl('remember_me','auth') }}
                             </label>
                         </div>
                     </div>
-
                     <div class="form-group">
-
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-btn fa-sign-in"></i> Login
+                        <button type="submit" class="btn">
+                            {{ transTpl('login','auth') }}
                         </button>
-
-                        <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your
-                            Password?</a>
-
+                        <a class="btn" href="{{ url('/register') }}">
+                            {{ transTpl('register','auth') }}
+                        </a>
+                        <a class="btn" href="{{ url('/password/reset') }}">{{ transTpl('forget_password','auth') }}</a>
                     </div>
                 </form>
             </div>

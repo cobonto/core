@@ -20,22 +20,33 @@ class AdminPermission
      */
     public function handle($request, Closure $next)
     {
-        $this->globalPages = [adminRoute('404'),adminRoute('403')];
-        if (\Auth::check())
+        $this->globalPages = [config('app.admin_url').'.404',config('app.admin_url').'.403'];
+        $actions = ['index','show','edit','store','destroy'];
+        if (\Auth::guard('admin')->check())
         {
-            $user = \Auth::user();
-            if($user->is_admin && $user->role_id != 1)
+            $user = \Auth::guard('admin')->user();
+            if($user->role_id != 1)
             {
                 $route = $request->route()->getName();
                 if(in_array($route,$this->globalPages))
-                     return $next($request);;
+                {
+                    return $next($request);
+                }
                 $access = substr($route,strlen($this->getPrefix()),strlen($route));
+                $access_array = explode('.',$access);
+                // access to someone that can edit so he can view
+                if(last($access_array)=='show')
+                    $access = str_replace('show','edit',$access);
+                // access to someone can store so if request is post he can access it
+                elseif($request->method()=='POST' && !in_array(last($access_array),['store','destroy'])){
+                    $access =  $access = str_replace(last($access_array),'store',$access);
+                }
                 if(!$user->role()->hasPermission($access))
                 {
                     if ($request->ajax() || $request->wantsJson()) {
-                        return response('forbidden', 403);
+                        return response('forbidden', adminRoute(403));
                     } else {
-                        return redirect(route(config('api.admin_url').'.403'));
+                        return redirect(adminRoute('403'));
                     }
                 }
             }

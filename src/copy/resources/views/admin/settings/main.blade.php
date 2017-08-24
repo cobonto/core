@@ -2,12 +2,12 @@
 @section('content')
     <div id="ettings" class="row">
         <div class="col-xs-12">
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">{{transTpl('settings','settings')}}</h3>
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{transTpl('settings','settings')}}</h3>
                 </div>
-                <!-- /.box-header -->
-                <div class="box-body">
+                <!-- /.panel-header -->
+                <div class="panel-body">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs">
                        @include('admin.settings.navbar')
@@ -19,9 +19,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.box-body -->
+                <!-- /.panel-body -->
             </div>
-            <!-- /.box -->
+            <!-- /.panel -->
         </div>
     </div>
 @endsection

@@ -312,14 +312,14 @@ abstract class AdminController extends Controller
         if ($id && $this->loadObject($id, true))
         {
             // check permissions
-            if (!$this->hasPermission('edit'))
+            if (!$this->hasPermission('edit') || !$this->hasPermission('store'))
                 return redirect(adminRoute('403'));
             return $this->update($id);
         }
         else
         {
             // check permissions
-            if (!$this->hasPermission('create'))
+            if (!$this->hasPermission('create') || !$this->hasPermission('store'))
                 return redirect(adminRoute('403'));
             return $this->add();
         }
@@ -588,6 +588,8 @@ abstract class AdminController extends Controller
             return true;
         foreach ($this->actions as $action => $params)
         {
+            if($action=='show')
+                $action='edit';
             if (!isset($this->permissions[$this->route . '.' . $action]))
                 $this->removeAction($action);
         }
@@ -599,7 +601,7 @@ abstract class AdminController extends Controller
         }
     }
 
-    protected function hasPermission($permission)
+    public function hasPermission($permission)
     {
         if ($this->admin->role_id == 1)
             return true;

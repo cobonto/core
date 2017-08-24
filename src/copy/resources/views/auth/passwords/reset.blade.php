@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2 text">
-            <h1><strong>{{ transTpl('reset_password','auth') }}</strong></h1>
+            <h1><strong>{{ transTpl('reset_password_form','auth') }}</strong></h1>
             <div class="description">
                 <p>
                     {{ transTpl('enter_your_new_password','auth') }}
@@ -40,7 +40,6 @@
                                 @endif
                             </div>
                         </div>
-
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">{{ transTpl('password','auth') }}</label>
 
@@ -54,7 +53,6 @@
                                 @endif
                             </div>
                         </div>
-
                         <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                             <label for="password-confirm" class="col-md-4 control-label">{{ transTpl('confirm_password','auth') }}</label>
                             <div class="col-md-6">
@@ -67,11 +65,10 @@
                                 @endif
                             </div>
                         </div>
-
                         <div class="form-group">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-refresh"></i>{{ transTpl('reset_password','auth') }}
-                                </button>
+                            <button type="submit" class="btn">
+                                {{ transTpl('reset_password','auth') }}
+                            </button>
                         </div>
                     </form>
                 </div>

@@ -10,11 +10,16 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="{{ asset('admin/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/css/font-awesome/font-awesome.min.css') }}">
+    @if(config('app.rtl'))
+        <link rel="stylesheet" href="{{ asset('admin/css/bootstrap-rtl.css') }}">
+    @endif
     <link rel="stylesheet" href="{{ asset('auth/css/form-elements.css') }}">
     <link rel="stylesheet" href="{{ asset('auth/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/selecttwo/selecttwo.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
-
+    @if(config('app.rtl'))
+        <link rel="stylesheet" href="{{ asset('auth/css/rtl.css') }}">
+    @endif
     <style>
         body {
             font-family: 'Lato';

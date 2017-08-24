@@ -19,8 +19,9 @@
     <link rel="stylesheet" href="{{ asset('plugins/icheck/square/blue.css') }}">
     <!-- auth -->
     <link rel="stylesheet" href="{{ asset('admin/css/auth.css') }}">
-    <!-- rtl
-    <link rel="stylesheet" href="{{ asset('admin/css/rtl.css') }}"> -->
+    @if(config('app.rtl'))
+         <link rel="stylesheet" href="{{ asset('admin/css/rtl.css') }}">
+    @endif
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -61,7 +62,7 @@
                 <div class="form-group clearfix">
                     <div class="checkbox icheck">
                         <label>
-                            <input name="remember" type="checkbox"> {{ transTpl('remember','auth') }}
+                            <input name="remember" type="checkbox"> {{ transTpl('remember_me','auth') }}
                         </label>
                     </div>
                     <button type="submit" class="login-btn">{{ transTpl('sign_in_btn','auth') }}</button>

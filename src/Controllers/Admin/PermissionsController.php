@@ -28,6 +28,7 @@ class PermissionsController extends AdminController
         parent::setMedia();
         $this->assign->addCSS('css/bootstrap.vertical-tabs.css');
         $this->assign->addJS('js/permissions.js');
+        $this->assign->addCSS('css/permission.css');
         $this->assign->addPlugin('growl');
     }
 
@@ -102,7 +103,7 @@ class PermissionsController extends AdminController
             $permissions = $Role->getRolePermissions($Role->id);
             $html = view('admin.permission.content',[
                 'permissions'=>$permissions,
-                'controllers'=>Permission::getControllers(),
+                'access'=>Permission::getControllers(),
                 'role'=>$Role,
                 'admin'=>$this->admin
             ])->render();

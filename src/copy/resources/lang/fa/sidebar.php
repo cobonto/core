@@ -13,4 +13,5 @@
         'settings' => 'تنظیمات',
         'translates' => 'ترجمه ها',
         'system_menu' => 'منوهای سیستمی',
+        'quick_access'=>'دسترسی سریع'
 );

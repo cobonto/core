@@ -103,7 +103,6 @@ trait SimpleHelperList
     {
         if(!count($titles))
             $titles[] =['id'=>0,'name'=>$this->title,'link'=>false];
-
         return view($this->theme.'.helpers.list.simple.list_title',['titles'=>$titles,'id'=>$id]);
     }
 }

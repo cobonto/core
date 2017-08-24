@@ -9,10 +9,10 @@
                             <!-- new module -->
                     <button type="button" class="new btn btn-default btn-primary" data-toggle="modal"
                             data-target="#myModal">
-                        New module
+                       ماژول جدید
                     </button>
                     <a href="{{ $clear_cache_url }}" class="rebuild btn btn-default btn-info">
-                       Refresh list
+                      دوباره سازی لیست
                     </a>
                     <!-- Modal -->
                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -24,7 +24,7 @@
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                                     aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="myModalLabel">Upload module</h4>
+                                        <h4 class="modal-title" id="myModalLabel">آپلود کردن ماژول</h4>
                                     </div>
                                     <div class="modal-body">
                                         <label class="btn btn-default btn-file">
@@ -32,8 +32,8 @@
                                         </label>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Upload</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+                                        <button type="submit" class="btn btn-primary">آپلود</button>
                                     </div>
                                 </div>
                             </div>
@@ -53,9 +53,9 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Version</th>
-                            <th>Action</th>
+                            <th>نام</th>
+                            <th>ورژن</th>
+                            <th>عملیات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -67,7 +67,7 @@
                                     <td></td>
                                 </tr>
                                 @foreach($data as $module)
-                                    <tr class="{{ strtolower($author) }} hidden">
+                                    <tr class="{{ strtolower($author) }}">
                                         <td>{{$module['name']}}</td>
                                         <td>{{ $module['version'] }}</td>
                                         <td>@include('admin.module.actions')</td>

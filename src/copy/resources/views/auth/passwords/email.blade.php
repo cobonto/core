@@ -26,27 +26,28 @@
                         {{ session('status') }}
                     </div>
                 @endif
-
                 <form class="login-form" role="form" method="POST" action="{{ url('/password/email') }}">
                     {{ csrf_field() }}
 
-                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                        <label for="email" class="control-label">E-Mail Address</label>
+                    <div class="form-group{{ $errors->has('email') || $errors->has('mobile') ? ' has-error' : '' }}">
+                        <label for="email" class="control-label">{{ transTpl('email_or_mobile','auth') }}</label>
 
-                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+                            <input id="email" type="text"  class="form-control" name="email" value="{{ old('email')?: old('mobile') }}">
 
-                            @if ($errors->has('email'))
+                            @if ($errors->has('email')|| $errors->has('mobile'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('email')?:$errors->first('mobile') }}</strong>
                                     </span>
                             @endif
                     </div>
-
                     <div class="form-group">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fa fa-btn fa-envelope"></i>{{ transTpl('send_password_link','auth') }}
-                            </button>
-                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            {{ transTpl('send_password_link','auth') }}
+                        </button>
+                        <a class="btn" href="{{ url('/login') }}">
+                            {{ transTpl('back','auth') }}
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>

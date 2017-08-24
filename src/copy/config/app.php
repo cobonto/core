@@ -112,7 +112,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Tehran',
 
     /*
     |--------------------------------------------------------------------------
@@ -237,8 +237,10 @@ return [
         \Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\Elfinder\ElfinderServiceProvider::class,
+
         \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         \Morilog\Jalali\JalaliServiceProvider::class,
+        Jenssegers\Date\DateServiceProvider::class,
      //   Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
@@ -286,7 +288,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'JDate'=>Morilog\Jalali\Facades\jDate::class,
+         'JDate'=>Jenssegers\Date\Date::class,
     ],
 
 ];
