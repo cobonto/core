@@ -48,7 +48,6 @@ if (!function_exists('activeLink'))
      */
     function activeMenu($string,$class_name='active',$admin=true)
     {
-        return;
         if(!is_array($string))
         {
             if($admin)
