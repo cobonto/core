@@ -24,7 +24,7 @@
       "barryvdh/laravel-elfinder": "^0.3.8",
       "kalnoy/nestedset":"^4.0",
       "guzzlehttp/guzzle": "~5.3|~6.0",
-      "pusher/pusher-php-server": "^2.6",
+      "pusher/pusher-php-server": "^3.0",
       "barryvdh/laravel-ide-helper": "^2.3",
       "jenssegers/date": "^3.2",
       "morilog/jalali": "^2.2",
