@@ -10,6 +10,8 @@ namespace Cobonto\Classes\Traits;
 
 use Carbon\Carbon;
 use Cobonto\Controllers\ModuleAdminController;
+use Jenssegers\Date\Date;
+use Morilog\Jalali\jDateTime;
 
 trait SimpleHelperList
 {
@@ -27,12 +29,12 @@ trait SimpleHelperList
             // add filters from cache
             $this->filters();
             // add pagination
-           $rows = $this->pagination();
+            $rows = $this->pagination();
         }
         //add javascript vars
         $this->assign->addJSVars(
             ['alert_msg'=>$this->lang('sure_to_delete'),
-            'list_positions_update'=>adminRoute('list.positions.update'),
+                'list_positions_update'=>adminRoute('list.positions.update'),
                 'controller'=>get_class($this),
                 'module'=>($this instanceof ModuleAdminController)?$this->getModule()->name:false,
             ]);
@@ -59,11 +61,15 @@ trait SimpleHelperList
     {
         $this->assign->addCSS(['css/list.css']);
         $this->assign->addJS(['js/list.js']);
-    #    $this->assign->addJS(['js/simple.list.js']);
+        #    $this->assign->addJS(['js/simple.list.js']);
         $this->assign->addPlugin('confirm');
         $this->assign->addPlugin('growl');
         $this->assign->addPlugin('selecttwo');
         $this->assign->addPlugin('datepicker');
+        if(config('app.rtl')){
+            $this->assign->addJS('plugins/datepicker/datepicker.fa.min.js',true);
+        }
+
     }
 
     protected function beforeGenerateSimpleList(&$data)
@@ -72,15 +78,23 @@ trait SimpleHelperList
     }
     protected function filters()
     {
-        $filters = \Cache::get($this->route('filter',[],false));
+        $filters = \Cache::get($this->route('filter',[],false).'_'.\Auth::guard('admin')->user()->id);
         if (count($this->fields_list) && $filters &&  is_array($filters))
         {
             foreach ($filters as $field=>$filter)
             {
                 if($filter['type']=='date')
                 {
+                    $time = explode(':',$filter['time']);
                     $date = explode('/',$filter['value']);
-                    $filter['value'] = Carbon::createFromDate($date[2],$date[0],$date[1]);
+                    // if system is rtl need to change
+                    if(config('app.rtl')){
+                        $date = jDateTime::toGregorian($date[2],$date[1],$date[0]);
+                        $filter['value'] = Carbon::create($date[0],$date[1],$date[2],$time[0],$time[1],$time[2]);
+                    }
+                    else{
+                        $filter['value'] = Carbon::create($date[2],$date[0],$date[1],$time[0],$time[1],$time[2]);
+                    }
                 }
                 $this->sql->where($filter['name'],$filter['condition'],$filter['value']);
             }
@@ -93,7 +107,7 @@ trait SimpleHelperList
         if(!$perPage)
             $perPage=10;
         $this->assign->params(['per_page'=>$perPage]);
-       return  $this->sql->paginate($perPage);
+        return  $this->sql->paginate($perPage);
     }
     public function displayStatus($row)
     {

@@ -3,11 +3,11 @@
 // route for filter list admin
 Route::post('list/filters',function(){
     $filters = [];
-    $class_name = Request::input('class_name');
+    $class_name = \Request::input('class_name');
     $request = app('request');
     /** @var \Cobonto\Controllers\AdminController $controller */
     $controller = new $class_name($request);
-    if(Request::input('submitFilter'))
+    if(\Request::has('submitFilter'))
     {
         $fields_list = $controller->getFieldList();
         if (count($fields_list))
@@ -42,7 +42,8 @@ Route::post('list/filters',function(){
                                     'name'=>$column,
                                     'condition'=>'>=',
                                     'type'=>'date',
-                                    'value'=>$from
+                                    'value'=>$from,
+                                    'time'=>'00:00:00',
                                 ];
                             }
 
@@ -52,7 +53,8 @@ Route::post('list/filters',function(){
                                     'name'=>$column,
                                     'condition'=>'<=',
                                     'type'=>'date',
-                                    'value'=>$to
+                                    'value'=>$to,
+                                    'time'=>'23:59:59',
                                 ];
                             }
                         }
@@ -79,17 +81,25 @@ Route::post('list/filters',function(){
                 }
             }
         }
-        \Cache::forget($controller->getRoute('filter',[],false));
+        // create filter name for each employee
+        $filter_name = $controller->route('filter',[],false).'_'.\Auth::guard('admin')->user()->id;
+        \Cache::forget($filter_name);
         if($filters && count($filters))
-            \Cache::add($controller->getRoute('filter',[],false),$filters,1440);
+            \Cache::put($filter_name,$filters,1440);
     }
-    elseif($perPage = $request->input('perPage',[],false))
+    elseif($perPage = \Request::input('perPage'))
     {
-        \Cache::put($controller->getRoute('perPage',[],false),$perPage,1440);
+        $perPage_name = $controller->route('perPage',[],false).'_'.\Auth::guard('admin')->user()->id;
+
+        if($perPage>=10)
+            \Cache::put($perPage_name,$perPage,1440);
     }
-    elseif($request->input('resetFilter',[],false))
+    elseif(\Request::has('resetFilter'))
     {
-        \Cache::forget($controller->getRoute('filter',[],false));
+        \Cache::forget($controller->route('filter',[],false).'_'.\Auth::guard('admin')->user()->id);
     }
-    return redirect(route($controller->getRoute('index',[],false)));
+    else{
+        dd('wrong!!!!');
+    }
+    return redirect(route($controller->route('index',[],false)));
 })->name(config('app.admin_url').'.list.filters');
