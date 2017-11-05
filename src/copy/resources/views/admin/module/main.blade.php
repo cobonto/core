@@ -1,4 +1,4 @@
-php@extends('admin.layout.main')
+@extends('admin.layout.main')
 @section('content')<div class="row"><div class="col-lg-12">
         <div class="toolbar clearfix">
             <div class="toolbar-title">{{ $title }}</div>
