@@ -9,7 +9,7 @@
 namespace Cobonto\Events;
 
 
-use App\Events\Event;
+
 use Cobonto\Classes\User;
 
 class UserRegistered extends Event

@@ -288,8 +288,8 @@ class ModulesController extends AdminController
         {
             if(is_object($this->request->route()))
             {
-                $this->name = ucfirst(snake_case($this->request->route()->getParameter('name')));
-                $this->author = ucfirst(snake_case($this->request->route()->getParameter('author')));
+                $this->name = ucfirst(snake_case($this->request->route('name')));
+                $this->author = ucfirst(snake_case($this->request->route('author')));
             }
 
         }

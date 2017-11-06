@@ -5,6 +5,7 @@ namespace Cobonto\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Cobonto\Classes\Admin;
 use Cobonto\Events\AdminLoggedIn;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -21,16 +22,23 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-    protected $loginView = 'admin.auth.login';
+    use AuthenticatesUsers;
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLoginForm()
+    {
+        return view('admin.auth.login');
+    }
     /**
      * Where to redirect users after login / registration.
      *
      * @var string
      */
-    protected $redirectPath  = false;
+    protected $redirectPath  = '/';
     protected $redirectAfterLogout  = false;
-    protected $guard = 'admin';
     /**
      * Create a new authentication controller instance.
      *
@@ -43,15 +51,24 @@ class AuthController extends Controller
         $this->redirectAfterLogout = $admin_url.'/login';
         $this->middleware('guest.admin', ['except' => ['logout']]);
     }
-    public function getCredentials($request)
+    protected function credentials($request)
     {
-        $credentials = $request->only($this->loginUsername(), 'password');
+        $credentials = $request->only($this->username(), 'password');
 
         return array_add($credentials, 'active', '1');
     }
     protected function authenticated($request,$user)
     {
-        \Event::fire(new AdminLoggedIn(\Auth::guard($this->getGuard())->user()));
+        \Event::fire(new AdminLoggedIn($this->guard()->user()));
         return redirect()->to($this->redirectPath());
+    }
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return \Auth::guard('admin');
     }
 }

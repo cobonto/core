@@ -599,7 +599,7 @@ abstract class AdminController extends Controller
         }
     }
 
-    protected function hasPermission($permission)
+    public function hasPermission($permission)
     {
         if ($this->admin->role_id == 1)
             return true;
@@ -608,13 +608,12 @@ abstract class AdminController extends Controller
 
     protected function setPermissions()
     {
-        // for debug and artisan
-        if (\Auth::guard('admin')->check())
-        {
-            /** @var Admin admin */
-            $this->admin = \Auth::guard('admin')->user();
-            $this->admin->setLocale();
-            $this->permissions = Role::getRolePermissions($this->admin->role_id);
-        }
+        $this->middleware(function ($request, $next) {
+                /** @var Admin admin */
+                $this->admin = \Auth::guard('admin')->user();
+                $this->admin->setLocale();
+                $this->permissions = Role::getRolePermissions($this->admin->role_id);
+            return $next($request);
+        });
     }
 }

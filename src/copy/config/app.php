@@ -2,6 +2,18 @@
 
 return [
     /*
+   |--------------------------------------------------------------------------
+   | Application Name
+   |--------------------------------------------------------------------------
+   |
+   | This value is the name of your application. This value is used when the
+   | framework needs to place the application's name in a notification or
+   | any other location as required by the application or its packages.
+   |
+   */
+
+    'name' => env('APP_NAME', 'cobonto'),
+    /*
        |--------------------------------------------------------------------------
        | Application Admin url
        |--------------------------------------------------------------------------
@@ -171,19 +183,7 @@ return [
     'log' => env('APP_LOG', 'single'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
-    /*
-    |--------------------------------------------------------------------------
-    | Version
-    |--------------------------------------------------------------------------
-    |
-    | Here you may configure the log settings for your application. Out of
-    | the box, Laravel uses the Monolog PHP logging library. This gives
-    | you a variety of powerful log handlers / formatters to utilize.
-    |
-    | Available Settings: "single", "daily", "syslog", "errorlog"
-    |
-    */
-    'version'=>'1.1',
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -232,7 +232,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Module\ModuleServiceProvider::class,
         \Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
-        \Dingo\Api\Provider\LaravelServiceProvider::class,
+     //   \Dingo\Api\Provider\LaravelServiceProvider::class,
         \Cobonto\CmsServiceProvider::class,
         \Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,

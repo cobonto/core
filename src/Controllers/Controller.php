@@ -16,7 +16,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 
 abstract class Controller extends BaseController
 {
-    use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     /**
      * @param string $route name of route
      */
