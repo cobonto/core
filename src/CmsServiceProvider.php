@@ -45,6 +45,8 @@ class CmsServiceProvider extends ServiceProvider
         ]);
         $this->registerApi();
         $this->bootBladeSet();
+        //prevent error in unique key database
+        \Schema::defaultStringLength(191);
     }
 
     protected function registerCommands()
