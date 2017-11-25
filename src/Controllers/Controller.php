@@ -22,10 +22,6 @@ abstract class Controller extends BaseController
      */
     protected $route;
     /**
-     * @param string $route_name full route name include prefix route
-     */
-    protected $route_name;
-    /**
      * @param array $errors ;
      */
     protected $errors = [];

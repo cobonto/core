@@ -22,8 +22,8 @@ class TranslatesController extends AdminController
 
     protected function setProperties()
     {
-        $this->tpl = 'translate';
-        $this->route_name = 'translates';
+        $this->tpl = $this->theme.'.translate.main';
+        $this->route = 'translates';
         $this->title = $this->lang('translate');
         $this->environments = [
             'core'=>$this->lang('core_translate'),'module'=>$this->lang('module_translate'),
@@ -35,12 +35,12 @@ class TranslatesController extends AdminController
     protected function index()
     {
         $this->assign->addJSVars([
-            'translate_environment'=>route($this->route_name.'environment'),
+            'translate_environment'=>$this->route('environment'),
         ]);
         // get translate folders
         $this->assign->params([
             'languages' => Translate::getLanguages(),
-            'route'=>$this->route_name,
+            'route'=>$this->route,
             'environment'=>$this->environments,
         ]);
         return parent::view();
@@ -91,7 +91,7 @@ class TranslatesController extends AdminController
     }
     protected function loadFile(Request $request)
     {
-        $this->tpl = 'translate.file';
+        $this->tpl = $this->theme.'.translate.file';
         if(!$this->loadData($request))
         {
             return redirect($this->getRoute('index'))->withErrors($this->errors);

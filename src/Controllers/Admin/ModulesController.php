@@ -10,7 +10,6 @@ use Module\Classes\Module;
 class ModulesController extends AdminController
 {
     //
-    protected $tpl = 'module';
     /** @var  string module name */
     protected $name;
     /** @var  string author name */
@@ -22,6 +21,7 @@ class ModulesController extends AdminController
 
     public function setProperties()
     {
+        $this->tpl = $this->theme.'.module.main';
         $this->title = $this->lang('modules');
         parent::setProperties();
         $this->fillData();
@@ -34,8 +34,8 @@ class ModulesController extends AdminController
         $this->assign->params(
             [
                 'modules' => $modules,
-                'upload_url' => $this->getRoute('uploadModule'),
-                'clear_cache_url' => $this->getRoute('rebuildList'),
+                'upload_url' => $this->route('uploadModule'),
+                'clear_cache_url' => $this->route('rebuildList'),
             ]
         );
         return parent::index();
@@ -216,7 +216,7 @@ class ModulesController extends AdminController
             {
                 $this->errors[] =$this->lang('module_not_exists');
             }
-            return redirect($this->getRoute('configure', ['author' => strtolower(camel_case($this->author)), 'name' => strtolower(camel_case($this->name))]))->withErrors($this->errors);
+            return redirect($this->route('configure', ['author' => strtolower(camel_case($this->author)), 'name' => strtolower(camel_case($this->name))]))->withErrors($this->errors);
 
         }
         else
@@ -266,7 +266,7 @@ class ModulesController extends AdminController
     {
         $this->clearCache();
         if (count($this->errors))
-            return redirect($this->getRoute('index'))->withErrors($this->errors);
+            return redirect($this->route('index'))->withErrors($this->errors);
         else
         {
             $this->loadMessages();

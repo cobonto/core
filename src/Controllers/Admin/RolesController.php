@@ -76,7 +76,6 @@ class RolesController extends AdminController
     }
     protected function listQuery()
     {
-         parent::listQuery();
-         return  $this->sql->where('admin',1);
+        return  parent::listQuery()->where('admin',1);
     }
 }

@@ -8,9 +8,10 @@ use Cobonto\Controllers\AdminController;
 class DashboardController extends AdminController
 {
     //
-    protected $tpl ='dashboard';
     public function index()
     {
+       $this->tpl =$this->theme.'.dashboard.main';
+
         // add 3 hook for dashboard
         $this->assign->params([
             // hooks

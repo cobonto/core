@@ -119,4 +119,26 @@ trait SimpleHelperList
             $titles[] =['id'=>0,'name'=>$this->title,'link'=>false];
         return view($this->theme.'.helpers.list.simple.list_title',['titles'=>$titles,'id'=>$id]);
     }
+
+    public function updatePositions($positions=[])
+    {
+        if(count($positions))
+        {
+            $ids =[];
+            $positionsIds=[];
+            foreach($positions as $position)
+            {
+                list($id,$id_position) = explode('|',$position);
+                $ids[] = $id;
+                $positionsIds[] = $id_position;
+            }
+            sort($positionsIds,SORT_NUMERIC);
+            foreach($ids as $key=>$id)
+            {
+                \DB::table($this->table)->where($this->position_identifier,$id)->update(['position'=>$positionsIds[$key]]);
+            }
+            return ['status'=>'success','msg'=>$this->lang('update_success')];
+        }
+    }
+
 }
