@@ -29,7 +29,7 @@
       "jenssegers/date": "^3.2",
       "morilog/jalali": "^2.3",
       "tymon/jwt-auth": "0.5.*",
-      "cobonto/module":"~1.1"
+      "cobonto/module":"1.1.*"
     },
     "require-dev":{
     },
