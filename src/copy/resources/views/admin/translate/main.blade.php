@@ -2,7 +2,7 @@
 @section('content')
     <div class="panel panel-flat">
         <div class="panel-heading">{{ transTpl('translate_file','translate') }}</div>
-        <form class="form-horizontal" role="form" method="post" action="{{ $controller->getRoute('load',true) }}">
+        <form class="form-horizontal" role="form" method="post" action="{{ $controller->route('load',true) }}">
             <div class="panel-body">
                 {!! csrf_field() !!}
                 <div class="box-body">

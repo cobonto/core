@@ -13,8 +13,7 @@
         </form>--}}
                 <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
-        <ul>
-
+        <ul role="menu">
             @if(hasAccess('dashboard'))
                 <li class="title">{{ transTpl('quick_access','sidebar') }}</li>
                 <li class="menu" class="{{ activeMenu('dashboard') }}">
