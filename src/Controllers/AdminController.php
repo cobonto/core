@@ -67,10 +67,6 @@ abstract class AdminController extends Controller
      */
     protected $translationPrefixFile = 'admin';
     /**
-     * @var bool datatable list
-     */
-    protected $dataTableList = false;
-    /**
      * @var array $permissions
      */
     protected $permissions;
@@ -95,16 +91,17 @@ abstract class AdminController extends Controller
         // set login environment
         $this->assign->setEnvironment('admin');
         // load module
-        if ($this instanceof ModuleAdminController)
+        if ($this instanceof ModuleAdminController && method_exists($this,'loadModule'))
             $this->loadModule();
         //run some method before routing
         //$this->beforeProcess(\Route::getCurrentRoute()->getActionName());
         $this->setProperties();
-        $this->route_name = config('app.admin_url') . '.' . $this->route_name . '.';
         $this->setMedia();
     }
 
-    // we need some properties if not set it this method set theme
+    // we need some properties
+    // if not set it in controller
+    // this method set them
     protected function setProperties()
     {
         if(!$this->prefix_model)
@@ -113,19 +110,20 @@ abstract class AdminController extends Controller
         /**
          * @deprecated and remove next version
          */
-        if (!$this->route_name)
+        if (!$this->route)
         {
-            $this->route_name = strtolower($controller_name);
+            $this->route = strtolower($controller_name);
         }
-        $this->route = $this->route_name;
         if (!$this->title)
             $this->title = $controller_name;
         if (!$this->model_name)
-            $this->model_name = $controller_name;
+            // most controllers have s in end of them so we remove it but for Some controller
+            // like Address or... you should set the model
+            $this->model_name = rtrim($controller_name,'s');
         if (!$this->table)
         {
             if ($this->model_name)
-                $this->table = strtolower(snake_case($this->model_name)) . 's';
+                $this->table = strtolower(snake_case($this->model_name));
             else
                 $this->table = snake_case($controller_name);
         }
@@ -138,27 +136,19 @@ abstract class AdminController extends Controller
     protected function setMedia()
     {
         parent::setMedia();
-        // css
-        /**  $this->assign->addCSS([
-        #'css/ionicons/css/ionicons.min.css',
-        # 'css/skins/_all-skins.min.css',
-        ]);*/
-        //js
         $this->assign->addJS('js/global.js');
-        // plugins
-        #  $this->assign->addPlugin('morris');
-        #  $this->assign->addPlugin('pace');
     }
 
     /**
-     * do something and prepare to render view
+     * prepare to render view
      * @return \View html
      */
     protected function view()
     {
+        // add importan variable to view
         $this->assign->params([
             'HOOK_HEADER' => Hook::execute('displayAdminHeader'),
-            'route_name' => $this->route_name,
+            'route_name' => config('app.admin_url').'.'.$this->route.'.',
             'controller' => $this,
             'admin'=>$this->admin,
         ]);
@@ -179,7 +169,7 @@ abstract class AdminController extends Controller
         $tpl = $this->renderTplName();
         $this->loadMessages();
         ;
-        // add javascript vars to front
+        // add important javascript vars in view
         $this->assign->addJSVars([
             '_token' => csrf_token(),
         ]);
@@ -194,19 +184,15 @@ abstract class AdminController extends Controller
      */
     protected function renderTplName()
     {
-        $data = explode('.', $this->tpl);
-        if (count($data) == 1)
-            return $this->theme.'.' . $this->tpl . '.main';
-        elseif (count($data) == 2)
-            return $this->theme.'.' . $this->tpl;
-        else
-            return $this->tpl;
+        return $this->tpl;
     }
 
     /**
-     * load object
+     * load Instance of model for this controller
+     * this method is helper and usefull in admin controllers without check what model need to be loaded for this controller
+     * because you already determine model_name it in top of class
      * @param int|bool $id ;
-     * @param bool|false $force
+     * @param bool|false $force if this property is true and model can't be loaded you hwave throw exception
      * @return bool|void
      */
     protected function loadObject($id = false, $force = false)
@@ -238,7 +224,7 @@ abstract class AdminController extends Controller
 
     }
 
-    // index method
+    // index method in most admin controller this method show list of data
     protected function index()
     {
         // fill fields list
@@ -247,16 +233,7 @@ abstract class AdminController extends Controller
         $this->checkPermissions();
         if (count($this->fields_list))
         {
-            // determine datatable or list table loaded
-            if ($this->dataTableList)
-            {
-                if ($this->request->ajax())
-                    return $this->dataTableGenerateList();
-                else
-                    $this->dataTableGenerateList();
-            }
-            else
-                $this->generateList();
+            $this->generateList();
         }
         return $this->view();
     }
@@ -265,17 +242,15 @@ abstract class AdminController extends Controller
     {
         $this->loadObject();
         $this->fieldForm();
-        // add some variable for view
-        if ($this->tpl == false)
-            $this->tpl = $this->tpl_form;
+        $this->loadTplForm();
         // fill value if exists in session
         $this->fillValues();
         $this->generateForm();
         $this->assign->params([
             'id' => 0,
-            'form_url' => $this->getRoute('store'),
+            'form_url' => $this->route('store'),
             'object' => $this->model ?: null,
-            'route_list' => $this->getRoute('index'),
+            'route_list' => $this->route('index'),
         ]);
         return $this->view();
     }
@@ -290,17 +265,15 @@ abstract class AdminController extends Controller
     {
         $this->loadObject($id, true);
         $this->fieldForm();
-        // add some variable for view
-        if ($this->tpl == false)
-            $this->tpl = $this->tpl_form;
+        $this->loadTplForm();
         // fill value if exists in session
         $this->fillValues();
         $this->generateForm();
         $this->assign->params([
             'id' => $id,
-            'form_url' => route($this->route_name . 'store', ['id' => $id]),
+            'form_url' => route($this->route . 'store', ['id' => $id]),
             'object' => $this->model ?: null,
-            'route_list' => $this->getRoute('index'),
+            'route_list' => $this->route('index'),
         ]);
         return $this->view();
     }
@@ -329,27 +302,35 @@ abstract class AdminController extends Controller
     // create
     protected function add()
     {
-        $this->calcPost();
+        $this->processPostValues();
         $this->loadObject();
         if (is_object($this->model))
         {
+            // you can change data or do something else before data save to database
             $this->beforeAdd();
             if (!count($this->errors))
             {
+                // according Ardent if this property become true model load all data from  post
+                // and sometimes you wish to add data by yourself in model no automatic
+                // so you set this property false but here you have to set it true again
+                // we add this lines its mess but your code become cleaner
+
+                if($this->model->forceEntityHydrationFromInput==false)
+                    $this->model->forceEntityHydrationFromInput=true;
                 if (!$this->model->save())
                 {
                     $this->errors = $this->model->errors()->all();
                     $this->request->flash();
-                    return redirect($this->getRoute('create'))->withErrors($this->errors);
+                    return redirect($this->route('create'))->withErrors($this->errors);
                 }
                 else
                 {
-                    // call beforeCrate()
+                    // call after data crated you do something in controller like save image by given id ()
                     $this->afterAdd($this->model->id);
                     if (count($this->errors))
                     {
                         $this->request->flash();
-                        return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
+                        return redirect($this->route('edit', ['id' => $this->model->id]))->withErrors($this->errors);
                     }
 
                     else
@@ -359,33 +340,40 @@ abstract class AdminController extends Controller
         }
         else
             $this->errors[] = $this->lang('object_not_loaded');
-        return redirect($this->getRoute('create'))->withErrors($this->errors);
+        return redirect($this->route('create'))->withErrors($this->errors);
     }
 
     //update
     protected function update($id)
     {
-        $this->calcPost();
+        $this->processPostValues();
         $this->loadObject($id, true);
         if (is_object($this->model))
         {
             $this->beforeUpdate($id);
+            // according Ardent if this property become true model load all data from  post
+            // and sometimes you wish to add data by yourself in model no automatic
+            // so you set this property false but here you have to set it true again
+            // we add this lines its mess but your code become cleaner
+
+            if($this->model->forceEntityHydrationFromInput==false)
+                $this->model->forceEntityHydrationFromInput=true;
+
             if (!count($this->errors))
             {
                 if (!$this->model->save())
                 {
-                    $this->errors = $this->model->errors()->all();
                     $this->request->flash();
-                    return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
+                    return redirect($this->route('edit', ['id' => $this->model->id]))->withErrors($this->model->errors()->all(););
                 }
                 else
                 {
-                    // call beforeCrate()
+                    // call after object updated()
                     $this->afterUpdate($id);
                     if (count($this->errors))
                     {
                         $this->request->flash();
-                        return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
+                        return redirect($this->route('edit', ['id' => $this->model->id]))->withErrors($this->errors);
                     }
                     else
                         return $this->redirect($this->lang('add_success'));
@@ -394,7 +382,7 @@ abstract class AdminController extends Controller
         }
         else
             $this->errors[] = $this->lang('object_not_loaded');
-        return redirect(route($this->route_name . 'edit', ['id' => $this->model->id]))->withErrors($this->errors);
+        return redirect($this->route('edit', ['id' => $this->model->id]))->withErrors($this->errors);
     }
 
     /**
@@ -423,31 +411,10 @@ abstract class AdminController extends Controller
 
         }
         if (count($this->errors))
-            return redirect($this->getRoute('index'))->withErrors($this->errors);
+            return redirect($this->route('index'))->withErrors($this->errors);
         else
             return $this->redirect($this->lang('delete_success'));
     }
-    public function updatePositions($positions=[])
-    {
-        if(count($positions))
-        {
-            $ids =[];
-            $positionsIds=[];
-            foreach($positions as $position)
-            {
-                list($id,$id_position) = explode('|',$position);
-                $ids[] = $id;
-                $positionsIds[] = $id_position;
-            }
-            sort($positionsIds,SORT_NUMERIC);
-            foreach($ids as $key=>$id)
-            {
-                \DB::table($this->table)->where($this->position_identifier,$id)->update(['position'=>$positionsIds[$key]]);
-            }
-            return ['status'=>'success','msg'=>$this->lang('update_success')];
-        }
-    }
-
     /**
      * getHighestPosition
      * @return int
@@ -456,11 +423,21 @@ abstract class AdminController extends Controller
     {
         return $this->model->getHighestPosition()+1;
     }
+
+    /*********************************************************************************
+     |
+     |
+     | Helper methods this methods works in controller and help you manage your controller's model after and before actions
+     | like beforeAdd beforUpdate beforeDelete and etc
+     | this methods is like model events but its better to use them where nearby model are acting  :)
+     |
+     |
+     |
+     */
     protected function beforeDelete($object, $id)
     {
 
     }
-
     protected function afterDelete($object, $old_delete)
     {
 
@@ -486,12 +463,21 @@ abstract class AdminController extends Controller
 
     }
 
+    /**
+     * In each form we have 2 button
+     * one save and go to list page
+     * second save and stay in that page
+     * so we created it this method for that reason
+     * Hope enjoy it
+     * @param string $msg
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function redirect($msg)
     {
         if ($this->request->input('saveAndStay'))
-            return redirect($this->getRoute('edit', ['id' => $this->model->id]))->with('success', $msg);
+            return redirect($this->route('edit', ['id' => $this->model->id]))->with('success', $msg);
         else
-            return redirect($this->getRoute('index'))->with('success', $msg);
+            return redirect($this->route('index'))->with('success', $msg);
     }
 
     /**
@@ -508,7 +494,7 @@ abstract class AdminController extends Controller
     }
 
     /**
-     * get translated file
+     * get translated string
      * @param $string
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */
@@ -518,7 +504,8 @@ abstract class AdminController extends Controller
     }
 
     /**
-     * get translated file
+     * get translated strin
+     * alias of lang and use it in modules
      * @param $string
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */
@@ -528,6 +515,9 @@ abstract class AdminController extends Controller
     }
 
     /**
+     * This method process fieldsList and create queryData
+     * but not fired
+     * so you can call at nad after that add custom queries
      * create sql instance
      * @return \DB
      */
@@ -541,7 +531,7 @@ abstract class AdminController extends Controller
                 // select
                 if(!isset($options['sql_method']))
                     $select[] = isset($options['real_field']) ? $options['real_field'] . ' as ' . $field : $field;
-                // sql method like concat and....
+                // sql methods or custom  like concat and....
                 else
                     $select[]= \DB::raw(isset($options['real_field']) ? $options['real_field'] . ' as ' . $field : $field);
             }
@@ -552,35 +542,19 @@ abstract class AdminController extends Controller
         }
         return $this->sql;
     }
-
     /**
      * get route from controller
      * @param string $route_name
-     * @param bool $route
-     * @param array $params
-     * @return string
-     * @deprecated
-     */
-    public function getRoute($route_name,$params=[],$route=true)
-    {
-        if ($route)
-            return route($this->route_name . $route_name,$params);
-        else
-            return $this->route_name.$route_name;
-    }
-    /**
-     * get route from controller
-     * @param string $route_name
-     * @param bool $route
+     * @param bool $return_link
      * @param array $params
      * @return string
      */
-    public function route($route_name,$params=[],$route=true)
+    public function route($route_name,$params=[],$return_link=true)
     {
-        if ($route)
-            return route($this->route_name . $route_name,$params);
+        if ($return_link)
+            return route(config('app.admin_url').'.'.$this->route . $route_name,$params);
         else
-            return $this->route_name.$route_name;
+            return config('app.admin_url').'.'.$this->route.$route_name;
     }
     protected function checkPermissions()
     {
@@ -608,13 +582,12 @@ abstract class AdminController extends Controller
 
     protected function setPermissions()
     {
-        // for debug and artisan
-        if (\Auth::guard('admin')->check())
-        {
+        $this->middleware(function ($request, $next) {
             /** @var Admin admin */
             $this->admin = \Auth::guard('admin')->user();
             $this->admin->setLocale();
             $this->permissions = Role::getRolePermissions($this->admin->role_id);
-        }
+            return $next($request);
+        });
     }
 }

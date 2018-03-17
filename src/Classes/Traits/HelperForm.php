@@ -30,8 +30,7 @@ trait HelperForm
 
     /**
      * create form with helper form
-     * @param bool $return,if set true return array instead of go to assign
-     * This feature allows you to generate multiple forms from mutliple module in one page
+     * @param bool $return,if set true return array of varible otherwise varibles set in assign, This feature allows you to generate multiple forms from mutliple module in one page
      * @return array
      */
     protected function generateForm($return = false)
@@ -226,7 +225,7 @@ trait HelperForm
     }
 
     // do something before update or add
-    protected function calcPost($request = false)
+    protected function processPostValues($request = false)
     {
         if (!$request && property_exists($this, 'request'))
             $Request = $this->request;
@@ -249,7 +248,7 @@ trait HelperForm
     }
 
     /**
-     * add more values before render views and calculate data
+     * add more values before render views and after generatedForm done it's work
      */
     protected function addMoreValues()
     {
@@ -271,5 +270,16 @@ trait HelperForm
                     }
                 }
             }
+    }
+
+    /**
+     * load tpl form if no tpl is set for render
+     * @return void
+     */
+    protected function loadTplForm()
+    {
+        // add some variable for view
+        if ($this->tpl == false)
+            $this->tpl = $this->tpl_form;
     }
 }
