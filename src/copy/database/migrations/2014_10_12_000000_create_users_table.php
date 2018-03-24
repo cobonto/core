@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('mobile')->unique();
             $table->string('password');
-            $table->addColumn('datetime','last_login');
+            $table->addColumn('datetime','last_login')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

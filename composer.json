@@ -18,18 +18,18 @@
         }
     ],
     "require": {
-      "php": "^5.5.9 || ^7.0",
-      "laracasts/utilities": "~2.0",
-      "intervention/image": "^2.3",
-      "barryvdh/laravel-elfinder": "^0.3.8",
-      "kalnoy/nestedset":"^4.0",
-      "guzzlehttp/guzzle": "~5.3|~6.0",
+      "php": ">=7.0.0",
+      "laracasts/utilities": "~3.0",
+      "intervention/image": "^2.4",
+      "barryvdh/laravel-elfinder": "^0.3.11",
+      "kalnoy/nestedset":"^4.3",
+      "guzzlehttp/guzzle": "~6.3", 
       "pusher/pusher-php-server": "2.6.4",
-      "barryvdh/laravel-ide-helper": "^2.3",
+      "barryvdh/laravel-ide-helper": "^2.4",
       "jenssegers/date": "^3.2",
-      "morilog/jalali": "^2.2",
+      "morilog/jalali": "^2.3",
       "tymon/jwt-auth": "0.5.*",
-      "cobonto/module":"1.0.*"
+      "cobonto/module":"1.1.*"
     },
     "require-dev":{
     },

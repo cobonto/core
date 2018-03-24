@@ -63,7 +63,7 @@ if (!function_exists('activeLink'))
             foreach($string as $menu)
             {
                 if($admin)
-                    $string = config('app.admin_url').'/'.$menu;
+                    $menu = config('app.admin_url').'/'.$menu;
 
                 if(\Request::is($string) || \Request::is($menu.'/*'))
                     return $class_name;

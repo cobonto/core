@@ -34,7 +34,7 @@ class SettingsController extends AdminController
             'active_settings' => $tab,
             'html' => $html,
         ]);
-        $this->tpl = 'settings';
+        $this->tpl = $this->theme.'.settings.main';
         return parent::view();
     }
 
@@ -67,7 +67,7 @@ class SettingsController extends AdminController
        ]);
         $settings = $request->input('settings');
         if($validate->fails())
-            return redirect($this->getRoute('settings',['settings'=>$settings])->withErrors($this->lang('invalid_data')));
+            return redirect($this->route('settings',['settings'=>$settings])->withErrors($this->lang('invalid_data')));
         else
         {
 
@@ -80,22 +80,22 @@ class SettingsController extends AdminController
                 }
                 elseif($this->{'save'.ucfirst($settings).'Settings'}($request))
                 {
-                    return redirect($this->getRoute('settings',['settings'=>$settings]))->with('success',$this->lang('update_success'));
+                    return redirect($this->route('settings',['settings'=>$settings]))->with('success',$this->lang('update_success'));
                 }
                 else
                 {
-                    return redirect($this->getRoute('settings',['settings'=>$settings]))->withErrors($this->errors);
+                    return redirect($this->route('settings',['settings'=>$settings]))->withErrors($this->errors);
                 }
             }
             else
             {
                 if(($result = Hook::execute('save'.ucfirst($settings).'Settings',['request'=>$request]))===true)
                 {
-                    return redirect($this->getRoute('settings',['settings'=>$settings]))->with('success',$this->lang('update_success'));
+                    return redirect($this->route('settings',['settings'=>$settings]))->with('success',$this->lang('update_success'));
                 }
                 else
                 {
-                    return redirect($this->getRoute('settings',['settings'=>$settings]))->withErrors($request);
+                    return redirect($this->route('settings',['settings'=>$settings]))->withErrors($request);
                 }
             }
         }
@@ -144,7 +144,7 @@ class SettingsController extends AdminController
             $this->tpl = 'admin.helpers.form.form';
             $this->assign->params([
                 'id' => 0,
-                'form_url' => $this->getRoute('update'),
+                'form_url' => $this->route('update'),
                 'object' => null,
                 'route_list' => false,
             ]);
@@ -158,7 +158,7 @@ class SettingsController extends AdminController
         else
         {
             $this->wrong=true;
-            return redirect($this->getRoute('settings',['settings'=>'general']))->withErrors('invalid_data');
+            return redirect($this->route('settings',['settings'=>'general']))->withErrors('invalid_data');
         }
 
 

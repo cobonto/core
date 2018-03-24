@@ -102,4 +102,4 @@ Route::post('list/filters',function(){
         dd('wrong!!!!');
     }
     return redirect(route($controller->route('index',[],false)));
-})->name(config('app.admin_url').'.list.filters');
+})->name('list.filters');

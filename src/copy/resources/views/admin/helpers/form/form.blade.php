@@ -17,7 +17,7 @@
                         @endforeach
                     </div>
                     <!-- /.box-body -->
-                    <div class="panel-footer">
+                    <div class="panel-footer clearfix">
                         @if($route_list)
                             <a class="btn btn-default" href="{{ $route_list }}"><i class="fa fa-remove"></i>{{ transTpl('cancel','helpers') }}</a>
                         @endif

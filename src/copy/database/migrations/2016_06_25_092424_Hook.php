@@ -15,7 +15,7 @@ class Hook extends Migration
         Schema::create('hooks', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->text('description');
+            $table->text('description')->nullable();
         });
     }
 

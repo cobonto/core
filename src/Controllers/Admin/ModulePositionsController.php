@@ -36,7 +36,7 @@ class ModulePositionsController extends AdminController
         }
         $this->assign->params([
             'hooks' => $hooks,
-            'set_hook_url'=>$this->getRoute('set'),
+            'set_hook_url'=>$this->route('set'),
         ]);
         // add some javascript vars
         $this->assign->addJSVars([

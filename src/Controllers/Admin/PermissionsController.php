@@ -17,9 +17,9 @@ use Illuminate\Http\Request;
 
 class PermissionsController extends AdminController
 {
-    protected $tpl='permission';
     protected function setProperties()
     {
+        $this->tpl = $this->theme.'.permission.main';
         parent::setProperties();
         $this->title = $this->lang('permissions');
     }
@@ -101,7 +101,7 @@ class PermissionsController extends AdminController
         if(is_object($Role))
         {
             $permissions = $Role->getRolePermissions($Role->id);
-            $html = view('admin.permission.content',[
+            $html = view($this->theme.'.permission.content',[
                 'permissions'=>$permissions,
                 'access'=>Permission::getControllers(),
                 'role'=>$Role,

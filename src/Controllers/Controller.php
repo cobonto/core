@@ -16,15 +16,11 @@ use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 
 abstract class Controller extends BaseController
 {
-    use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     /**
      * @param string $route name of route
      */
     protected $route;
-    /**
-     * @param string $route_name full route name include prefix route
-     */
-    protected $route_name;
     /**
      * @param array $errors ;
      */

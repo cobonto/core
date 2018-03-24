@@ -82,7 +82,7 @@ class Admin extends Ardent implements
     }
     public function setLocale()
     {
-        app('translator')->setLocale($this->lang);
+         app('translator')->setLocale($this->lang);
         if($this->lang=='fa')
             config(['app.rtl'=>1]);
         else

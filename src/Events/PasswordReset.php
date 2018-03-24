@@ -9,10 +9,10 @@
 namespace Cobonto\Events;
 
 
-use App\Events\Event;
+
 use Cobonto\Classes\User;
 
-class PasswordReset extends Event
+class PasswordReset
 {
     /**
      * @var User

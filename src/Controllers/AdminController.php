@@ -272,6 +272,7 @@ abstract class AdminController extends Controller
         $this->assign->params([
             'id' => $id,
             'form_url' => route($this->route . 'store', ['id' => $id]),
+            'form_url' => $this->route('store', ['id' => $id]),
             'object' => $this->model ?: null,
             'route_list' => $this->route('index'),
         ]);
@@ -364,7 +365,7 @@ abstract class AdminController extends Controller
                 if (!$this->model->save())
                 {
                     $this->request->flash();
-                    return redirect($this->route('edit', ['id' => $this->model->id]))->withErrors($this->model->errors()->all(););
+                    return redirect($this->route('edit', ['id' => $this->model->id]))->withErrors($this->model->errors()->all());
                 }
                 else
                 {
@@ -423,17 +424,6 @@ abstract class AdminController extends Controller
     {
         return $this->model->getHighestPosition()+1;
     }
-
-    /*********************************************************************************
-     |
-     |
-     | Helper methods this methods works in controller and help you manage your controller's model after and before actions
-     | like beforeAdd beforUpdate beforeDelete and etc
-     | this methods is like model events but its better to use them where nearby model are acting  :)
-     |
-     |
-     |
-     */
     protected function beforeDelete($object, $id)
     {
 
@@ -573,7 +563,7 @@ abstract class AdminController extends Controller
         }
     }
 
-    protected function hasPermission($permission)
+    public function hasPermission($permission)
     {
         if ($this->admin->role_id == 1)
             return true;

@@ -2,12 +2,10 @@
 namespace Cobonto\Events;
 
 
-use App\Events\Event;
 use Cobonto\Classes\Admin;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class AdminLoggedIn extends Event
+class AdminLoggedIn
 {
     use SerializesModels;
     /** @var  Admin */
